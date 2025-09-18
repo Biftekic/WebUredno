@@ -70,13 +70,27 @@ Secondary CTA: "Pogledaj cijene"
 
 ### Value Propositions
 ```
-"Zašto WebUredno?"
+"Zašto Uredno?"
 ✓ Provjereni i osigurani djelatnici
 ✓ Ekološki prihvatljiva sredstva za čišćenje
 ✓ Fleksibilno terminiranje
 ✓ Transparentne cijene bez skrivenih troškova
 ✓ Garancija zadovoljstva ili povrat novca
 ✓ Dostupnost 7 dana u tjednu
+✓ Plaćanje gotovinom, karticom ili virmanom
+```
+
+### Contact Information
+```
+Telefon: +385 92 450 2265
+Email: kontakt@uredno.eu
+WhatsApp: +385 92 450 2265
+Radno vrijeme:
+- Ponedjeljak - Petak: 08:00 - 20:00
+- Subota: 09:00 - 18:00
+- Nedjelja: 10:00 - 16:00
+
+Hitne intervencije: Dostupni 24/7 za hitne slučajeve
 ```
 
 ## SEO Strategy
@@ -111,14 +125,14 @@ Secondary CTA: "Pogledaj cijene"
 
 #### Homepage
 ```html
-<title>Profesionalne Usluge Čišćenja Zagreb | WebUredno</title>
-<meta name="description" content="Vrhunske usluge čišćenja u Zagrebu i Zagrebačkoj županiji. Provjereni djelatnici, ekološka sredstva, fleksibilno terminiranje. Rezervirajte odmah!">
+<title>Profesionalne Usluge Čišćenja Zagreb | Uredno</title>
+<meta name="description" content="Vrhunske usluge čišćenja u Zagrebu i Zagrebačkoj županiji. Provjereni djelatnici, ekološka sredstva. ☎️ +385 92 450 2265. Rezervirajte odmah!">
 ```
 
 #### Service Pages
 ```html
-<title>[Service Name] Zagreb | WebUredno Čišćenje</title>
-<meta name="description" content="[Service description] u Zagrebu. Transparentne cijene od [price]€. Rezervirajte online ili nazovite.">
+<title>[Service Name] Zagreb | Uredno Čišćenje</title>
+<meta name="description" content="[Service description] u Zagrebu. Transparentne cijene od [price]€. Rezervirajte online ili nazovite +385 92 450 2265">
 ```
 
 ### Structured Data (JSON-LD)
@@ -128,11 +142,16 @@ Secondary CTA: "Pogledaj cijene"
 {
   "@context": "https://schema.org",
   "@type": "LocalBusiness",
-  "name": "WebUredno",
-  "description": "Profesionalne usluge čišćenja",
+  "name": "Uredno",
+  "description": "Profesionalne usluge čišćenja u Zagrebu i Zagrebačkoj županiji",
+  "url": "https://uredno.eu",
+  "telephone": "+38592450265",
+  "email": "kontakt@uredno.eu",
   "address": {
     "@type": "PostalAddress",
+    "streetAddress": "Ivšićev prilaz 9",
     "addressLocality": "Zagreb",
+    "postalCode": "10000",
     "addressRegion": "Zagrebačka županija",
     "addressCountry": "HR"
   },
@@ -145,7 +164,29 @@ Secondary CTA: "Pogledaj cijene"
     "Zagreb",
     "Zagrebačka županija"
   ],
-  "priceRange": "€€"
+  "priceRange": "€€",
+  "paymentAccepted": ["Cash", "Credit Card", "Debit Card", "Bank Transfer"],
+  "currenciesAccepted": "EUR",
+  "openingHoursSpecification": [
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+      "opens": "08:00",
+      "closes": "20:00"
+    },
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": "Saturday",
+      "opens": "09:00",
+      "closes": "18:00"
+    },
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": "Sunday",
+      "opens": "10:00",
+      "closes": "16:00"
+    }
+  ]
 }
 ```
 

@@ -276,7 +276,10 @@ Možete upravljati svojom rezervacijom putem linka:
 {{managementLink}}
 
 Hvala vam na povjerenju!
-Tim WebUredno
+Tim Uredno
+
+Kontakt: +385 92 450 2265
+Email: kontakt@uredno.eu
 ```
 
 ## Security Considerations

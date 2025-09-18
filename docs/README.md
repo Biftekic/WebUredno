@@ -1,4 +1,4 @@
-# WebUredno - Documentation
+# Uredno - Documentation
 
 ## 📚 Documentation Structure
 
@@ -150,7 +150,7 @@ For implementation questions or clarifications about the design:
 
 ---
 
-**Project:** WebUredno
+**Project:** Uredno
 **Market:** Zagreb & Zagrebačka županija, Croatia
 **Status:** Design Documentation Complete
 **Next Step:** Begin Phase 1 - Foundation Setup

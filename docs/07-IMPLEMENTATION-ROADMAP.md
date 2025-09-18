@@ -157,10 +157,10 @@ npx shadcn-ui@latest add form toast badge separator
 
 ```bash
 # 1. Create Next.js project
-npx create-next-app@latest weburedno --typescript --tailwind --app
+npx create-next-app@latest uredno --typescript --tailwind --app
 
 # 2. Navigate to project
-cd weburedno
+cd uredno
 
 # 3. Install dependencies
 npm install lucide-react date-fns react-hook-form zod
@@ -186,8 +186,8 @@ npm run dev
 # .env.local
 
 # Site Configuration
-NEXT_PUBLIC_SITE_URL=https://weburedno.hr
-NEXT_PUBLIC_SITE_NAME=WebUredno
+NEXT_PUBLIC_SITE_URL=https://uredno.eu
+NEXT_PUBLIC_SITE_NAME=Uredno
 
 # Google Calendar API
 GOOGLE_CLIENT_ID=your_client_id
@@ -201,7 +201,7 @@ EMAIL_SERVER_HOST=smtp.gmail.com
 EMAIL_SERVER_PORT=587
 EMAIL_SERVER_USER=your_email@gmail.com
 EMAIL_SERVER_PASSWORD=your_app_password
-EMAIL_FROM=noreply@weburedno.hr
+EMAIL_FROM=kontakt@uredno.eu
 
 # Analytics (optional)
 NEXT_PUBLIC_GA_ID=G-XXXXXXXXXX

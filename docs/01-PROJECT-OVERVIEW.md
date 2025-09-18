@@ -1,4 +1,4 @@
-# WebUredno - Croatian Cleaning Service Website
+# Uredno - Croatian Cleaning Service Website
 
 ## Project Overview
 A professional cleaning service website for Zagreb and Zagrebačka županija, inspired by MyClean.com's successful model but adapted for the Croatian market.

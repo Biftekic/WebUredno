@@ -262,6 +262,74 @@ interface SectionProps {
 }
 ```
 
+## Contact Components
+
+### 1. ClickToCall Button
+```typescript
+// components/contact/ClickToCall.tsx
+interface ClickToCallProps {
+  phone: string; // "+38592450265"
+  variant?: 'button' | 'link' | 'floating';
+  size?: 'sm' | 'md' | 'lg';
+  showIcon?: boolean;
+  text?: string;
+}
+
+// Features:
+// - Mobile: tel: link
+// - Desktop: Show number with copy
+// - Floating option for mobile
+// - Analytics tracking
+```
+
+### 2. WhatsApp Button
+```typescript
+// components/contact/WhatsAppButton.tsx
+interface WhatsAppButtonProps {
+  phone: string; // "38592450265" (without +)
+  message?: string; // Pre-filled message
+  variant?: 'fixed' | 'inline';
+  position?: 'bottom-right' | 'bottom-left';
+}
+
+// Features:
+// - Opens WhatsApp with pre-filled message
+// - Floating position on mobile
+// - Service type quick selection
+```
+
+### 3. Contact Bar
+```typescript
+// components/contact/ContactBar.tsx
+interface ContactBarProps {
+  showPhone?: boolean;
+  showEmail?: boolean;
+  showWhatsApp?: boolean;
+  showHours?: boolean;
+  sticky?: boolean;
+}
+
+// Features:
+// - Sticky header option
+// - Business hours indicator
+// - Emergency service badge
+```
+
+### 4. Emergency Banner
+```typescript
+// components/contact/EmergencyBanner.tsx
+interface EmergencyBannerProps {
+  isEmergency: boolean;
+  surchargePercent: number; // 50
+  phoneNumber: string;
+}
+
+// Features:
+// - 24/7 availability notice
+// - Surcharge warning
+// - Direct call button
+```
+
 ## Utility Components
 
 ### 1. SEO Component

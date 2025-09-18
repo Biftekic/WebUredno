@@ -27,7 +27,7 @@
 ## Project Structure
 
 ```
-WebUredno/
+Uredno/
 ├── docs/                    # Documentation
 ├── src/
 │   ├── app/                # Next.js App Router
