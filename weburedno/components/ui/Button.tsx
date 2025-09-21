@@ -17,6 +17,9 @@ interface ButtonProps {
   loading?: boolean;
   className?: string;
   type?: 'button' | 'submit' | 'reset';
+  external?: boolean;
+  target?: string;
+  rel?: string;
 }
 
 export default function Button({
@@ -32,6 +35,9 @@ export default function Button({
   loading = false,
   className = '',
   type = 'button',
+  external = false,
+  target,
+  rel,
 }: ButtonProps) {
   const sizeClasses = {
     sm: 'px-3 py-2 text-sm min-h-[36px]',
@@ -72,6 +78,21 @@ export default function Button({
   );
 
   if (href) {
+    // External link
+    if (external || href.startsWith('http') || href.startsWith('//')) {
+      return (
+        <a
+          href={href}
+          target={target || '_blank'}
+          rel={rel || 'noopener noreferrer'}
+          className={baseClasses}
+        >
+          {content}
+        </a>
+      );
+    }
+
+    // Internal link
     return (
       <Link href={href} className={baseClasses}>
         {content}
