@@ -1,107 +1,192 @@
 import { supabase } from '@/lib/supabase';
-import type { Booking, CreateBookingInput, Customer } from '@/types/database';
-import { reserveTimeSlot, releaseTimeSlot } from './availability';
+import type { Booking, CreateBookingInput, AvailabilitySlot, Customer } from '@/types/database';
+import { generateBookingNumber } from '@/lib/booking-utils';
+
+/**
+ * Check availability for a specific date and time
+ */
+export async function checkAvailability(date: string, timeSlot: string) {
+  const { data, error } = await supabase
+    .rpc('check_availability', {
+      p_date: date,
+      p_time_slot: timeSlot
+    });
+
+  if (error) {
+    console.error('Error checking availability:', error);
+    throw error;
+  }
+
+  return data as Array<{ team_number: number; is_available: boolean }>;
+}
+
+/**
+ * Get available time slots for a specific date
+ */
+export async function getAvailableSlots(date: string): Promise<AvailabilitySlot[]> {
+  const { data, error } = await supabase
+    .rpc('get_available_slots', {
+      p_date: date
+    });
+
+  if (error) {
+    console.error('Error getting available slots:', error);
+    throw error;
+  }
+
+  // Transform the data to include team numbers
+  const slots = data as Array<{ time_slot: string; available_teams: number }>;
+
+  // For each slot, get the available team numbers
+  const slotsWithTeams = await Promise.all(
+    slots.map(async (slot) => {
+      const teams = await checkAvailability(date, slot.time_slot);
+      const availableTeamNumbers = teams
+        .filter(t => t.is_available)
+        .map(t => t.team_number);
+
+      return {
+        date,
+        time_slot: slot.time_slot,
+        available_teams: slot.available_teams,
+        team_numbers: availableTeamNumbers
+      };
+    })
+  );
+
+  return slotsWithTeams;
+}
+
+/**
+ * Get availability for multiple dates
+ */
+export async function getAvailabilityForDates(dates: string[]): Promise<Map<string, AvailabilitySlot[]>> {
+  const availabilityMap = new Map<string, AvailabilitySlot[]>();
+
+  await Promise.all(
+    dates.map(async (date) => {
+      const slots = await getAvailableSlots(date);
+      availabilityMap.set(date, slots);
+    })
+  );
+
+  return availabilityMap;
+}
+
+/**
+ * Create or find a customer
+ */
+async function createOrFindCustomer(customerData: Omit<Customer, 'id' | 'created_at' | 'updated_at'>): Promise<string> {
+  // First, try to find existing customer by email
+  const { data: existingCustomer, error: findError } = await supabase
+    .from('customers')
+    .select('id')
+    .eq('email', customerData.email)
+    .single();
+
+  if (existingCustomer && !findError) {
+    // Update existing customer data
+    await supabase
+      .from('customers')
+      .update({
+        ...customerData,
+        updated_at: new Date().toISOString()
+      })
+      .eq('id', existingCustomer.id);
+
+    return existingCustomer.id;
+  }
+
+  // Create new customer
+  const { data: newCustomer, error: createError } = await supabase
+    .from('customers')
+    .insert({
+      ...customerData,
+      source: 'website'
+    })
+    .select('id')
+    .single();
+
+  if (createError) {
+    console.error('Error creating customer:', createError);
+    throw createError;
+  }
+
+  return newCustomer.id;
+}
 
 /**
  * Create a new booking
  */
 export async function createBooking(input: CreateBookingInput): Promise<Booking> {
-  // Start a Supabase transaction-like operation
-  try {
-    // 1. Create or find customer
-    let customerId: string;
+  // Create or find customer
+  const customerId = await createOrFindCustomer(input.customer);
 
-    // Check if customer exists
-    const { data: existingCustomer } = await supabase
-      .from('customers')
-      .select('id')
-      .eq('email', input.customer.email)
-      .single();
+  // Generate booking number
+  const bookingNumber = generateBookingNumber();
 
-    if (existingCustomer) {
-      customerId = existingCustomer.id;
+  // Calculate total price (simplified for now)
+  const extrasTotal = input.extras?.reduce((sum, extra) =>
+    sum + (extra.price * (extra.quantity || 1)), 0
+  ) || 0;
 
-      // Update customer details
-      await supabase
-        .from('customers')
-        .update({
-          ...input.customer,
-          updated_at: new Date().toISOString()
-        })
-        .eq('id', customerId);
-    } else {
-      // Create new customer
-      const { data: newCustomer, error: customerError } = await supabase
-        .from('customers')
-        .insert([input.customer])
-        .select()
-        .single();
+  // Reserve availability slot
+  const availableTeams = await checkAvailability(input.booking_date, input.time_slot);
+  const availableTeam = availableTeams.find(t => t.is_available);
 
-      if (customerError) throw customerError;
-      customerId = newCustomer.id;
-    }
+  if (!availableTeam) {
+    throw new Error('Odabrani termin više nije dostupan');
+  }
 
-    // 2. Calculate pricing
-    const { data: pricing } = await supabase
-      .rpc('calculate_price', {
-        p_service_id: input.service_id,
-        p_property_size: input.property_size || null,
-        p_extras: input.extras ? JSON.stringify(input.extras) : '[]'
-      });
-
-    const priceData = pricing[0];
-
-    // 3. Create booking
-    const bookingData = {
+  // Create booking
+  const { data: booking, error: bookingError } = await supabase
+    .from('bookings')
+    .insert({
+      booking_number: bookingNumber,
       customer_id: customerId,
       service_id: input.service_id,
       status: 'pending',
       booking_date: input.booking_date,
       time_slot: input.time_slot,
-      team_number: input.team_number || null,
+      team_number: availableTeam.team_number,
       service_type: input.service_type,
-      frequency: input.frequency || 'one-time',
-      property_type: input.property_type || null,
-      property_size: input.property_size || null,
-      bedrooms: input.bedrooms || null,
-      bathrooms: input.bathrooms || null,
-      base_price: priceData.base_price,
+      frequency: input.frequency,
+      property_type: input.property_type,
+      property_size: input.property_size,
+      bedrooms: input.bedrooms,
+      bathrooms: input.bathrooms,
       extras: input.extras || [],
-      extras_cost: priceData.extras_cost,
-      distance_fee: 0, // Calculate based on address if needed
-      total_price: priceData.total_price,
-      special_requests: input.special_requests || null
-    };
+      extras_cost: extrasTotal,
+      distance_fee: 0, // Will be calculated based on address
+      total_price: 0, // Will be calculated
+      special_requests: input.special_requests
+    })
+    .select('*')
+    .single();
 
-    const { data: booking, error: bookingError } = await supabase
-      .from('bookings')
-      .insert([bookingData])
-      .select()
-      .single();
-
-    if (bookingError) throw bookingError;
-
-    // 4. Reserve time slot if team number is specified
-    if (input.team_number) {
-      await reserveTimeSlot(
-        input.booking_date,
-        input.time_slot,
-        input.team_number,
-        booking.id
-      );
-    }
-
-    return booking as Booking;
-  } catch (error) {
-    console.error('Error creating booking:', error);
-    throw error;
+  if (bookingError) {
+    console.error('Error creating booking:', bookingError);
+    throw bookingError;
   }
+
+  // Update availability
+  await supabase
+    .from('availability')
+    .update({
+      is_available: false,
+      booking_id: booking.id
+    })
+    .eq('date', input.booking_date)
+    .eq('time_slot', input.time_slot)
+    .eq('team_number', availableTeam.team_number);
+
+  return booking as Booking;
 }
 
 /**
  * Get booking by ID
  */
-export async function getBookingById(id: string): Promise<Booking | null> {
+export async function getBooking(bookingId: string): Promise<Booking | null> {
   const { data, error } = await supabase
     .from('bookings')
     .select(`
@@ -109,15 +194,12 @@ export async function getBookingById(id: string): Promise<Booking | null> {
       customer:customers(*),
       service:services(*)
     `)
-    .eq('id', id)
+    .eq('id', bookingId)
     .single();
 
   if (error) {
-    if (error.code === 'PGRST116') {
-      return null; // Not found
-    }
     console.error('Error fetching booking:', error);
-    throw error;
+    return null;
   }
 
   return data as Booking;
@@ -138,171 +220,108 @@ export async function getBookingByNumber(bookingNumber: string): Promise<Booking
     .single();
 
   if (error) {
-    if (error.code === 'PGRST116') {
-      return null; // Not found
-    }
     console.error('Error fetching booking:', error);
-    throw error;
+    return null;
   }
 
   return data as Booking;
-}
-
-/**
- * Get bookings by customer email
- */
-export async function getBookingsByEmail(email: string): Promise<Booking[]> {
-  const { data, error } = await supabase
-    .from('bookings')
-    .select(`
-      *,
-      customer:customers!inner(*),
-      service:services(*)
-    `)
-    .eq('customers.email', email)
-    .order('booking_date', { ascending: false });
-
-  if (error) {
-    console.error('Error fetching bookings:', error);
-    throw error;
-  }
-
-  return data as Booking[];
 }
 
 /**
  * Update booking status
  */
 export async function updateBookingStatus(
-  id: string,
-  status: 'pending' | 'confirmed' | 'completed' | 'cancelled'
-): Promise<Booking> {
-  const { data, error } = await supabase
+  bookingId: string,
+  status: 'confirmed' | 'completed' | 'cancelled'
+): Promise<void> {
+  const updateData: any = {
+    status,
+    updated_at: new Date().toISOString()
+  };
+
+  // Add timestamp based on status
+  if (status === 'confirmed') {
+    updateData.confirmed_at = new Date().toISOString();
+  } else if (status === 'completed') {
+    updateData.completed_at = new Date().toISOString();
+  } else if (status === 'cancelled') {
+    updateData.cancelled_at = new Date().toISOString();
+
+    // Release the availability slot
+    const { data: booking } = await supabase
+      .from('bookings')
+      .select('booking_date, time_slot, team_number')
+      .eq('id', bookingId)
+      .single();
+
+    if (booking) {
+      await supabase
+        .from('availability')
+        .update({
+          is_available: true,
+          booking_id: null
+        })
+        .eq('date', booking.booking_date)
+        .eq('time_slot', booking.time_slot)
+        .eq('team_number', booking.team_number);
+    }
+  }
+
+  const { error } = await supabase
     .from('bookings')
-    .update({ status })
-    .eq('id', id)
-    .select()
-    .single();
+    .update(updateData)
+    .eq('id', bookingId);
 
   if (error) {
     console.error('Error updating booking status:', error);
     throw error;
   }
-
-  // If cancelling, release the time slot
-  if (status === 'cancelled') {
-    await releaseTimeSlot(id);
-  }
-
-  return data as Booking;
 }
 
 /**
- * Cancel booking
+ * Get next available slot
  */
-export async function cancelBooking(id: string): Promise<boolean> {
-  try {
-    await updateBookingStatus(id, 'cancelled');
-    return true;
-  } catch (error) {
-    console.error('Error cancelling booking:', error);
-    return false;
-  }
-}
-
-/**
- * Get upcoming bookings
- */
-export async function getUpcomingBookings(limit: number = 10): Promise<Booking[]> {
-  const today = new Date().toISOString().split('T')[0];
-
+export async function getNextAvailableSlot(serviceId?: string) {
   const { data, error } = await supabase
-    .from('bookings')
-    .select(`
-      *,
-      customer:customers(*),
-      service:services(*)
-    `)
-    .gte('booking_date', today)
-    .in('status', ['pending', 'confirmed'])
-    .order('booking_date', { ascending: true })
-    .order('time_slot', { ascending: true })
-    .limit(limit);
+    .rpc('get_next_available_slot', {
+      p_service_id: serviceId || null
+    });
 
   if (error) {
-    console.error('Error fetching upcoming bookings:', error);
+    console.error('Error getting next available slot:', error);
     throw error;
   }
 
-  return data as Booking[];
+  return data[0] as {
+    date: string;
+    time_slot: string;
+    team_number: number;
+  } | null;
 }
 
 /**
- * Get bookings for a specific date
+ * Calculate booking price
  */
-export async function getBookingsByDate(date: string): Promise<Booking[]> {
+export async function calculateBookingPrice(
+  serviceId: string,
+  propertySize?: number,
+  extras?: Array<{ name: string; price: number }>
+) {
   const { data, error } = await supabase
-    .from('bookings')
-    .select(`
-      *,
-      customer:customers(*),
-      service:services(*)
-    `)
-    .eq('booking_date', date)
-    .order('time_slot', { ascending: true })
-    .order('team_number', { ascending: true });
+    .rpc('calculate_price', {
+      p_service_id: serviceId,
+      p_property_size: propertySize || null,
+      p_extras: extras ? JSON.stringify(extras) : '[]'
+    });
 
   if (error) {
-    console.error('Error fetching bookings by date:', error);
+    console.error('Error calculating price:', error);
     throw error;
   }
 
-  return data as Booking[];
-}
-
-/**
- * Confirm booking with team assignment
- */
-export async function confirmBooking(
-  id: string,
-  teamNumber: number
-): Promise<Booking> {
-  // First get the booking details
-  const booking = await getBookingById(id);
-  if (!booking) {
-    throw new Error('Booking not found');
-  }
-
-  // Reserve the time slot
-  const reserved = await reserveTimeSlot(
-    booking.booking_date,
-    booking.time_slot,
-    teamNumber,
-    id
-  );
-
-  if (!reserved) {
-    throw new Error('Time slot is no longer available');
-  }
-
-  // Update booking with team number and status
-  const { data, error } = await supabase
-    .from('bookings')
-    .update({
-      status: 'confirmed',
-      team_number: teamNumber,
-      confirmed_at: new Date().toISOString()
-    })
-    .eq('id', id)
-    .select()
-    .single();
-
-  if (error) {
-    // If update fails, release the time slot
-    await releaseTimeSlot(id);
-    console.error('Error confirming booking:', error);
-    throw error;
-  }
-
-  return data as Booking;
+  return data[0] as {
+    base_price: number;
+    extras_cost: number;
+    total_price: number;
+  };
 }
