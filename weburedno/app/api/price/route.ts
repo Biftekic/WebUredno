@@ -200,7 +200,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json(
         {
           error: 'Neispravni podaci za izračun cijene',
-          details: validationResult.error.errors
+          details: validationResult.error.issues
         },
         { status: 400 }
       );
@@ -227,10 +227,10 @@ export async function POST(request: NextRequest) {
 
     // If we have service data, include additional information
     if (serviceData) {
-      priceBreakdown.service_details = {
-        ...priceBreakdown.service_details,
+      (priceBreakdown as any).service_info = {
         name: serviceData.name,
-        description: serviceData.description
+        description: serviceData.description,
+        category: serviceData.category
       };
     }
 

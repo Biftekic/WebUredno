@@ -121,7 +121,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json(
         {
           error: 'Neispravni podaci',
-          details: validationResult.error.errors.map(err => ({
+          details: validationResult.error.issues.map(err => ({
             field: err.path.join('.'),
             message: err.message
           }))

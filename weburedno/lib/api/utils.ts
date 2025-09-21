@@ -89,7 +89,7 @@ export function rateLimitResponse(resetIn: number): NextResponse {
 
 // Validation error formatter
 export function formatValidationErrors(errors: z.ZodError): any[] {
-  return errors.errors.map(err => ({
+  return errors.issues.map(err => ({
     field: err.path.join('.'),
     message: err.message,
     code: err.code
