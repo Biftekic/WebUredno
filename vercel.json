@@ -1,7 +1,4 @@
 {
-  "buildCommand": "cd weburedno && npm run build",
-  "outputDirectory": "weburedno/.next",
-  "installCommand": "cd weburedno && npm install",
-  "devCommand": "cd weburedno && npm run dev",
+  "rootDirectory": "weburedno",
   "framework": "nextjs"
 }
