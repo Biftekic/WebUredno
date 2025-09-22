@@ -2,10 +2,13 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getAvailableSlots, checkAvailability, getNextAvailableSlot } from '@/lib/db/bookings';
 import { format, addDays } from 'date-fns';
 
+// Force dynamic rendering for API routes
+export const dynamic = 'force-dynamic';
+
 // Get availability for a specific date or date range
 export async function GET(request: NextRequest) {
   try {
-    const { searchParams } = new URL(request.url);
+    const { searchParams } = request.nextUrl;
     const date = searchParams.get('date');
     const timeSlot = searchParams.get('time_slot');
     const days = searchParams.get('days');
