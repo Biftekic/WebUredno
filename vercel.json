@@ -1,4 +1,0 @@
-{
-  "buildCommand": "cd weburedno && npm install && npm run build",
-  "outputDirectory": "weburedno/.next"
-}
