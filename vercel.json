@@ -3,10 +3,5 @@
   "outputDirectory": "weburedno/.next",
   "installCommand": "cd weburedno && npm install",
   "devCommand": "cd weburedno && npm run dev",
-  "framework": "nextjs",
-  "functions": {
-    "weburedno/app/**/*": {
-      "runtime": "@vercel/next@latest"
-    }
-  }
+  "framework": "nextjs"
 }
