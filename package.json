@@ -1,0 +1,14 @@
+{
+  "name": "weburedno-root",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "cd weburedno && npm run dev",
+    "build": "cd weburedno && npm run build",
+    "start": "cd weburedno && npm run start",
+    "install": "cd weburedno && npm install"
+  },
+  "dependencies": {
+    "critters": "^0.0.23"
+  }
+}
