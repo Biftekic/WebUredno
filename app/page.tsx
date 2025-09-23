@@ -44,7 +44,7 @@ const popularServices = [
       'Iznošenje smeća'
     ],
     popular: true,
-    href: '/usluge/osnovno-ciscenje'
+    href: '/services/osnovno-ciscenje'
   },
   {
     id: 2,
@@ -60,7 +60,7 @@ const popularServices = [
       'Dezinfekcija površina'
     ],
     popular: false,
-    href: '/usluge/dubinsko-ciscenje'
+    href: '/services/dubinsko-ciscenje'
   },
   {
     id: 3,
@@ -76,7 +76,7 @@ const popularServices = [
       'Pražnjenje koševa'
     ],
     popular: false,
-    href: '/usluge/ciscenje-ureda'
+    href: '/services/ciscenje-ureda'
   },
   {
     id: 4,
@@ -92,7 +92,7 @@ const popularServices = [
       'Pranje prozora'
     ],
     popular: false,
-    href: '/usluge/selidba-ciscenje'
+    href: '/services/selidba-ciscenje'
   }
 ];
 

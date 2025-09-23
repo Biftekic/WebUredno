@@ -96,6 +96,11 @@ const nextConfig = {
         permanent: true,
       },
       {
+        source: '/rezervacija',
+        destination: '/booking',
+        permanent: true,
+      },
+      {
         source: '/o-nama',
         destination: '/about',
         permanent: true,
