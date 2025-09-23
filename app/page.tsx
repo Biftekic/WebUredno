@@ -256,7 +256,7 @@ export default function HomePage() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
               >
-                <ServiceCard {...service} />
+                <ServiceCard {...service} showPerHour={false} />
               </motion.div>
             ))}
           </div>

@@ -15,6 +15,7 @@ interface ServiceCardProps {
   popular?: boolean;
   href?: string;
   onSelect?: () => void;
+  showPerHour?: boolean;
 }
 
 export default function ServiceCard({
@@ -27,6 +28,7 @@ export default function ServiceCard({
   popular = false,
   href = '/kontakt',
   onSelect,
+  showPerHour = true,
 }: ServiceCardProps) {
   return (
     <motion.div
@@ -81,10 +83,12 @@ export default function ServiceCard({
               <Clock className="w-4 h-4" />
               <span>{duration}</span>
             </div>
-            <div className="flex items-center gap-1">
-              <Euro className="w-4 h-4" />
-              <span>po satu</span>
-            </div>
+            {showPerHour && (
+              <div className="flex items-center gap-1">
+                <Euro className="w-4 h-4" />
+                <span>po satu</span>
+              </div>
+            )}
           </div>
         </div>
 
