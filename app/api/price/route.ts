@@ -4,7 +4,7 @@ import { supabase } from '@/lib/supabase';
 
 // Validation schema for price calculation request
 const priceCalculationSchema = z.object({
-  service_id: z.string().uuid().optional(),
+  service_id: z.string().optional(), // Allow both UUID and string IDs for mock data
   service_type: z.enum(['regular', 'deep', 'construction', 'moving', 'windows', 'office', 'general', 'disinfection']),
   property_size: z.number().min(10).max(500),
   property_type: z.enum(['apartment', 'house', 'office']),

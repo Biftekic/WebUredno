@@ -27,6 +27,19 @@ export async function checkAvailability(date: string, timeSlot: string) {
  * Get available time slots for a specific date
  */
 export async function getAvailableSlots(date: string): Promise<AvailabilitySlot[]> {
+  // Check if Supabase is configured
+  if (!process.env.NEXT_PUBLIC_SUPABASE_URL ||
+      process.env.NEXT_PUBLIC_SUPABASE_URL === '' ||
+      process.env.NEXT_PUBLIC_SUPABASE_URL === 'https://placeholder.supabase.co') {
+    // Return mock available slots for demo mode
+    return getTimeSlotOptions().map(slot => ({
+      date,
+      time_slot: slot.value,
+      available_teams: 1,
+      team_numbers: [1]
+    }));
+  }
+
   const { data, error } = await supabase
     .rpc('get_available_slots', {
       p_date: date
@@ -34,7 +47,13 @@ export async function getAvailableSlots(date: string): Promise<AvailabilitySlot[
 
   if (error) {
     console.error('Error fetching available slots:', error);
-    throw error;
+    // Fallback to mock slots on error
+    return getTimeSlotOptions().map(slot => ({
+      date,
+      time_slot: slot.value,
+      available_teams: 1,
+      team_numbers: [1]
+    }));
   }
 
   // Transform the data to include team numbers
@@ -115,6 +134,23 @@ export async function getAvailableDates(days: number = 30): Promise<string[]> {
   const today = startOfDay(new Date());
   const endDate = addDays(today, days);
 
+  // Check if Supabase is configured
+  if (!process.env.NEXT_PUBLIC_SUPABASE_URL ||
+      process.env.NEXT_PUBLIC_SUPABASE_URL === '' ||
+      process.env.NEXT_PUBLIC_SUPABASE_URL === 'https://placeholder.supabase.co') {
+    // Return mock available dates (all weekdays for next 30 days)
+    const dates: string[] = [];
+    for (let i = 0; i < days; i++) {
+      const date = addDays(today, i);
+      const dayOfWeek = date.getDay();
+      // Exclude Sundays (0)
+      if (dayOfWeek !== 0) {
+        dates.push(format(date, 'yyyy-MM-dd'));
+      }
+    }
+    return dates;
+  }
+
   const { data, error } = await supabase
     .from('availability')
     .select('date')
@@ -125,7 +161,17 @@ export async function getAvailableDates(days: number = 30): Promise<string[]> {
 
   if (error) {
     console.error('Error fetching available dates:', error);
-    throw error;
+    // Fallback to mock dates on error
+    const dates: string[] = [];
+    for (let i = 0; i < days; i++) {
+      const date = addDays(today, i);
+      const dayOfWeek = date.getDay();
+      // Exclude Sundays (0)
+      if (dayOfWeek !== 0) {
+        dates.push(format(date, 'yyyy-MM-dd'));
+      }
+    }
+    return dates;
   }
 
   // Get unique dates

@@ -1,10 +1,19 @@
 import { supabase } from '@/lib/supabase';
 import type { Service } from '@/types/database';
+import { mockServices } from '@/lib/mock-services';
 
 /**
  * Fetch all active services
  */
 export async function getServices() {
+  // Check if Supabase is configured
+  if (!process.env.NEXT_PUBLIC_SUPABASE_URL ||
+      process.env.NEXT_PUBLIC_SUPABASE_URL === '' ||
+      process.env.NEXT_PUBLIC_SUPABASE_URL === 'https://placeholder.supabase.co') {
+    // Return mock services when database is not configured
+    return mockServices as Service[];
+  }
+
   const { data, error } = await supabase
     .from('services')
     .select('*')
@@ -13,7 +22,8 @@ export async function getServices() {
 
   if (error) {
     console.error('Error fetching services:', error);
-    throw error;
+    // Fallback to mock services on error
+    return mockServices as Service[];
   }
 
   return data as Service[];
