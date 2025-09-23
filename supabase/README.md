@@ -1,6 +1,6 @@
-# WebUredno Database Setup
+# Uredno.eu Database Setup
 
-This directory contains all database migrations and configuration for the WebUredno cleaning service platform.
+This directory contains all database migrations and configuration for the Uredno.eu cleaning service platform.
 
 ## Prerequisites
 

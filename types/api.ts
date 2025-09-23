@@ -1,4 +1,4 @@
-// API Types for WebUredno Backend
+// API Types for Uredno.eu Backend
 
 // Price Calculator API
 export interface PriceCalculationRequest {

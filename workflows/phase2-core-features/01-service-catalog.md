@@ -297,7 +297,7 @@ import { ServiceGrid } from '@/components/services/ServiceGrid';
 import { ServiceHero } from '@/components/services/ServiceHero';
 
 export const metadata: Metadata = {
-  title: 'Naše usluge - WebUredno',
+  title: 'Naše usluge - Uredno.eu',
   description: 'Profesionalne usluge čišćenja za vaš dom i ured',
 };
 

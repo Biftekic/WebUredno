@@ -1,4 +1,4 @@
-// Database Types for WebUredno
+// Database Types for Uredno.eu
 
 export interface Service {
   id: string;

@@ -3,7 +3,7 @@ import ServiceCatalog from '@/components/services/ServiceCatalog';
 import LoadingState from '@/components/ui/LoadingState';
 
 export const metadata = {
-  title: 'Naše Usluge | WebUredno',
+  title: 'Naše Usluge | Uredno.eu',
   description: 'Profesionalne usluge čišćenja u Zagrebu. Osnovno čišćenje, dubinsko čišćenje, selidbe, građevinski radovi. Povoljne cijene i pouzdana usluga.',
 };
 

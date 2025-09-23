@@ -24,6 +24,7 @@ import Button from '@/components/ui/Button';
 import Badge from '@/components/ui/Badge';
 import FAQ from '@/components/ui/FAQ';
 import type { Service } from './ServiceCatalog';
+import { PHONE_NUMBER, PHONE_NUMBER_FORMATTED, WHATSAPP_PHONE } from '@/lib/constants';
 
 interface ServiceDetailProps {
   service: Service;
@@ -68,7 +69,7 @@ export default function ServiceDetail({ service }: ServiceDetailProps) {
     return encodeURIComponent(message);
   };
 
-  const whatsappUrl = `https://wa.me/385953955129?text=${getWhatsAppMessage()}`;
+  const whatsappUrl = `https://wa.me/${WHATSAPP_PHONE}?text=${getWhatsAppMessage()}`;
 
   // Service-specific FAQs
   const serviceFaqs = [
@@ -179,14 +180,14 @@ export default function ServiceDetail({ service }: ServiceDetailProps) {
                   Rezerviraj putem WhatsApp
                 </Button>
                 <Button
-                  href="tel:+385953955129"
+                  href={`tel:${PHONE_NUMBER}`}
                   variant="outline"
                   fullWidth
                   size="lg"
                   external
                 >
                   <Phone className="w-5 h-5 mr-2" />
-                  Nazovi: 095 395 5129
+                  Nazovi: {PHONE_NUMBER_FORMATTED}
                 </Button>
               </div>
             </div>

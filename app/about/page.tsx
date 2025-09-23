@@ -12,17 +12,18 @@ import {
   Building2,
   Leaf
 } from 'lucide-react';
+import { PHONE_NUMBER_FORMATTED } from '@/lib/constants';
 
 export const metadata: Metadata = {
-  title: 'O Nama - WebUredno | Vaš Partner za Čišćenje u Zagrebu',
-  description: 'Saznajte više o WebUredno - vodećoj tvrtki za profesionalno čišćenje u Zagrebu. 10+ godina iskustva, 500+ zadovoljnih klijenata, ekološki proizvodi.',
+  title: 'O Nama - Uredno.eu | Vaš Partner za Čišćenje u Zagrebu',
+  description: 'Saznajte više o Uredno.eu - vodećoj tvrtki za profesionalno čišćenje u Zagrebu. 10+ godina iskustva, 500+ zadovoljnih klijenata, ekološki proizvodi.',
   alternates: {
-    canonical: 'https://weburedno.hr/about',
+    canonical: 'https://uredno.eu/about',
   },
   openGraph: {
-    title: 'O Nama - WebUredno',
+    title: 'O Nama - Uredno.eu',
     description: 'Profesionalne usluge čišćenja s više od 10 godina iskustva',
-    url: 'https://weburedno.hr/about',
+    url: 'https://uredno.eu/about',
   },
 };
 
@@ -72,7 +73,7 @@ export default function AboutPage() {
           <div className="flex justify-between items-center h-16">
             <Link href="/" className="flex items-center space-x-2">
               <Sparkles className="h-8 w-8 text-green-600" />
-              <span className="text-xl font-bold text-gray-900">WebUredno</span>
+              <span className="text-xl font-bold text-gray-900">Uredno.eu</span>
             </Link>
             <div className="hidden md:flex items-center space-x-8">
               <Link href="/" className="text-gray-700 hover:text-green-600 transition-colors">
@@ -102,7 +103,7 @@ export default function AboutPage() {
       <section className="pt-20 pb-12 px-4">
         <div className="max-w-4xl mx-auto text-center">
           <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-            O <span className="text-green-600">WebUredno</span>
+            O <span className="text-green-600">Uredno.eu</span>
           </h1>
           <p className="text-xl text-gray-600 leading-relaxed">
             Vaš pouzdani partner za profesionalno čišćenje u Zagrebu
@@ -117,7 +118,7 @@ export default function AboutPage() {
             <h2 className="text-3xl font-bold text-gray-900 mb-6">Naša Priča</h2>
             <div className="space-y-4 text-gray-600 leading-relaxed">
               <p>
-                WebUredno je osnovana 2014. godine s jasnom vizijom - pružiti vrhunske usluge
+                Uredno.eu je osnovana 2014. godine s jasnom vizijom - pružiti vrhunske usluge
                 čišćenja koje nadmašuju očekivanja naših klijenata. Započeli smo kao mala
                 obiteljska tvrtka, a danas smo jedan od vodećih pružatelja usluga čišćenja u Zagrebu.
               </p>
@@ -206,7 +207,7 @@ export default function AboutPage() {
             </div>
             <div className="bg-white rounded-2xl shadow-lg p-8">
               <h3 className="text-2xl font-bold text-gray-900 mb-4">
-                Zašto WebUredno?
+                Zašto Uredno.eu?
               </h3>
               <ul className="space-y-3">
                 <li className="flex items-start">
@@ -260,7 +261,7 @@ export default function AboutPage() {
           </div>
           <div className="mt-8 flex items-center justify-center text-white">
             <Phone className="h-5 w-5 mr-2" />
-            <span className="text-lg">095 858 1508</span>
+            <span className="text-lg">{PHONE_NUMBER_FORMATTED}</span>
           </div>
         </div>
       </section>
@@ -268,7 +269,7 @@ export default function AboutPage() {
       {/* Footer */}
       <footer className="bg-gray-900 text-white py-8 px-4">
         <div className="max-w-6xl mx-auto text-center">
-          <p>&copy; 2024 WebUredno. Sva prava pridržana.</p>
+          <p>&copy; 2024 Uredno.eu. Sva prava pridržana.</p>
         </div>
       </footer>
     </main>

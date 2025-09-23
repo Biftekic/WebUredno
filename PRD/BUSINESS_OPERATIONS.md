@@ -1,4 +1,4 @@
-# BUSINESS OPERATIONS - WebUredno
+# BUSINESS OPERATIONS - Uredno.eu
 ## Complete Business Policies, Service Standards & Content
 ### Consolidation of SERVICE_STANDARDS.md + COMPANY_POLICIES.md + FAQ_CROATIAN_CONTENT.md + TRUST_SOCIAL_PROOF.md
 
@@ -459,8 +459,8 @@
 
 ## 1. Općenito o Usluzi
 
-### Što je WebUredno?
-WebUredno je profesionalna služba čišćenja s 10 godina iskustva u Zagrebu i okolici. Od 2015. godine pružamo pouzdane usluge čišćenja domova i ureda s preko 5000 zadovoljnih klijenata.
+### Što je Uredno.eu?
+Uredno.eu je profesionalna služba čišćenja s 10 godina iskustva u Zagrebu i okolici. Od 2015. godine pružamo pouzdane usluge čišćenja domova i ureda s preko 5000 zadovoljnih klijenata.
 
 ### Koje usluge nudite?
 Nudimo 4 vrste usluga:
@@ -687,7 +687,7 @@ Da, izdajemo R1 račune za sve usluge. Za tvrtke možemo dogovoriti mjesečno fa
 *Redoviti klijent - Standardno čišćenje*
 
 #### ⭐⭐⭐⭐⭐ **Marko Horvat** - *Maksimir, Zagreb*
-> "Nakon renovacije, stan je bio u totalnom neredu. WebUredno tim je napravio čudo - sve je bilo savršeno čisto za samo 5 sati. Preporučujem svima!"
+> "Nakon renovacije, stan je bio u totalnom neredu. Uredno.eu tim je napravio čudo - sve je bilo savršeno čisto za samo 5 sati. Preporučujem svima!"
 *Čišćenje nakon selidbe*
 
 #### ⭐⭐⭐⭐⭐ **Petra Novak** - *Trešnjevka, Zagreb*
@@ -695,7 +695,7 @@ Da, izdajemo R1 račune za sve usluge. Za tvrtke možemo dogovoriti mjesečno fa
 *Redoviti klijent - Čišćenje ureda*
 
 #### ⭐⭐⭐⭐⭐ **Ivan Babić** - *Dubrava, Zagreb*
-> "Kao samohrani otac, nemam vremena za dubinsko čišćenje. WebUredno mi je spasio život! Dolaze svake dvije sedmice i kuća uvijek miriše svježe."
+> "Kao samohrani otac, nemam vremena za dubinsko čišćenje. Uredno.eu mi je spasio život! Dolaze svake dvije sedmice i kuća uvijek miriše svježe."
 *Redoviti klijent - Dubinsko čišćenje*
 
 #### ⭐⭐⭐⭐⭐ **Jelena Kovačić** - *Velika Gorica*
@@ -715,7 +715,7 @@ Da, izdajemo R1 račune za sve usluge. Za tvrtke možemo dogovoriti mjesečno fa
 *Redoviti klijent - Tjedno čišćenje*
 
 #### ⭐⭐⭐⭐⭐ **Sanja Matić** - *Zaprešić*
-> "Nakon što sam probala nekoliko službi, WebUredno je definitivno najbolji. Konzistentna kvaliteta i fer cijene."
+> "Nakon što sam probala nekoliko službi, Uredno.eu je definitivno najbolji. Konzistentna kvaliteta i fer cijene."
 *Redoviti klijent - Mjesečno čišćenje*
 
 #### ⭐⭐⭐⭐⭐ **Davor Vuković** - *Stenjevec, Zagreb*

@@ -1,4 +1,4 @@
-# WebUredno Project Overview
+# Uredno.eu Project Overview
 
 ## Purpose
 Professional cleaning service website for Croatian market (Zagreb + 70km radius) - MyClean.com-inspired platform adapted for local needs.

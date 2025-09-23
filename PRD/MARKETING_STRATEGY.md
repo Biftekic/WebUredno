@@ -1,4 +1,4 @@
-# MARKETING STRATEGY - WebUredno
+# MARKETING STRATEGY - Uredno.eu
 ## Complete Marketing, Customer Journey & Analytics Guide
 ### Consolidation of CUSTOMER_JOURNEY.md + COMPETITIVE_ADVANTAGES.md + REVIEW_MANAGEMENT.md + ANALYTICS_TRACKING.md
 
@@ -18,7 +18,7 @@
 ## 🎯 Customer Journey Overview
 
 ### **Journey Stages:**
-1. **Awareness** → Discovery of WebUredno
+1. **Awareness** → Discovery of Uredno.eu
 2. **Consideration** → Comparing services and prices
 3. **Decision** → Booking the service
 4. **Experience** → Service delivery
@@ -269,7 +269,7 @@ Tech Excellence:
 
 ## 💪 Competitive Matrix
 
-| Feature | WebUredno | Competitor A | Competitor B | MyClean |
+| Feature | Uredno.eu | Competitor A | Competitor B | MyClean |
 |---------|-----------|--------------|--------------|---------|
 | **Parno čišćenje** | ✅ Included | ❌ Extra | ❌ N/A | ❌ N/A |
 | **Eko proizvodi** | ✅ Standard | 🔶 Option | ❌ No | 🔶 Option |
@@ -286,7 +286,7 @@ Tech Excellence:
 
 **Who:** Need reliable, professional, eco-friendly cleaning services
 
-**WebUredno is:** The premium cleaning service
+**Uredno.eu is:** The premium cleaning service
 
 **That:** Combines revolutionary steam cleaning technology with real-time booking transparency
 
@@ -353,7 +353,7 @@ const serviceCompleteFlow = {
     Kako biste ocijenili našu uslugu?
     ⭐⭐⭐⭐⭐
 
-    Vaš WebUredno tim 💙
+    Vaš Uredno.eu tim 💙
   `
 };
 ```
@@ -466,7 +466,7 @@ const followUpFlow = {
 "Hvala vam puno, [Name]! 🌟
 Vaše povjerenje nam znači sve. Veselimo se
 sljedećem čišćenju vašeg doma.
-Tim WebUredno"
+Tim Uredno.eu"
 ```
 
 ### **4-Star Response:**
@@ -474,7 +474,7 @@ Tim WebUredno"
 "Hvala na povratnoj informaciji, [Name]!
 Cijenimo vašu iskrenost. Kako možemo
 postići 5 zvjezdica sljedeći put?
-Tim WebUredno"
+Tim Uredno.eu"
 ```
 
 ### **3-Star or Below Response:**

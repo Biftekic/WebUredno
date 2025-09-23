@@ -1,11 +1,11 @@
 #!/bin/bash
 
-# WebUredno Documentation Migration Script
+# Uredno.eu Documentation Migration Script
 # This script safely migrates from the old documentation structure to the new consolidated one
 
 set -e  # Exit on error
 
-echo "🚀 Starting WebUredno Documentation Migration..."
+echo "🚀 Starting Uredno.eu Documentation Migration..."
 echo "================================================"
 
 # Create backup directory with timestamp

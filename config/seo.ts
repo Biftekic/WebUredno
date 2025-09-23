@@ -1,6 +1,6 @@
 export const seoConfig = {
-  siteName: 'WebUredno',
-  siteUrl: process.env.NEXT_PUBLIC_BASE_URL || 'https://weburedno.hr',
+  siteName: 'Uredno.eu',
+  siteUrl: process.env.NEXT_PUBLIC_BASE_URL || 'https://uredno.eu',
   siteDescription: 'Profesionalne usluge čišćenja u Zagrebu. Čišćenje stanova, kuća, ureda i poslovnih prostora. Povoljne cijene, fleksibilni termini.',
   siteKeywords: [
     'čišćenje Zagreb',
@@ -13,24 +13,24 @@ export const seoConfig = {
     'čišćenje nakon gradnje',
     'čistačica Zagreb',
     'usluge čišćenja',
-    'WebUredno',
+    'Uredno.eu',
     'čišćenje poslovnih prostora',
     'održavanje higijene',
     'ekološko čišćenje'
   ],
-  author: 'WebUredno',
-  twitterHandle: '@weburedno',
+  author: 'Uredno.eu',
+  twitterHandle: '@uredno_eu',
   ogImage: '/og-image.jpg',
 
   // Contact info
-  phone: '+385958581508',
-  email: 'info@weburedno.hr',
+  phone: '+385924502265',
+  email: 'kontakt@uredno.eu',
 
   // Social media
   social: {
-    facebook: 'https://facebook.com/weburedno',
-    instagram: 'https://instagram.com/weburedno',
-    linkedin: 'https://linkedin.com/company/weburedno'
+    facebook: 'https://facebook.com/uredno.eu',
+    instagram: 'https://instagram.com/uredno.eu',
+    linkedin: 'https://linkedin.com/company/uredno-eu'
   },
 
   // Business hours

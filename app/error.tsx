@@ -3,6 +3,7 @@
 import { useEffect } from 'react';
 import Link from 'next/link';
 import { AlertTriangle, RefreshCw, Home } from 'lucide-react';
+import { PHONE_NUMBER, PHONE_NUMBER_FORMATTED, EMAIL } from '@/lib/constants';
 
 export default function Error({
   error,
@@ -73,17 +74,17 @@ export default function Error({
             Ako se problem nastavi, molimo vas da nas kontaktirate:
           </p>
           <a
-            href="tel:+385958581508"
+            href={`tel:${PHONE_NUMBER}`}
             className="text-green-600 font-semibold hover:text-green-700"
           >
-            095 858 1508
+            {PHONE_NUMBER_FORMATTED}
           </a>
           <span className="mx-2 text-gray-400">|</span>
           <a
-            href="mailto:info@weburedno.hr"
+            href={`mailto:${EMAIL}`}
             className="text-green-600 font-semibold hover:text-green-700"
           >
-            info@weburedno.hr
+            {EMAIL}
           </a>
         </div>
       </div>

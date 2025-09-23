@@ -18,6 +18,7 @@ import {
 import Badge from '@/components/ui/Badge';
 import Button from '@/components/ui/Button';
 import type { Service } from './ServiceCatalog';
+import { WHATSAPP_PHONE } from '@/lib/constants';
 
 interface ServiceCardProps {
   service: Service;
@@ -60,7 +61,7 @@ export default function ServiceCard({ service }: ServiceCardProps) {
     return encodeURIComponent(message);
   };
 
-  const whatsappUrl = `https://wa.me/385953955129?text=${getWhatsAppMessage()}`;
+  const whatsappUrl = `https://wa.me/${WHATSAPP_PHONE}?text=${getWhatsAppMessage()}`;
 
   return (
     <motion.div

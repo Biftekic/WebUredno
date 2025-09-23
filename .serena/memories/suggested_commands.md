@@ -3,7 +3,7 @@
 ## Project Setup
 ```bash
 # Create Next.js project
-npx create-next-app@latest weburedno --typescript --tailwind --app
+npx create-next-app@latest uredno --typescript --tailwind --app
 
 # Install dependencies
 npm install

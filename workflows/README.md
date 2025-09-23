@@ -1,7 +1,7 @@
-# WebUredno Implementation Workflows
+# Uredno.eu Implementation Workflows
 
 ## 📋 Project Overview
-Complete implementation workflow for WebUredno cleaning service platform with mobile-first approach and WhatsApp integration.
+Complete implementation workflow for Uredno.eu cleaning service platform with mobile-first approach and WhatsApp integration.
 
 ## 🎯 Implementation Strategy
 - **Phase 1**: Foundation (Week 1-2)
@@ -45,8 +45,8 @@ Complete implementation workflow for WebUredno cleaning service platform with mo
 
 ```bash
 # 1. Clone repository
-git clone https://github.com/your-org/weburedno.git
-cd weburedno
+git clone https://github.com/your-org/uredno.git
+cd uredno
 
 # 2. Install dependencies
 npm install

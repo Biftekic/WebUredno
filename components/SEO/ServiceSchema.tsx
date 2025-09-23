@@ -25,8 +25,8 @@ export default function ServiceSchema({
     provider: {
       '@type': 'LocalBusiness',
       name: provider,
-      telephone: '+385958581508',
-      email: 'info@weburedno.hr',
+      telephone: '+385924502265',
+      email: 'kontakt@uredno.eu',
       address: {
         '@type': 'PostalAddress',
         addressLocality: 'Zagreb',
@@ -43,7 +43,7 @@ export default function ServiceSchema({
     availableChannel: {
       '@type': 'ServiceChannel',
       serviceUrl: url,
-      servicePhone: '+385958581508',
+      servicePhone: '+385924502265',
       availableLanguage: {
         '@type': 'Language',
         name: 'Croatian',
@@ -54,7 +54,7 @@ export default function ServiceSchema({
       '@type': 'ReserveAction',
       target: {
         '@type': 'EntryPoint',
-        urlTemplate: 'https://weburedno.hr/booking',
+        urlTemplate: 'https://uredno.eu/booking',
         actionPlatform: [
           'http://schema.org/DesktopWebPlatform',
           'http://schema.org/MobileWebPlatform'

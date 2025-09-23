@@ -2,6 +2,7 @@
 
 import { MessageCircle } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { WHATSAPP_PHONE } from '@/lib/constants';
 
 interface WhatsAppButtonProps {
   variant?: 'primary' | 'secondary' | 'white' | 'floating';
@@ -15,7 +16,7 @@ export default function WhatsAppButton({
   variant = 'primary',
   size = 'md',
   className = '',
-  phoneNumber = '385912345678',
+  phoneNumber = WHATSAPP_PHONE,
   message = 'Pozdrav! Zanima me vaša usluga čišćenja.',
 }: WhatsAppButtonProps) {
   const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;

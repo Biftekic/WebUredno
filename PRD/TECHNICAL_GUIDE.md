@@ -1,4 +1,4 @@
-# TECHNICAL GUIDE - WebUredno
+# TECHNICAL GUIDE - Uredno.eu
 ## Complete Technical Documentation & Implementation
 ### Consolidation of TECHNICAL_SPECIFICATIONS.md + API_DOCUMENTATION.md + INTEGRATION_DETAILS.md + COMPONENT_LIBRARY.md
 
@@ -1004,7 +1004,7 @@ const handleBookingSubmit = async () => {
 # https://console.cloud.google.com
 
 # 2. Create new project or select existing
-# Project name: "WebUredno"
+# Project name: "Uredno.eu"
 
 # 3. Enable Google Calendar API
 # APIs & Services > Library > Search "Google Calendar API" > Enable
@@ -1023,7 +1023,7 @@ const handleBookingSubmit = async () => {
 ```
 1. Open Google Calendar (with business account)
 2. Settings > Settings for my calendars
-3. Select the WebUredno calendar
+3. Select the Uredno.eu calendar
 4. Share with specific people
 5. Add service account email: weburedno-calendar@PROJECT_ID.iam.gserviceaccount.com
 6. Permission: "Make changes to events"
@@ -1119,7 +1119,7 @@ export async function sendCustomerConfirmation(booking: BookingData) {
   const msg = {
     to: booking.email,
     from: 'info@uredno.eu',
-    subject: 'Potvrda rezervacije - WebUredno',
+    subject: 'Potvrda rezervacije - Uredno.eu',
     html: generateCustomerEmailHTML(booking),
     text: generateCustomerEmailText(booking),
   };

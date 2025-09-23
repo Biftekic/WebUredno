@@ -1,10 +1,10 @@
 #!/bin/bash
 
-# WebUredno Database Setup Script
-# This script helps initialize the Supabase database for the WebUredno project
+# Uredno.eu Database Setup Script
+# This script helps initialize the Supabase database for the Uredno.eu project
 
 echo "=========================================="
-echo "WebUredno Database Setup"
+echo "Uredno.eu Database Setup"
 echo "=========================================="
 
 # Check if Supabase CLI is installed

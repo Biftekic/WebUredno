@@ -8,6 +8,7 @@ import LoadingState from '@/components/ui/LoadingState';
 import { getBooking } from '@/lib/db/bookings';
 import { formatDateHr, formatPhoneForWhatsApp } from '@/lib/booking-utils';
 import type { Booking } from '@/types/database';
+import { PHONE_NUMBER, EMAIL, WHATSAPP_PHONE } from '@/lib/constants';
 
 function BookingConfirmationContent() {
   const router = useRouter();
@@ -49,19 +50,19 @@ function BookingConfirmationContent() {
   };
 
   const handleWhatsAppClick = () => {
-    const phone = formatPhoneForWhatsApp('385915551234'); // Company WhatsApp number
+    const phone = formatPhoneForWhatsApp(WHATSAPP_PHONE); // Company WhatsApp number
     const url = `https://wa.me/${phone}?text=${encodeURIComponent(whatsappMessage)}`;
     window.open(url, '_blank');
   };
 
   const handleCallClick = () => {
-    window.location.href = 'tel:+385915551234';
+    window.location.href = `tel:${PHONE_NUMBER}`;
   };
 
   const handleEmailClick = () => {
     const subject = `Potvrda rezervacije - ${booking?.booking_number}`;
-    const body = `Poštovani,\n\nHvala vam na rezervaciji. Vaš broj rezervacije je ${booking?.booking_number}.\n\nS poštovanjem,\nWebUredno tim`;
-    window.location.href = `mailto:info@weburedno.hr?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    const body = `Poštovani,\n\nHvala vam na rezervaciji. Vaš broj rezervacije je ${booking?.booking_number}.\n\nS poštovanjem,\nUredno.eu tim`;
+    window.location.href = `mailto:${EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
   };
 
   if (loading) {
@@ -93,7 +94,7 @@ function BookingConfirmationContent() {
             Rezervacija uspješno poslana!
           </h1>
           <p className="text-gray-600">
-            Hvala vam što ste odabrali WebUredno
+            Hvala vam što ste odabrali Uredno.eu
           </p>
         </div>
 

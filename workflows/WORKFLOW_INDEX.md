@@ -1,7 +1,7 @@
-# WebUredno Implementation Workflow Index
+# Uredno.eu Implementation Workflow Index
 
 ## 🎯 Project Overview
-Complete implementation workflow for WebUredno cleaning service platform.
+Complete implementation workflow for Uredno.eu cleaning service platform.
 
 **Timeline**: 4 weeks
 **Tech Stack**: Next.js 14, TypeScript, Tailwind CSS, Supabase, Railway

@@ -1,7 +1,7 @@
 # Phase 1: Database Schema Setup Workflow
 
 ## Overview
-Setup PostgreSQL database schema with Supabase for the WebUredno platform.
+Setup PostgreSQL database schema with Supabase for the Uredno.eu platform.
 
 ## Prerequisites
 - Supabase account created

@@ -249,7 +249,7 @@ INSERT INTO reviews (
         uuid_generate_v4(),
         uuid_generate_v4(),
         5,
-        'Već godinama koristim usluge WebUredno. Uvijek su pouzdani i kvalitetni. Njihovo dubinsko čišćenje je fantastično!',
+        'Već godinama koristim usluge Uredno.eu. Uvijek su pouzdani i kvalitetni. Njihovo dubinsko čišćenje je fantastično!',
         true
     ),
     (
@@ -263,6 +263,6 @@ INSERT INTO reviews (
         uuid_generate_v4(),
         uuid_generate_v4(),
         5,
-        'Nakon renovacije stana, WebUredno tim je napravio čudo! Sve je bilo prekriveno građevinskom prašinom, a oni su sve očistili do savršenstva.',
+        'Nakon renovacije stana, Uredno.eu tim je napravio čudo! Sve je bilo prekriveno građevinskom prašinom, a oni su sve očistili do savršenstva.',
         true
     );

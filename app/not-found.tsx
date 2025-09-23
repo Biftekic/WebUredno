@@ -56,7 +56,7 @@ export default function NotFound() {
               <Search className="h-5 w-5 text-green-600 flex-shrink-0" />
               <div>
                 <div className="font-medium text-gray-900">O Nama</div>
-                <div className="text-sm text-gray-600">Saznajte više o WebUredno</div>
+                <div className="text-sm text-gray-600">Saznajte više o Uredno.eu</div>
               </div>
             </Link>
             <Link

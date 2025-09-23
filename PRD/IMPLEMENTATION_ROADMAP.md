@@ -1,4 +1,4 @@
-# IMPLEMENTATION ROADMAP - WebUredno
+# IMPLEMENTATION ROADMAP - Uredno.eu
 ## Complete Development, Deployment & Mobile-First Guide
 ### Consolidation of IMPLEMENTATION_CHECKLIST.md + DEPLOYMENT_GUIDE.md + MOBILE_FIRST_REQUIREMENTS.md
 
@@ -694,7 +694,7 @@ NEXT_PUBLIC_GA_ID=G-XXXXXXXXXX
 https://console.cloud.google.com
 
 # 2. Create new project
-Project name: WebUredno
+Project name: Uredno.eu
 Project ID: weburedno-2025
 
 # 3. Enable Google Calendar API
@@ -717,7 +717,7 @@ Download and save securely
 ```
 1. Open Google Calendar (business account)
 2. Settings > Settings for my calendars
-3. Find WebUredno calendar
+3. Find Uredno.eu calendar
 4. Share with specific people
 5. Add: weburedno-calendar@weburedno-2025.iam.gserviceaccount.com
 6. Permission: Make changes to events

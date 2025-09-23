@@ -17,12 +17,12 @@ export async function generateMetadata({ params }: ServicePageProps) {
 
     if (!service) {
       return {
-        title: 'Usluga nije pronađena | WebUredno',
+        title: 'Usluga nije pronađena | Uredno.eu',
       };
     }
 
     return {
-      title: `${service.name} | WebUredno`,
+      title: `${service.name} | Uredno.eu`,
       description: service.description,
     };
   }
@@ -36,12 +36,12 @@ export async function generateMetadata({ params }: ServicePageProps) {
 
   if (!service) {
     return {
-      title: 'Usluga nije pronađena | WebUredno',
+      title: 'Usluga nije pronađena | Uredno.eu',
     };
   }
 
   return {
-    title: `${service.name} | WebUredno`,
+    title: `${service.name} | Uredno.eu`,
     description: service.description,
   };
 }

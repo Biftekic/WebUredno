@@ -10,7 +10,7 @@ interface BreadcrumbSchemaProps {
 }
 
 export default function BreadcrumbSchema({ items }: BreadcrumbSchemaProps) {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://weburedno.hr';
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://uredno.eu';
 
   const schema = {
     '@context': 'https://schema.org',

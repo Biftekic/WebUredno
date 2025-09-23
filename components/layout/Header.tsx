@@ -6,6 +6,7 @@ import { Menu, X, Phone } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import WhatsAppButton from '../ui/WhatsAppButton';
 import Logo from '../ui/Logo';
+import { PHONE_NUMBER, PHONE_NUMBER_FORMATTED } from '@/lib/constants';
 
 interface HeaderProps {
   transparent?: boolean;
@@ -83,7 +84,7 @@ export default function Header({ transparent = false }: HeaderProps) {
             {/* Desktop CTA */}
             <div className="hidden lg:flex items-center gap-4">
               <a
-                href="tel:+385912345678"
+                href={`tel:${PHONE_NUMBER}`}
                 className={`
                   flex items-center gap-2 font-medium transition-colors
                   ${isScrolled || !transparent
@@ -92,7 +93,7 @@ export default function Header({ transparent = false }: HeaderProps) {
                 `}
               >
                 <Phone className="w-4 h-4" />
-                <span>091 234 5678</span>
+                <span>{PHONE_NUMBER_FORMATTED}</span>
               </a>
               <WhatsAppButton variant="primary" size="md" />
             </div>
@@ -174,11 +175,11 @@ export default function Header({ transparent = false }: HeaderProps) {
               >
                 <div className="flex flex-col gap-4">
                   <a
-                    href="tel:+385912345678"
+                    href={`tel:${PHONE_NUMBER}`}
                     className="flex items-center gap-3 text-lg font-medium text-gray-700 hover:text-green-600"
                   >
                     <Phone className="w-5 h-5" />
-                    <span>091 234 5678</span>
+                    <span>{PHONE_NUMBER_FORMATTED}</span>
                   </a>
                   <WhatsAppButton variant="primary" size="lg" className="w-full" />
                 </div>

@@ -4,13 +4,14 @@ import Link from 'next/link';
 import { Phone, Mail, MapPin, Clock, Facebook, Instagram, MessageCircle } from 'lucide-react';
 import Logo from '../ui/Logo';
 import WhatsAppButton from '../ui/WhatsAppButton';
+import { PHONE_NUMBER, PHONE_NUMBER_FORMATTED, EMAIL, WHATSAPP_PHONE } from '@/lib/constants';
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   const businessInfo = {
-    phone: '+385912345678',
-    email: 'info@weburedno.hr',
+    phone: PHONE_NUMBER,
+    email: EMAIL,
     address: 'Ilica 1, 10000 Zagreb',
     hours: {
       weekdays: '07:00 - 20:00',
@@ -34,9 +35,9 @@ export default function Footer() {
   ];
 
   const socialLinks = [
-    { href: 'https://facebook.com/weburedno', icon: Facebook, label: 'Facebook' },
-    { href: 'https://instagram.com/weburedno', icon: Instagram, label: 'Instagram' },
-    { href: `https://wa.me/${businessInfo.phone.replace(/\D/g, '')}`, icon: MessageCircle, label: 'WhatsApp' },
+    { href: 'https://facebook.com/uredno.eu', icon: Facebook, label: 'Facebook' },
+    { href: 'https://instagram.com/uredno.eu', icon: Instagram, label: 'Instagram' },
+    { href: `https://wa.me/${WHATSAPP_PHONE}`, icon: MessageCircle, label: 'WhatsApp' },
   ];
 
   return (
@@ -77,7 +78,7 @@ export default function Footer() {
                   className="flex items-center gap-3 text-gray-300 hover:text-white transition-colors"
                 >
                   <Phone className="w-5 h-5 text-green-500" />
-                  <span>091 234 5678</span>
+                  <span>{PHONE_NUMBER_FORMATTED}</span>
                 </a>
                 <a
                   href={`mailto:${businessInfo.email}`}
@@ -242,7 +243,7 @@ export default function Footer() {
                   className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors"
                 >
                   <Phone className="w-4 h-4 text-green-500" />
-                  091 234 5678
+                  {PHONE_NUMBER_FORMATTED}
                 </a>
                 <a
                   href={`mailto:${businessInfo.email}`}
@@ -270,7 +271,7 @@ export default function Footer() {
         <div className="border-t border-gray-800">
           <div className="container mx-auto px-4 py-6">
             <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-gray-400">
-              <p>© {currentYear} WebUredno. Sva prava pridržana.</p>
+              <p>© {currentYear} Uredno.eu. Sva prava pridržana.</p>
               <div className="flex gap-6">
                 <Link href="/privatnost" className="hover:text-white transition-colors">
                   Politika privatnosti

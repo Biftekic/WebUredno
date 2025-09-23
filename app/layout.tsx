@@ -5,7 +5,7 @@ import './globals.css';
 
 const inter = Inter({ subsets: ['latin', 'latin-ext'] });
 
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://weburedno.hr';
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://uredno.eu';
 
 export const viewport = {
   width: 'device-width',
@@ -16,14 +16,14 @@ export const viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),
   title: {
-    default: 'WebUredno - Profesionalno Čišćenje Zagreb | Čišćenje Stanova i Ureda',
-    template: '%s | WebUredno'
+    default: 'Uredno.eu - Profesionalno Čišćenje Zagreb | Čišćenje Stanova i Ureda',
+    template: '%s | Uredno.eu'
   },
-  description: 'Profesionalne usluge čišćenja u Zagrebu. Čišćenje stanova, kuća, ureda i poslovnih prostora. Dubinsko čišćenje, redovito održavanje, čišćenje nakon gradnje. Povoljne cijene, fleksibilni termini. ☎ 095 858 1508',
-  keywords: 'čišćenje Zagreb, profesionalno čišćenje, čišćenje stanova, čišćenje kuća, čišćenje ureda, dubinsko čišćenje, redovito čišćenje, čišćenje nakon gradnje, čistačica Zagreb, usluge čišćenja, WebUredno',
-  authors: [{ name: 'WebUredno', url: baseUrl }],
-  creator: 'WebUredno',
-  publisher: 'WebUredno',
+  description: 'Profesionalne usluge čišćenja u Zagrebu. Čišćenje stanova, kuća, ureda i poslovnih prostora. Dubinsko čišćenje, redovito održavanje, čišćenje nakon gradnje. Povoljne cijene, fleksibilni termini. ☎ +385 92 450 2265',
+  keywords: 'čišćenje Zagreb, profesionalno čišćenje, čišćenje stanova, čišćenje kuća, čišćenje ureda, dubinsko čišćenje, redovito čišćenje, čišćenje nakon gradnje, čistačica Zagreb, usluge čišćenja, Uredno.eu',
+  authors: [{ name: 'Uredno.eu', url: baseUrl }],
+  creator: 'Uredno.eu',
+  publisher: 'Uredno.eu',
   formatDetection: {
     email: false,
     address: false,
@@ -50,25 +50,25 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'hr_HR',
     url: baseUrl,
-    siteName: 'WebUredno',
-    title: 'WebUredno - Profesionalno Čišćenje u Zagrebu',
+    siteName: 'Uredno.eu',
+    title: 'Uredno.eu - Profesionalno Čišćenje u Zagrebu',
     description: 'Profesionalne usluge čišćenja za domove i urede u Zagrebu. Pouzdano, efikasno i pristupačno. Besplatna procjena cijena.',
     images: [
       {
         url: '/og-image.jpg',
         width: 1200,
         height: 630,
-        alt: 'WebUredno - Profesionalno čišćenje',
+        alt: 'Uredno.eu - Profesionalno čišćenje',
         type: 'image/jpeg',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'WebUredno - Profesionalno Čišćenje Zagreb',
+    title: 'Uredno.eu - Profesionalno Čišćenje Zagreb',
     description: 'Profesionalne usluge čišćenja za domove i urede. Povoljne cijene, fleksibilni termini.',
     images: ['/og-image.jpg'],
-    creator: '@weburedno',
+    creator: '@uredno',
   },
   manifest: '/manifest.json',
   icons: {
@@ -96,11 +96,11 @@ export const metadata: Metadata = {
 const localBusinessSchema = {
   '@context': 'https://schema.org',
   '@type': 'LocalBusiness',
-  name: 'WebUredno',
+  name: 'Uredno.eu',
   description: 'Profesionalne usluge čišćenja u Zagrebu',
   url: baseUrl,
-  telephone: '+385958581508',
-  email: 'info@weburedno.hr',
+  telephone: '+385924502265',
+  email: 'kontakt@uredno.eu',
   address: {
     '@type': 'PostalAddress',
     addressLocality: 'Zagreb',

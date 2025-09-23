@@ -1,11 +1,11 @@
-# WebUredno Documentation Hub
+# Uredno.eu Documentation Hub
 ## Consolidated Development Documentation (6 Core Documents)
 
 ---
 
 ## 📚 Streamlined Documentation Structure
 
-Complete documentation for the WebUredno cleaning service website, consolidated from 19 documents into 6 comprehensive guides for efficient development.
+Complete documentation for the Uredno.eu cleaning service website, consolidated from 19 documents into 6 comprehensive guides for efficient development.
 
 ---
 
@@ -129,7 +129,7 @@ Complete documentation for the WebUredno cleaning service website, consolidated 
 
 ## 📊 Project Overview
 
-**Project**: WebUredno - Professional Cleaning Service Website
+**Project**: Uredno.eu - Professional Cleaning Service Website
 **Market**: Croatian (Zagreb + 70km radius)
 **Language**: Croatian only
 **Timeline**: 3-4 weeks development
@@ -191,6 +191,6 @@ Complete documentation for the WebUredno cleaning service website, consolidated 
 
 ---
 
-*Documentation consolidated for WebUredno*
+*Documentation consolidated for Uredno.eu*
 *Last updated: January 2025*
 *Status: Ready for Development*

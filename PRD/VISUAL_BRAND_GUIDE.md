@@ -1,4 +1,4 @@
-# WebUredno - Visual Assets & Midjourney Prompts
+# Uredno.eu - Visual Assets & Midjourney Prompts
 ## Complete Visual Asset Requirements and AI Generation Guide
 
 ---
@@ -100,7 +100,7 @@ blue branded cleaning supplies visible --ar 4:3 --v 6"
 #### **Professional Cleaning Team**
 ```
 Midjourney Prompt:
-"Three professional cleaners in matching blue uniforms with WebUredno logo,
+"Three professional cleaners in matching blue uniforms with Uredno.eu logo,
 diverse team, friendly smiles, holding cleaning equipment,
 standing in modern Zagreb apartment, professional portrait,
 bright natural lighting --ar 16:9 --v 6"
@@ -259,7 +259,7 @@ professional product photography, clean white background --ar 4:3 --v 6"
 ### **Primary Logo**
 ```
 Midjourney Prompt:
-"Professional cleaning service logo design 'WebUredno',
+"Professional cleaning service logo design 'Uredno.eu',
 blue gradient, modern sans-serif font, sparkle or bubble accent,
 Croatian company, clean minimal design, vector style,
 suitable for web and print --v 6"
@@ -268,7 +268,7 @@ suitable for web and print --v 6"
 ### **Icon/Favicon**
 ```
 Midjourney Prompt:
-"Simple icon logo for WebUredno cleaning service,
+"Simple icon logo for Uredno.eu cleaning service,
 letter W with sparkle effect, blue gradient, minimal design,
 suitable for favicon and app icon, vector illustration --ar 1:1 --v 6"
 ```

@@ -13,14 +13,14 @@ Initial project setup with Next.js 14, TypeScript, and mobile-first configuratio
 ### 1. Initialize Next.js Project
 ```bash
 # Create Next.js app with TypeScript
-npx create-next-app@latest weburedno --typescript --tailwind --app --no-src-dir
+npx create-next-app@latest uredno --typescript --tailwind --app --no-src-dir
 
 # Navigate to project
-cd weburedno
+cd uredno
 
 # Initialize git
 git init
-git remote add origin https://github.com/[your-org]/weburedno.git
+git remote add origin https://github.com/[your-org]/uredno.git
 ```
 
 ### 2. Configure TypeScript
@@ -139,7 +139,7 @@ touch components/layout/Footer.tsx
 cat > .env.local << 'EOF'
 # Site
 NEXT_PUBLIC_SITE_URL=http://localhost:3000
-NEXT_PUBLIC_SITE_NAME=WebUredno
+NEXT_PUBLIC_SITE_NAME=Uredno.eu
 
 # WhatsApp
 NEXT_PUBLIC_WHATSAPP_PHONE=385924502265

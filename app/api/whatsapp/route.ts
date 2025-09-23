@@ -4,7 +4,7 @@ import { supabase } from '@/lib/supabase';
 import crypto from 'crypto';
 
 // WhatsApp webhook verification token
-const WEBHOOK_VERIFY_TOKEN = process.env.WHATSAPP_WEBHOOK_TOKEN || 'weburedno_verify_token';
+const WEBHOOK_VERIFY_TOKEN = process.env.WHATSAPP_WEBHOOK_TOKEN || 'uredno_verify_token';
 const WHATSAPP_API_TOKEN = process.env.WHATSAPP_API_TOKEN || '';
 const WHATSAPP_PHONE_NUMBER_ID = process.env.WHATSAPP_PHONE_NUMBER_ID || '';
 const WHATSAPP_BUSINESS_ACCOUNT_ID = process.env.WHATSAPP_BUSINESS_ACCOUNT_ID || '';
@@ -13,7 +13,7 @@ const WHATSAPP_BUSINESS_ACCOUNT_ID = process.env.WHATSAPP_BUSINESS_ACCOUNT_ID ||
 const MESSAGE_TEMPLATES = {
   welcome: `Pozdrav! 👋
 
-Dobrodošli u WebUredno - Vašeg pouzdanog partnera za čišćenje.
+Dobrodošli u Uredno.eu - Vašeg pouzdanog partnera za čišćenje.
 
 Kako Vam možemo pomoći danas?
 
@@ -42,7 +42,7 @@ Broj rezervacije: ${bookingNumber}
 Datum: ${date}
 Vrijeme: ${time}
 
-Hvala što ste odabrali WebUredno!
+Hvala što ste odabrali Uredno.eu!
 
 Za promjenu termina ili otkazivanje, kontaktirajte nas najmanje 24 sata unaprijed.`,
 
@@ -74,7 +74,7 @@ Provjerit ćemo dostupnost i javiti Vam se!`,
 
 Naš tim je tu za Vas!
 
-Email: info@weburedno.hr
+Email: kontakt@uredno.eu
 Telefon: +385 XX XXX XXXX
 Radno vrijeme: Pon-Pet 8:00-18:00, Sub 9:00-14:00
 

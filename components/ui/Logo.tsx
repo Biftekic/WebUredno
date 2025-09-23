@@ -27,7 +27,7 @@ export default function Logo({ className = '', showIcon = true, variant = 'defau
         <Sparkles className={`w-6 h-6 ${iconColor}`} />
       )}
       <span className={`font-bold text-xl ${textColor}`}>
-        Web<span className={iconColor}>Uredno</span>
+        Uredno<span className={iconColor}>.eu</span>
       </span>
     </div>
   );

@@ -1,4 +1,4 @@
-# WebUredno Implementation Requirements
+# Uredno.eu Implementation Requirements
 
 ## Development Timeline: 20 Days
 

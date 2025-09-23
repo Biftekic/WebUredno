@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { ChevronDown } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { PHONE_NUMBER, WHATSAPP_PHONE } from '@/lib/constants';
 
 interface FAQItem {
   question: string;
@@ -102,13 +103,13 @@ export default function FAQ({
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
-              href="tel:+385912345678"
+              href={`tel:${PHONE_NUMBER}`}
               className="inline-flex items-center justify-center px-6 py-3 bg-white border-2 border-green-600 text-green-600 font-medium rounded-lg hover:bg-green-50 transition-colors"
             >
               Nazovite nas
             </a>
             <a
-              href="https://wa.me/385912345678"
+              href={`https://wa.me/${WHATSAPP_PHONE}`}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center justify-center px-6 py-3 bg-green-600 text-white font-medium rounded-lg hover:bg-green-700 transition-colors"

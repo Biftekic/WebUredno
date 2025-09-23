@@ -19,6 +19,7 @@ import {
 import Badge from '@/components/ui/Badge';
 import Button from '@/components/ui/Button';
 import type { Service } from './ServiceCatalog';
+import { WHATSAPP_PHONE } from '@/lib/constants';
 
 interface ServiceListItemProps {
   service: Service;
@@ -51,7 +52,7 @@ export default function ServiceListItem({ service }: ServiceListItemProps) {
     return encodeURIComponent(message);
   };
 
-  const whatsappUrl = `https://wa.me/385953955129?text=${getWhatsAppMessage()}`;
+  const whatsappUrl = `https://wa.me/${WHATSAPP_PHONE}?text=${getWhatsAppMessage()}`;
 
   return (
     <div

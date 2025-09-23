@@ -317,7 +317,7 @@ Slobodno nas kontaktirajte za sve informacije!`
       await whatsappService.sendMessage(
         from,
         `Hvala na poruci!
-Tim WebUredno će vam odgovoriti tijekom radnog vremena (Pon-Sub 07:00-15:00).
+Tim Uredno.eu će vam odgovoriti tijekom radnog vremena (Pon-Sub 07:00-15:00).
 
 Za hitne slučajeve nazovite: +385 92 450 2265`
       );
@@ -341,7 +341,7 @@ export function generateWhatsAppLink(
 }
 
 export function generateBookingMessage(booking: any): string {
-  return `🏠 NOVA REZERVACIJA - WebUredno
+  return `🏠 NOVA REZERVACIJA - Uredno.eu
 ━━━━━━━━━━━━━━━━━━
 📅 Datum: ${booking.date}
 ⏰ Vrijeme: ${booking.timeSlot}
@@ -434,7 +434,7 @@ Broj rezervacije: {{7}}
 Stići ćemo u dogovoreno vrijeme. Za promjene kontaktirajte nas najmanje 24h prije.
 
 Hvala na povjerenju!
-Tim WebUredno ✨
+Tim Uredno.eu ✨
 
 ## Day Before Reminder Template
 Name: day_before_reminder_v1

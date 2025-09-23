@@ -1,4 +1,4 @@
-# MASTER PRD - WebUredno
+# MASTER PRD - Uredno.eu
 ## Complete Product Requirements & Configuration
 ### Consolidation of FINAL_PRD_CONSOLIDATED.md + FINAL_CONFIGURATION.md + README Overview
 
@@ -36,7 +36,7 @@
 
 ## 📋 Executive Summary
 
-**Product**: WebUredno - Professional cleaning service website
+**Product**: Uredno.eu - Professional cleaning service website
 **Goal**: Create a MyClean.com-inspired website adapted for Croatian market
 **Target**: 150+ qualified leads per month
 **Approach**: Mobile-first, WhatsApp-integrated, real-time availability
@@ -283,7 +283,7 @@ const createBooking = async (bookingData) => {
 const generateWhatsAppLink = (booking) => {
   const phone = '385924502265';
   const message = encodeURIComponent(`
-🏠 NOVA REZERVACIJA - WebUredno
+🏠 NOVA REZERVACIJA - Uredno.eu
 ━━━━━━━━━━━━━━━━━━
 📅 Datum: ${booking.date}
 ⏰ Vrijeme: ${booking.time}
@@ -407,7 +407,7 @@ $wide: 1280px;
 ### 4.1 On-Page SEO
 ```html
 <!-- Meta tags for each page -->
-<title>Profesionalno Čišćenje Zagreb | WebUredno - Od 45€</title>
+<title>Profesionalno Čišćenje Zagreb | Uredno.eu - Od 45€</title>
 <meta name="description" content="Pouzdane usluge čišćenja u Zagrebu i okolici. ✓ 10 godina iskustva ✓ Osigurani ✓ Od 45€. Rezervirajte online u 60 sekundi.">
 <meta name="keywords" content="čišćenje zagreb, profesionalno čišćenje, čistačica zagreb, dubinsko čišćenje, čišćenje stana">
 
@@ -416,7 +416,7 @@ $wide: 1280px;
 {
   "@context": "https://schema.org",
   "@type": "LocalBusiness",
-  "name": "WebUredno",
+  "name": "Uredno.eu",
   "image": "https://uredno.eu/logo.png",
   "telephone": "+385924502265",
   "address": {
@@ -749,7 +749,7 @@ export async function sendEmail(data: EmailData): Promise<boolean> {
       to: data.to,
       from: {
         email: 'info@uredno.eu',
-        name: 'WebUredno'
+        name: 'Uredno.eu'
       },
       subject: data.subject,
       html: data.html,
@@ -785,7 +785,7 @@ export async function sendBookingNotificationEmail(booking: any): Promise<boolea
     <body>
       <div class="container">
         <div class="header">
-          <h2 style="margin: 0;">Nova Rezervacija - WebUredno</h2>
+          <h2 style="margin: 0;">Nova Rezervacija - Uredno.eu</h2>
         </div>
         <div class="content">
           <div class="info-row">
@@ -892,7 +892,7 @@ export async function sendCustomerConfirmation(booking: any): Promise<boolean> {
           </center>
 
           <div class="footer">
-            <p>WebUredno - Profesionalno čišćenje<br>
+            <p>Uredno.eu - Profesionalno čišćenje<br>
             10 godina iskustva | 5000+ zadovoljnih klijenata<br>
             Tel: +385 92 450 2265 | Email: info@uredno.eu<br>
             <a href="https://uredno.eu" style="color: #2563eb;">uredno.eu</a></p>
@@ -905,7 +905,7 @@ export async function sendCustomerConfirmation(booking: any): Promise<boolean> {
 
   return await sendEmail({
     to: booking.email,
-    subject: 'Potvrda rezervacije - WebUredno',
+    subject: 'Potvrda rezervacije - Uredno.eu',
     html
   });
 }
@@ -948,7 +948,7 @@ export async function send24HourReminder(booking: any): Promise<boolean> {
           </ul>
 
           <p>Vidimo se sutra!</p>
-          <p>Tim WebUredno</p>
+          <p>Tim Uredno.eu</p>
         </div>
       </div>
     </body>
@@ -971,14 +971,14 @@ export async function send24HourReminder(booking: any): Promise<boolean> {
 
 # Site Configuration
 NEXT_PUBLIC_SITE_URL=https://uredno.eu
-NEXT_PUBLIC_SITE_NAME=WebUredno
+NEXT_PUBLIC_SITE_NAME=Uredno.eu
 
 # WhatsApp
 NEXT_PUBLIC_WHATSAPP_PHONE=3859245022655
 
 # Google Calendar API
 GOOGLE_CALENDAR_ID=02ff9b19d12ca44fda1dc9d4f6b628aa30663578b36f6c403d6f1b81e74e2664@group.calendar.google.com
-GOOGLE_SERVICE_ACCOUNT_EMAIL=[to-be-created]@weburedno.iam.gserviceaccount.com
+GOOGLE_SERVICE_ACCOUNT_EMAIL=[to-be-created]@uredno.iam.gserviceaccount.com
 GOOGLE_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\n[your-key-here]\n-----END PRIVATE KEY-----"
 
 # Email Service (SendGrid)
@@ -1007,7 +1007,7 @@ ENABLE_SMS_NOTIFICATIONS=false
 export const APP_CONFIG = {
   // Business Information
   business: {
-    name: 'WebUredno',
+    name: 'Uredno.eu',
     established: 2015,
     phone: '+385924502265',
     email: 'info@uredno.eu',
@@ -1096,8 +1096,8 @@ export const APP_CONFIG = {
 
   // SEO
   seo: {
-    defaultTitle: 'Profesionalno Čišćenje Zagreb | WebUredno',
-    titleTemplate: '%s | WebUredno',
+    defaultTitle: 'Profesionalno Čišćenje Zagreb | Uredno.eu',
+    titleTemplate: '%s | Uredno.eu',
     defaultDescription: 'Pouzdane usluge čišćenja u Zagrebu i okolici. 10 godina iskustva, preko 5000 zadovoljnih klijenata. Rezervirajte online u 60 sekundi.',
     siteUrl: 'https://uredno.eu',
     defaultOgImage: '/og-image.jpg',
@@ -1170,7 +1170,7 @@ export function Logo({
   const LogoImage = (
     <Image
       src={logos[variant]}
-      alt="WebUredno"
+      alt="Uredno.eu"
       width={sizes[size].width}
       height={sizes[size].height}
       priority
@@ -1248,7 +1248,7 @@ export function Logo({
 
 ## 📚 Documentation Structure
 
-This folder contains all necessary documentation to build the WebUredno cleaning service website. The documentation is organized for efficient development and deployment.
+This folder contains all necessary documentation to build the Uredno.eu cleaning service website. The documentation is organized for efficient development and deployment.
 
 ## 🚀 Quick Start Guide
 
@@ -1267,7 +1267,7 @@ This folder contains all necessary documentation to build the WebUredno cleaning
 
 ## 📊 Project Overview
 
-**Project**: WebUredno - Professional Cleaning Service Website
+**Project**: Uredno.eu - Professional Cleaning Service Website
 **Market**: Croatian (Zagreb + 70km radius)
 **Language**: Croatian only
 **Timeline**: 3-4 weeks development

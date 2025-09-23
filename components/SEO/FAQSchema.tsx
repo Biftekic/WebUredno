@@ -33,7 +33,7 @@ export default function FAQSchema({ faqs }: FAQSchemaProps) {
   );
 }
 
-// Default FAQs for WebUredno
+// Default FAQs for Uredno.eu
 export const defaultFAQs: FAQItem[] = [
   {
     question: 'Koje usluge čišćenja nudite u Zagrebu?',
@@ -49,7 +49,7 @@ export const defaultFAQs: FAQItem[] = [
   },
   {
     question: 'Koliko unaprijed trebam rezervirati termin?',
-    answer: 'Preporučujemo rezervaciju 24-48 sati unaprijed. Za hitne slučajeve, pokušat ćemo organizirati termin isti dan uz dodatnu naknadu.'
+    answer: 'Preporučujemo rezervaciju 1-2 tjedna unaprijed, ali često imamo slobodne termine i za hitne slučajeve. Kontaktirajte nas putem WhatsApp-a za provjeru dostupnosti.'
   },
   {
     question: 'Pokrivate li cijeli Zagreb?',
@@ -65,6 +65,6 @@ export const defaultFAQs: FAQItem[] = [
   },
   {
     question: 'Jeste li osigurani?',
-    answer: 'Da, WebUredno je u potpunosti osiguran za sve vrste štete koja bi se mogla dogoditi tijekom pružanja usluga.'
+    answer: 'Da, Uredno.eu je u potpunosti osiguran za sve vrste štete koja bi se mogla dogoditi tijekom pružanja usluga.'
   }
 ];

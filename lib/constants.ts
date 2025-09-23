@@ -1,6 +1,12 @@
-export const SITE_NAME = process.env.NEXT_PUBLIC_SITE_NAME || 'WebUredno';
+export const SITE_NAME = process.env.NEXT_PUBLIC_SITE_NAME || 'Uredno.eu';
 export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
-export const WHATSAPP_PHONE = process.env.NEXT_PUBLIC_WHATSAPP_PHONE || '';
+
+// Contact Information
+export const PHONE_NUMBER = '+385924502265';
+export const PHONE_NUMBER_FORMATTED = '+385 92 450 2265';
+export const WHATSAPP_PHONE = process.env.NEXT_PUBLIC_WHATSAPP_PHONE || '385924502265';
+export const VIBER_PHONE = '385924502265';
+export const EMAIL = 'kontakt@uredno.eu';
 
 export const SERVICES = {
   REGULAR_CLEANING: 'regular_cleaning',

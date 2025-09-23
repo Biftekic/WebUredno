@@ -26,6 +26,7 @@ import FAQ from '@/components/ui/FAQ';
 import WhatsAppButton from '@/components/ui/WhatsAppButton';
 import Button from '@/components/ui/Button';
 import Badge from '@/components/ui/Badge';
+import { PHONE_NUMBER, PHONE_NUMBER_FORMATTED } from '@/lib/constants';
 
 // Service data
 const popularServices = [
@@ -100,7 +101,7 @@ const testimonials = [
   {
     name: 'Ana Marić',
     role: 'Vlasnica stana, Novi Zagreb',
-    content: 'WebUredno tim je fenomenalan! Moj stan nikad nije bio čišći. Osoblje je profesionalno, brzo i temeljito. Preporučujem svima!',
+    content: 'Uredno.eu tim je fenomenalan! Moj stan nikad nije bio čišći. Osoblje je profesionalno, brzo i temeljito. Preporučujem svima!',
     rating: 5,
     date: 'Prije 2 tjedna'
   },
@@ -114,14 +115,14 @@ const testimonials = [
   {
     name: 'Petra Novak',
     role: 'Majka troje djece, Dubrava',
-    content: 'Kao zaposlena majka, WebUredno mi je spasio život! Dolaze kad mi odgovara, koriste eko proizvode sigurne za djecu i sve besprijekorno očiste.',
+    content: 'Kao zaposlena majka, Uredno.eu mi je spasio život! Dolaze kad mi odgovara, koriste eko proizvode sigurne za djecu i sve besprijekorno očiste.',
     rating: 5,
     date: 'Prije 3 tjedna'
   },
   {
     name: 'Ivan Jurić',
     role: 'Vlasnik restorana',
-    content: 'Nakon renovacije, WebUredno tim je očistio sav građevinski nered. Nevjerojatno temeljiti i profesionalni. Vrhunska usluga!',
+    content: 'Nakon renovacije, Uredno.eu tim je očistio sav građevinski nered. Nevjerojatno temeljiti i profesionalni. Vrhunska usluga!',
     rating: 5,
     date: 'Prije 2 mjeseca'
   }
@@ -143,7 +144,7 @@ const faqItems = [
   },
   {
     question: 'Koliko unaprijed trebam rezervirati termin?',
-    answer: 'Preporučujemo rezervaciju 2-3 dana unaprijed, ali često imamo slobodne termine i za hitne slučajeve. Kontaktirajte nas putem WhatsApp-a za provjeru dostupnosti.'
+    answer: 'Preporučujemo rezervaciju 1-2 tjedna unaprijed, ali često imamo slobodne termine i za hitne slučajeve. Kontaktirajte nas putem WhatsApp-a za provjeru dostupnosti.'
   },
   {
     question: 'Što ako nisam zadovoljan/na uslugom?',
@@ -343,7 +344,7 @@ export default function HomePage() {
           >
             <Badge variant="primary" className="mb-4">Zašto mi?</Badge>
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Zašto odabrati WebUredno?
+              Zašto odabrati Uredno.eu?
             </h2>
             <p className="text-lg text-gray-600 max-w-3xl mx-auto">
               Kombinacija iskustva, profesionalnosti i povjerenja čini nas vodećim izborom za čišćenje u Zagrebu
@@ -390,7 +391,7 @@ export default function HomePage() {
                   Naš profesionalni tim
                 </h3>
                 <p className="text-gray-600 mb-6">
-                  WebUredno zapošljava samo provjerene i obučene profesionalce.
+                  Uredno.eu zapošljava samo provjerene i obučene profesionalce.
                   Svaki član našeg tima prolazi temeljitu obuku i redovito se educira
                   o najnovijim tehnikama čišćenja i sigurnosnim protokolima.
                 </p>
@@ -622,13 +623,13 @@ export default function HomePage() {
                 className="bg-white text-green-600 hover:bg-gray-100"
               />
               <Button
-                href="tel:+385912345678"
+                href={`tel:${PHONE_NUMBER}`}
                 variant="outline"
                 size="lg"
                 className="border-2 border-white text-white hover:bg-white hover:text-green-600"
               >
                 <Phone className="mr-2 w-5 h-5" />
-                Pozovite: 091 234 5678
+                Pozovite: {PHONE_NUMBER_FORMATTED}
               </Button>
             </div>
 

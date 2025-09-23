@@ -196,7 +196,7 @@ export function generateWhatsAppMessage(booking: {
     '',
     'Molimo potvrdite rezervaciju ili nas kontaktirajte za izmjene.',
     '',
-    'Hvala što ste odabrali WebUredno! 💙'
+    'Hvala što ste odabrali Uredno.eu! 💙'
   );
 
   return lines.join('\n');

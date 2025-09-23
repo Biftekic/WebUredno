@@ -23,7 +23,7 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
   },
   global: {
     headers: {
-      'x-application-name': 'weburedno'
+      'x-application-name': 'uredno'
     }
   }
 });

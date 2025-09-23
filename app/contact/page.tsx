@@ -10,17 +10,18 @@ import {
   Send,
   CheckCircle
 } from 'lucide-react';
+import { PHONE_NUMBER, PHONE_NUMBER_FORMATTED, EMAIL, WHATSAPP_PHONE } from '@/lib/constants';
 
 export const metadata: Metadata = {
-  title: 'Kontakt - WebUredno | Kontaktirajte Nas za Čišćenje u Zagrebu',
-  description: 'Kontaktirajte WebUredno za profesionalne usluge čišćenja u Zagrebu. ☎ 095 858 1508 | ✉ info@weburedno.hr | Brzi odgovor, fleksibilni termini.',
+  title: 'Kontakt - Uredno.eu | Kontaktirajte Nas za Čišćenje u Zagrebu',
+  description: `Kontaktirajte Uredno.eu za profesionalne usluge čišćenja u Zagrebu. ☎ ${PHONE_NUMBER_FORMATTED} | ✉ ${EMAIL} | Brzi odgovor, fleksibilni termini.`,
   alternates: {
-    canonical: 'https://weburedno.hr/contact',
+    canonical: 'https://uredno.eu/contact',
   },
   openGraph: {
-    title: 'Kontakt - WebUredno',
+    title: 'Kontakt - Uredno.eu',
     description: 'Kontaktirajte nas za besplatnu procjenu i rezervaciju termina',
-    url: 'https://weburedno.hr/contact',
+    url: 'https://uredno.eu/contact',
   },
 };
 
@@ -28,23 +29,23 @@ const contactInfo = [
   {
     icon: Phone,
     title: 'Telefon',
-    content: '095 858 1508',
+    content: PHONE_NUMBER_FORMATTED,
     description: 'Dostupni Pon-Pet 8:00-20:00, Sub 9:00-18:00',
-    action: 'tel:+385958581508'
+    action: `tel:${PHONE_NUMBER}`
   },
   {
     icon: Mail,
     title: 'Email',
-    content: 'info@weburedno.hr',
+    content: EMAIL,
     description: 'Odgovaramo u roku 24 sata',
-    action: 'mailto:info@weburedno.hr'
+    action: `mailto:${EMAIL}`
   },
   {
     icon: MessageCircle,
     title: 'WhatsApp',
-    content: '095 858 1508',
+    content: PHONE_NUMBER_FORMATTED,
     description: 'Pošaljite nam poruku',
-    action: 'https://wa.me/385958581508'
+    action: `https://wa.me/${WHATSAPP_PHONE}`
   },
   {
     icon: MapPin,
@@ -89,7 +90,7 @@ export default function ContactPage() {
           <div className="flex justify-between items-center h-16">
             <Link href="/" className="flex items-center space-x-2">
               <Sparkles className="h-8 w-8 text-green-600" />
-              <span className="text-xl font-bold text-gray-900">WebUredno</span>
+              <span className="text-xl font-bold text-gray-900">Uredno.eu</span>
             </Link>
             <div className="hidden md:flex items-center space-x-8">
               <Link href="/" className="text-gray-700 hover:text-green-600 transition-colors">
@@ -202,7 +203,7 @@ export default function ContactPage() {
                     id="phone"
                     name="phone"
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors"
-                    placeholder="095 858 1508"
+                    placeholder={PHONE_NUMBER_FORMATTED}
                   />
                 </div>
 
@@ -335,7 +336,7 @@ export default function ContactPage() {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
-              href="tel:+385958581508"
+              href={`tel:${PHONE_NUMBER}`}
               className="bg-white text-green-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors flex items-center justify-center"
             >
               <Phone className="h-5 w-5 mr-2" />
@@ -354,7 +355,7 @@ export default function ContactPage() {
       {/* Footer */}
       <footer className="bg-gray-900 text-white py-8 px-4">
         <div className="max-w-6xl mx-auto text-center">
-          <p>&copy; 2024 WebUredno. Sva prava pridržana.</p>
+          <p>&copy; 2024 Uredno.eu. Sva prava pridržana.</p>
         </div>
       </footer>
     </main>
