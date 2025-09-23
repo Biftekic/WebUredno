@@ -7,6 +7,12 @@ const inter = Inter({ subsets: ['latin', 'latin-ext'] });
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://weburedno.hr';
 
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
+};
+
 export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),
   title: {
@@ -63,11 +69,6 @@ export const metadata: Metadata = {
     description: 'Profesionalne usluge čišćenja za domove i urede. Povoljne cijene, fleksibilni termini.',
     images: ['/og-image.jpg'],
     creator: '@weburedno',
-  },
-  viewport: {
-    width: 'device-width',
-    initialScale: 1,
-    maximumScale: 5,
   },
   manifest: '/manifest.json',
   icons: {
