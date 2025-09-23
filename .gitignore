@@ -34,3 +34,8 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+# Testing files
+.playwright-mcp/
+*test-report.json
+playwright-*.md
+test-*.js
