@@ -147,7 +147,7 @@ export default function ServiceDetail({ service }: ServiceDetailProps) {
                 <div className="flex items-baseline gap-2 mb-2">
                   <span className="text-sm text-gray-500">od</span>
                   <span className="text-3xl font-bold text-gray-900">
-                    €{formatPrice(service.base_price)}
+                    {formatPrice(service.base_price)} €
                   </span>
                 </div>
                 <div className="flex flex-wrap gap-4 text-sm text-gray-600">

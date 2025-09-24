@@ -113,7 +113,7 @@ export default function ServiceListItem({ service }: ServiceListItemProps) {
             <div className="flex flex-wrap items-center gap-3 text-sm">
               <div className="flex items-center gap-1 font-semibold text-gray-900">
                 <span className="text-xs text-gray-500">od</span>
-                <span>€{formatPrice(service.base_price)}</span>
+                <span>{formatPrice(service.base_price)} €</span>
               </div>
               <div className="flex items-center gap-1 text-gray-500">
                 <Clock className="w-3 h-3" />

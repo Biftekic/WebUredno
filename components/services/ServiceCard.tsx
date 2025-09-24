@@ -115,7 +115,7 @@ export default function ServiceCard({ service }: ServiceCardProps) {
           <div className="flex items-baseline gap-1 mb-2">
             <span className="text-sm text-gray-500">od</span>
             <span className="text-2xl font-bold text-gray-900">
-              €{formatPrice(service.base_price)}
+              {formatPrice(service.base_price)} €
             </span>
           </div>
           <div className="flex flex-wrap gap-3 text-xs text-gray-500">

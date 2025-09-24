@@ -76,7 +76,7 @@ export default function ServiceCard({
         <div className="px-6 pb-6 border-b border-gray-100">
           <div className="flex items-baseline gap-1 mb-2">
             <span className="text-sm text-gray-500">od</span>
-            <span className="text-3xl font-bold text-gray-900">€{price}</span>
+            <span className="text-3xl font-bold text-gray-900">{price} €</span>
           </div>
           <div className="flex items-center gap-4 text-sm text-gray-500">
             <div className="flex items-center gap-1">
