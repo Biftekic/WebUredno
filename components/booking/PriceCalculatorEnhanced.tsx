@@ -82,8 +82,7 @@ function PriceRow({ label, amount, type = 'base', detail, size = 'medium' }: Pri
 function ServiceBadge({ type, children }: { type: ServiceTypeEnum; children: React.ReactNode }) {
   const getBadgeColor = () => {
     switch (type) {
-      case 'airbnb':
-        return 'bg-purple-100 text-purple-700 border-purple-300';
+
       case 'daily_rental':
         return 'bg-blue-100 text-blue-700 border-blue-300';
       case 'vacation_rental':
@@ -143,7 +142,7 @@ export default function PriceCalculatorEnhanced({
   }
 
   const frequencyOption = FREQUENCY_OPTIONS.find(f => f.value === frequency);
-  const isRentalService = ['airbnb', 'daily_rental', 'vacation_rental'].includes(serviceType);
+  const isRentalService = ['daily_rental', 'vacation_rental'].includes(serviceType);
 
   return (
     <div className="bg-gradient-to-br from-green-50 to-white rounded-xl border border-green-100 p-4 md:p-6">
@@ -155,7 +154,7 @@ export default function PriceCalculatorEnhanced({
       {/* Service Type Badge */}
       {isRentalService && (
         <ServiceBadge type={serviceType}>
-          {serviceType === 'airbnb' && '🏠 AirBnB Čišćenje'}
+
           {serviceType === 'daily_rental' && '🔑 Jednodnevni najam'}
           {serviceType === 'vacation_rental' && '✨ Dubinsko čišćenje najma'}
         </ServiceBadge>
@@ -286,6 +285,13 @@ export default function PriceCalculatorEnhanced({
           label="Međuzbroj"
           amount={priceBreakdown.subtotal}
           type="subtotal"
+        />
+
+        {/* VAT */}
+        <PriceRow
+          label="PDV (25%)"
+          amount={priceBreakdown.vatAmount || Math.round(priceBreakdown.subtotal * 0.25)}
+          type="fee"
         />
 
         {/* Frequency Discount on Total */}

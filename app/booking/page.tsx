@@ -4,30 +4,38 @@ import { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import {
   ArrowLeft, ArrowRight, Home, Building, MapPin, Phone, Mail,
-  User, MessageSquare, Plus, Minus, Check, AlertCircle
+  User, MessageSquare, AlertCircle
 } from 'lucide-react';
 import BookingSteps, { BOOKING_STEPS } from '@/components/booking/BookingSteps';
 import BookingCalendar from '@/components/booking/BookingCalendar';
-import PriceCalculator from '@/components/booking/PriceCalculator';
+import PriceCalculatorEnhanced from '@/components/booking/PriceCalculatorEnhanced';
+import QuantitySelector from '@/components/booking/QuantitySelector';
+import AreaInput from '@/components/booking/AreaInput';
+import RentalServiceSelector from '@/components/booking/RentalServiceSelector';
 import Button from '@/components/ui/Button';
 import Input from '@/components/ui/Input';
 import LoadingState from '@/components/ui/LoadingState';
 import { getServices, getServiceBySlug } from '@/lib/db/services';
 import { createBooking } from '@/lib/db/bookings';
-import type { Service, CreateBookingInput, BookingExtra } from '@/types/database';
+import type { Service, CreateBookingInput } from '@/types/database';
 import {
   PROPERTY_TYPES,
   FREQUENCY_OPTIONS,
-  SERVICE_EXTRAS,
   formatDateHr,
   validatePhoneNumber,
   validateEmail,
   generateWhatsAppMessage,
-  formatPhoneForWhatsApp,
 } from '@/lib/booking-utils';
+import {
+  ServiceTypeEnum,
+  PropertyTypeEnum,
+  QUANTIFIABLE_EXTRAS,
+  LANDSCAPING_SERVICES,
+  RENTAL_SERVICES,
+  RentalFeatures
+} from '@/lib/booking-types-enhanced';
 
-// Wrap the main component to handle search params
-function BookingContent() {
+function BookingContentEnhanced() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [currentStep, setCurrentStep] = useState(0);
@@ -36,16 +44,53 @@ function BookingContent() {
   const [error, setError] = useState<string | null>(null);
   const [services, setServices] = useState<Service[]>([]);
 
-  // Booking Data
+  // Service Selection
   const [selectedService, setSelectedService] = useState<Service | null>(null);
-  const [propertyType, setPropertyType] = useState<'apartment' | 'house' | 'office'>('apartment');
+  const [serviceType, setServiceType] = useState<ServiceTypeEnum>('regular');
+
+  // Property Details
+  const [propertyType, setPropertyType] = useState<PropertyTypeEnum>('apartment');
   const [propertySize, setPropertySize] = useState<number>(60);
   const [bedrooms, setBedrooms] = useState<number>(2);
   const [bathrooms, setBathrooms] = useState<number>(1);
+
+  // Date & Time
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [selectedTimeSlot, setSelectedTimeSlot] = useState<string | null>(null);
+
+  // Frequency & Distance
   const [frequency, setFrequency] = useState<string>('one-time');
-  const [selectedExtras, setSelectedExtras] = useState<BookingExtra[]>([]);
+  const [distanceKm] = useState(5);
+
+  // Enhanced Extras
+  const [indoorExtras, setIndoorExtras] = useState<{ [key: string]: number }>({
+    windows: 0,
+    oven: 0,
+    fridge: 0,
+    balcony: 0,
+    ironing: 0,
+    cabinet_interior: 0,
+  });
+
+  // Outdoor Services
+  const [outdoorServices, setOutdoorServices] = useState<{ [key: string]: number }>({
+    lawn_mowing: 0,
+    garden_maintenance: 0,
+    leaf_removal: 0,
+    hedge_trimming: 0,
+  });
+
+  // Rental Features
+  const [rentalFeatures, setRentalFeatures] = useState<RentalFeatures>({
+    turnaroundTime: '4-6h',
+    laundryService: false,
+    suppliesRefill: false,
+    inventoryCheck: false,
+    guestWelcomeSetup: false,
+    emergencyAvailable: false,
+  });
+
+  // Customer Data
   const [customerData, setCustomerData] = useState({
     first_name: '',
     last_name: '',
@@ -55,8 +100,8 @@ function BookingContent() {
     city: 'Zagreb',
     postal_code: '',
   });
+
   const [specialRequests, setSpecialRequests] = useState('');
-  const [distanceKm] = useState(5); // Simplified for now
   const [validationErrors, setValidationErrors] = useState<Record<string, string>>({});
 
   useEffect(() => {
@@ -64,12 +109,29 @@ function BookingContent() {
   }, []);
 
   useEffect(() => {
-    // Check if service is preselected via URL param
     const serviceSlug = searchParams.get('service');
     if (serviceSlug && services.length > 0) {
       const service = services.find(s => s.slug === serviceSlug);
       if (service) {
         setSelectedService(service);
+
+        // Map service category to enhanced service type
+        if (service.slug === 'jednodnevni-najam') {
+          setServiceType('daily_rental');
+        } else if (service.slug === 'dubinsko-ciscenje-najma') {
+          setServiceType('vacation_rental');
+        } else if (service.category === 'deep') {
+          setServiceType('deep');
+        } else if (service.category === 'standard') {
+          setServiceType('standard');
+        } else if (service.category === 'post-renovation') {
+          setServiceType('post-renovation');
+        } else if (service.category === 'move-in-out') {
+          setServiceType('move-in-out');
+        } else {
+          setServiceType('regular');
+        }
+
         setCompletedSteps([0]);
         setCurrentStep(1);
       }
@@ -79,7 +141,30 @@ function BookingContent() {
   const loadServices = async () => {
     try {
       const data = await getServices();
-      setServices(data);
+
+      // Merge with rental services
+      const enhancedServices = [
+        ...data,
+        ...RENTAL_SERVICES.map(rs => ({
+          id: rs.id,
+          name: rs.name,
+          slug: rs.id.replace('_', '-'),
+          category: rs.id as any,
+          base_price: rs.base_price,
+          price_per_sqm: rs.price_per_sqm,
+          min_price: rs.min_price,
+          duration_hours: 3,
+          description: rs.description,
+          features: rs.includes,
+          popular: rs.id === 'daily_rental',
+          active: true,
+          display_order: 10,
+          created_at: new Date().toISOString(),
+          updated_at: new Date().toISOString(),
+        }))
+      ];
+
+      setServices(enhancedServices);
     } catch (error) {
       console.error('Error loading services:', error);
       setError('Greška pri učitavanju usluga');
@@ -96,17 +181,17 @@ function BookingContent() {
     const errors: Record<string, string> = {};
 
     switch (stepIndex) {
-      case 0: // Service selection
+      case 0:
         if (!selectedService) {
           errors.service = 'Molimo odaberite uslugu';
         }
         break;
-      case 1: // Property details
+      case 1:
         if (propertySize < 20 || propertySize > 500) {
           errors.propertySize = 'Površina mora biti između 20 i 500 m²';
         }
         break;
-      case 2: // Date and time
+      case 2:
         if (!selectedDate) {
           errors.date = 'Molimo odaberite datum';
         }
@@ -114,22 +199,16 @@ function BookingContent() {
           errors.time = 'Molimo odaberite vrijeme';
         }
         break;
-      case 3: // Contact info
-        if (!customerData.first_name) {
-          errors.first_name = 'Ime je obavezno';
-        }
-        if (!customerData.last_name) {
-          errors.last_name = 'Prezime je obavezno';
-        }
+      case 3:
+        if (!customerData.first_name) errors.first_name = 'Ime je obavezno';
+        if (!customerData.last_name) errors.last_name = 'Prezime je obavezno';
         if (!customerData.email || !validateEmail(customerData.email)) {
           errors.email = 'Unesite važeću email adresu';
         }
         if (!customerData.phone || !validatePhoneNumber(customerData.phone)) {
           errors.phone = 'Unesite važeći broj telefona';
         }
-        if (!customerData.address) {
-          errors.address = 'Adresa je obavezna';
-        }
+        if (!customerData.address) errors.address = 'Adresa je obavezna';
         break;
     }
 
@@ -161,14 +240,35 @@ function BookingContent() {
     }
   };
 
-  const toggleExtra = (extra: typeof SERVICE_EXTRAS[0]) => {
-    setSelectedExtras(prev => {
-      const exists = prev.find(e => e.name === extra.name);
-      if (exists) {
-        return prev.filter(e => e.name !== extra.name);
-      }
-      return [...prev, { name: extra.name, price: extra.price, quantity: 1 }];
-    });
+  const updateIndoorExtra = (id: string, quantity: number) => {
+    setIndoorExtras(prev => ({ ...prev, [id]: quantity }));
+  };
+
+  const updateOutdoorService = (id: string, area: number) => {
+    setOutdoorServices(prev => ({ ...prev, [id]: area }));
+  };
+
+  const getIndoorExtrasForCalculation = () => {
+    return QUANTIFIABLE_EXTRAS
+      .filter(extra => indoorExtras[extra.id] > 0)
+      .map(extra => ({
+        id: extra.id,
+        name: extra.name,
+        quantity: indoorExtras[extra.id],
+        unitPrice: extra.price_per_unit
+      }));
+  };
+
+  const getOutdoorServicesForCalculation = () => {
+    return LANDSCAPING_SERVICES
+      .filter(service => outdoorServices[service.id] > 0)
+      .map(service => ({
+        id: service.id,
+        name: service.name,
+        area: outdoorServices[service.id],
+        pricePerUnit: service.price_per_unit,
+        minPrice: service.min_price
+      }));
   };
 
   const handleSubmitBooking = async () => {
@@ -181,24 +281,37 @@ function BookingContent() {
     setError(null);
 
     try {
+      // Prepare extras for database
+      const bookingExtras = [
+        ...getIndoorExtrasForCalculation().map(e => ({
+          name: e.name,
+          price: e.unitPrice * e.quantity,
+          quantity: e.quantity
+        })),
+        ...getOutdoorServicesForCalculation().map(s => ({
+          name: s.name,
+          price: Math.max(s.area * s.pricePerUnit, s.minPrice),
+          quantity: 1
+        }))
+      ];
+
       const bookingInput: CreateBookingInput = {
         customer: customerData,
         service_id: selectedService.id,
         booking_date: selectedDate.toISOString().split('T')[0],
         time_slot: selectedTimeSlot,
-        service_type: selectedService.category,
+        service_type: serviceType,
         frequency: frequency as any,
         property_type: propertyType,
         property_size: propertySize,
         bedrooms,
         bathrooms,
-        extras: selectedExtras,
+        extras: bookingExtras,
         special_requests: specialRequests,
       };
 
       const booking = await createBooking(bookingInput);
 
-      // Generate WhatsApp message
       const message = generateWhatsAppMessage({
         bookingNumber: booking.booking_number,
         service: selectedService.name,
@@ -211,11 +324,10 @@ function BookingContent() {
         specialRequests,
       });
 
-      // Redirect to confirmation page
       router.push(`/booking/confirmation?id=${booking.id}&whatsapp=${encodeURIComponent(message)}`);
     } catch (error: any) {
       console.error('Booking error:', error);
-      setError(error.message || 'Greška pri slanju rezervacije. Molimo pokušajte ponovno.');
+      setError(error.message || 'Greška pri slanju rezervacije.');
     } finally {
       setLoading(false);
     }
@@ -223,58 +335,118 @@ function BookingContent() {
 
   const renderStepContent = () => {
     switch (currentStep) {
-      case 0: // Service Selection
+      case 0: // Enhanced Service Selection
         return (
-          <div className="space-y-4">
+          <div className="space-y-6">
             <h2 className="text-xl font-semibold text-gray-900 mb-4">
               Odaberite vrstu čišćenja
             </h2>
+
+            {/* Service Type Tabs */}
+            <div className="border-b border-gray-200 mb-6">
+              <div className="flex gap-2 overflow-x-auto pb-2">
+                <button
+                  onClick={() => setServiceType('regular')}
+                  className={`px-4 py-2 rounded-t-lg font-medium text-sm transition-colors ${
+                    serviceType === 'regular'
+                      ? 'bg-green-600 text-white'
+                      : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                  }`}
+                >
+                  Redovno
+                </button>
+                <button
+                  onClick={() => setServiceType('deep')}
+                  className={`px-4 py-2 rounded-t-lg font-medium text-sm transition-colors ${
+                    serviceType === 'deep'
+                      ? 'bg-green-600 text-white'
+                      : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                  }`}
+                >
+                  Dubinsko
+                </button>
+                <button
+                  onClick={() => setServiceType('daily_rental')}
+                  className={`px-4 py-2 rounded-t-lg font-medium text-sm transition-colors flex items-center gap-2 ${
+                    serviceType === 'daily_rental'
+                      ? 'bg-purple-600 text-white'
+                      : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                  }`}
+                >
+                  🔑 Jednodnevni najam
+                  <span className="px-2 py-0.5 bg-yellow-400 text-black text-xs rounded-full">
+                    NOVO
+                  </span>
+                </button>
+                <button
+                  onClick={() => setServiceType('vacation_rental')}
+                  className={`px-4 py-2 rounded-t-lg font-medium text-sm transition-colors flex items-center gap-2 ${
+                    serviceType === 'vacation_rental'
+                      ? 'bg-blue-600 text-white'
+                      : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                  }`}
+                >
+                  ✨ Dubinsko najma
+                </button>
+              </div>
+            </div>
+
             {validationErrors.service && (
               <div className="p-3 bg-red-50 rounded-lg text-red-700 text-sm">
                 {validationErrors.service}
               </div>
             )}
+
             <div className="grid gap-4 md:grid-cols-2">
-              {services.map(service => (
-                <button
-                  key={service.id}
-                  onClick={() => setSelectedService(service)}
-                  className={`
-                    p-4 rounded-xl border-2 text-left transition-all duration-200
-                    ${selectedService?.id === service.id
-                      ? 'border-green-500 bg-green-50'
-                      : 'border-gray-200 hover:border-gray-300 bg-white'
-                    }
-                  `}
-                >
-                  <div className="flex items-start justify-between mb-2">
-                    <h3 className="font-medium text-gray-900">{service.name}</h3>
-                    {service.popular && (
-                      <span className="px-2 py-1 bg-green-100 text-green-700 text-xs rounded-full">
-                        Popularno
+              {services
+                .filter(service => {
+                  if (serviceType === 'daily_rental') return service.slug === 'jednodnevni-najam';
+                  if (serviceType === 'vacation_rental') return service.slug === 'vacation-rental-deep';
+                  if (serviceType === 'deep') return service.category === 'deep';
+                  return service.category === 'regular';
+                })
+                .map(service => (
+                  <button
+                    key={service.id}
+                    onClick={() => setSelectedService(service)}
+                    className={`
+                      p-4 rounded-xl border-2 text-left transition-all duration-200
+                      ${selectedService?.id === service.id
+                        ? 'border-green-500 bg-green-50'
+                        : 'border-gray-200 hover:border-gray-300 bg-white'
+                      }
+                    `}
+                  >
+                    <div className="flex items-start justify-between mb-2">
+                      <h3 className="font-medium text-gray-900">{service.name}</h3>
+                      {service.popular && (
+                        <span className="px-2 py-1 bg-green-100 text-green-700 text-xs rounded-full">
+                          Popularno
+                        </span>
+                      )}
+                    </div>
+                    <p className="text-sm text-gray-600 mb-3">{service.description}</p>
+                    <div className="flex items-center justify-between">
+                      <span className="text-lg font-semibold text-green-600">
+                        od {service.base_price} EUR
                       </span>
-                    )}
-                  </div>
-                  <p className="text-sm text-gray-600 mb-3">{service.description}</p>
-                  <div className="flex items-center justify-between">
-                    <span className="text-lg font-semibold text-green-600">
-                      od {service.base_price} EUR
-                    </span>
-                    <span className="text-xs text-gray-500">
-                      ~{service.duration_hours}h
-                    </span>
-                  </div>
-                </button>
-              ))}
+                      <span className="text-xs text-gray-500">
+                        ~{service.duration_hours}h
+                      </span>
+                    </div>
+                  </button>
+                ))}
             </div>
           </div>
         );
 
-      case 1: // Property Details
+      case 1: // Enhanced Property Details
+        const isRentalService = ['airbnb', 'daily_rental', 'vacation_rental'].includes(serviceType);
+
         return (
           <div className="space-y-6">
             <h2 className="text-xl font-semibold text-gray-900 mb-4">
-              Detalji o nekretnini
+              Detalji o nekretnini i dodatne usluge
             </h2>
 
             {/* Property Type */}
@@ -286,7 +458,7 @@ function BookingContent() {
                 {PROPERTY_TYPES.map(type => (
                   <button
                     key={type.value}
-                    onClick={() => setPropertyType(type.value as any)}
+                    onClick={() => setPropertyType(type.value as PropertyTypeEnum)}
                     className={`
                       p-4 rounded-lg border-2 transition-all duration-200
                       ${propertyType === type.value
@@ -312,7 +484,7 @@ function BookingContent() {
                   onClick={() => setPropertySize(Math.max(20, propertySize - 10))}
                   className="p-2 rounded-lg border border-gray-300 hover:bg-gray-50"
                 >
-                  <Minus className="w-5 h-5" />
+                  <ArrowLeft className="w-5 h-5" />
                 </button>
                 <Input
                   type="number"
@@ -327,56 +499,8 @@ function BookingContent() {
                   onClick={() => setPropertySize(Math.min(500, propertySize + 10))}
                   className="p-2 rounded-lg border border-gray-300 hover:bg-gray-50"
                 >
-                  <Plus className="w-5 h-5" />
+                  <ArrowRight className="w-5 h-5" />
                 </button>
-              </div>
-              {validationErrors.propertySize && (
-                <p className="text-sm text-red-600 mt-1">{validationErrors.propertySize}</p>
-              )}
-            </div>
-
-            {/* Rooms */}
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-3">
-                  Broj spavaćih soba
-                </label>
-                <div className="flex items-center gap-3">
-                  <button
-                    onClick={() => setBedrooms(Math.max(0, bedrooms - 1))}
-                    className="p-2 rounded-lg border border-gray-300 hover:bg-gray-50"
-                  >
-                    <Minus className="w-4 h-4" />
-                  </button>
-                  <span className="w-12 text-center font-medium">{bedrooms}</span>
-                  <button
-                    onClick={() => setBedrooms(Math.min(10, bedrooms + 1))}
-                    className="p-2 rounded-lg border border-gray-300 hover:bg-gray-50"
-                  >
-                    <Plus className="w-4 h-4" />
-                  </button>
-                </div>
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-3">
-                  Broj kupaonica
-                </label>
-                <div className="flex items-center gap-3">
-                  <button
-                    onClick={() => setBathrooms(Math.max(1, bathrooms - 1))}
-                    className="p-2 rounded-lg border border-gray-300 hover:bg-gray-50"
-                  >
-                    <Minus className="w-4 h-4" />
-                  </button>
-                  <span className="w-12 text-center font-medium">{bathrooms}</span>
-                  <button
-                    onClick={() => setBathrooms(Math.min(5, bathrooms + 1))}
-                    className="p-2 rounded-lg border border-gray-300 hover:bg-gray-50"
-                  >
-                    <Plus className="w-4 h-4" />
-                  </button>
-                </div>
               </div>
             </div>
 
@@ -403,7 +527,7 @@ function BookingContent() {
                         <div className="font-medium text-sm">{option.label}</div>
                         <div className="text-xs text-gray-600 mt-0.5">{option.description}</div>
                       </div>
-                      {option.discount && (
+                      {option.discount && option.discount > 0 && (
                         <span className="px-2 py-1 bg-green-100 text-green-700 text-xs rounded-full">
                           -{option.discount}%
                         </span>
@@ -414,41 +538,59 @@ function BookingContent() {
               </div>
             </div>
 
-            {/* Extras */}
+            {/* Rental-Specific Options */}
+            {isRentalService && (
+              <RentalServiceSelector
+                features={rentalFeatures}
+                onChange={setRentalFeatures}
+                serviceType={serviceType as 'airbnb' | 'daily_rental' | 'vacation_rental'}
+              />
+            )}
+
+            {/* Indoor Extras with Quantities */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-3">
-                Dodatne usluge (opcionalno)
+                Dodatne usluge u zatvorenom (opcionalno)
               </label>
-              <div className="space-y-2">
-                {SERVICE_EXTRAS.map(extra => {
-                  const isSelected = selectedExtras.some(e => e.name === extra.name);
-                  return (
-                    <button
-                      key={extra.id}
-                      onClick={() => toggleExtra(extra)}
-                      className={`
-                        w-full p-3 rounded-lg border-2 text-left transition-all duration-200
-                        ${isSelected
-                          ? 'border-green-500 bg-green-50'
-                          : 'border-gray-200 hover:border-gray-300'
-                        }
-                      `}
-                    >
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-3">
-                          <span className="text-xl">{extra.icon}</span>
-                          <span className="text-sm font-medium">{extra.name}</span>
-                        </div>
-                        <div className="flex items-center gap-3">
-                          <span className="text-sm font-semibold text-green-600">
-                            +{extra.price} EUR
-                          </span>
-                          {isSelected && <Check className="w-5 h-5 text-green-600" />}
-                        </div>
-                      </div>
-                    </button>
-                  );
-                })}
+              <div className="space-y-3">
+                {QUANTIFIABLE_EXTRAS.map(extra => (
+                  <QuantitySelector
+                    key={extra.id}
+                    label={extra.name}
+                    unit={extra.unit}
+                    unitPrice={extra.price_per_unit}
+                    min={extra.min_quantity || 0}
+                    max={extra.max_quantity}
+                    value={indoorExtras[extra.id]}
+                    onChange={(value) => updateIndoorExtra(extra.id, value)}
+                    icon={extra.icon}
+                    helperText={`${extra.price_per_unit} EUR po ${extra.unit}`}
+                  />
+                ))}
+              </div>
+            </div>
+
+            {/* Outdoor Services */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-3">
+                Vanjski radovi (opcionalno)
+              </label>
+              <div className="space-y-3">
+                {LANDSCAPING_SERVICES.map(service => (
+                  <AreaInput
+                    key={service.id}
+                    label={service.name}
+                    unit={service.unit}
+                    pricePerUnit={service.price_per_unit}
+                    minPrice={service.min_price}
+                    value={outdoorServices[service.id]}
+                    onChange={(value) => updateOutdoorService(service.id, value)}
+                    icon={service.icon}
+                    helperText={service.description}
+                    max={1000}
+                    step={service.unit === 'm' ? 5 : 10}
+                  />
+                ))}
               </div>
             </div>
           </div>
@@ -611,10 +753,6 @@ function BookingContent() {
                   <span className="text-gray-600">Površina:</span>
                   <span className="font-medium">{propertySize} m²</span>
                 </div>
-                <div className="flex justify-between">
-                  <span className="text-gray-600">Sobe:</span>
-                  <span className="font-medium">{bedrooms} spavaćih, {bathrooms} kupaonica</span>
-                </div>
               </div>
             </div>
 
@@ -634,6 +772,29 @@ function BookingContent() {
                 </div>
               </div>
             </div>
+
+            {/* Extras Summary */}
+            {(getIndoorExtrasForCalculation().length > 0 || getOutdoorServicesForCalculation().length > 0) && (
+              <div className="bg-gray-50 rounded-lg p-4">
+                <h3 className="font-medium text-gray-900 mb-3">Dodatne usluge</h3>
+                <div className="space-y-2 text-sm">
+                  {getIndoorExtrasForCalculation().map(extra => (
+                    <div key={extra.id} className="flex justify-between">
+                      <span className="text-gray-600">{extra.name} ({extra.quantity}x)</span>
+                      <span className="font-medium">+{extra.quantity * extra.unitPrice} EUR</span>
+                    </div>
+                  ))}
+                  {getOutdoorServicesForCalculation().map(service => (
+                    <div key={service.id} className="flex justify-between">
+                      <span className="text-gray-600">{service.name} ({service.area}m²)</span>
+                      <span className="font-medium">
+                        +{Math.max(service.area * service.pricePerUnit, service.minPrice)} EUR
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
 
             {/* Contact Summary */}
             <div className="bg-gray-50 rounded-lg p-4">
@@ -661,21 +822,6 @@ function BookingContent() {
                 </div>
               </div>
             </div>
-
-            {/* Extras Summary */}
-            {selectedExtras.length > 0 && (
-              <div className="bg-gray-50 rounded-lg p-4">
-                <h3 className="font-medium text-gray-900 mb-3">Dodatne usluge</h3>
-                <div className="space-y-2 text-sm">
-                  {selectedExtras.map(extra => (
-                    <div key={extra.name} className="flex justify-between">
-                      <span className="text-gray-600">{extra.name}</span>
-                      <span className="font-medium">+{extra.price} EUR</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
 
             {/* Special Requests */}
             {specialRequests && (
@@ -713,8 +859,8 @@ function BookingContent() {
             <ArrowLeft className="w-5 h-5" />
             <span className="text-sm">Natrag</span>
           </button>
-          <h1 className="text-3xl font-bold text-gray-900">Rezervacija čišćenja</h1>
-          <p className="text-gray-600 mt-2">Rezervirajte svoj termin u nekoliko jednostavnih koraka</p>
+          <h1 className="text-3xl font-bold text-gray-900">Napredna rezervacija čišćenja</h1>
+          <p className="text-gray-600 mt-2">Prilagodite uslugu vašim potrebama</p>
         </div>
 
         <div className="grid lg:grid-cols-3 gap-8">
@@ -732,12 +878,17 @@ function BookingContent() {
             {/* Price Calculator - Desktop Only */}
             {selectedService && (
               <div className="hidden lg:block mt-6">
-                <PriceCalculator
+                <PriceCalculatorEnhanced
                   service={selectedService}
+                  serviceType={serviceType}
+                  propertyType={propertyType}
                   propertySize={propertySize}
-                  extras={selectedExtras}
+                  indoorExtras={getIndoorExtrasForCalculation()}
+                  outdoorServices={getOutdoorServicesForCalculation()}
                   frequency={frequency}
                   distanceKm={distanceKm}
+                  rentalFeatures={['airbnb', 'daily_rental', 'vacation_rental'].includes(serviceType) ? rentalFeatures : undefined}
+                  bookingDate={selectedDate || undefined}
                 />
               </div>
             )}
@@ -780,12 +931,17 @@ function BookingContent() {
             {/* Price Calculator - Mobile Only */}
             {selectedService && (
               <div className="lg:hidden mt-6">
-                <PriceCalculator
+                <PriceCalculatorEnhanced
                   service={selectedService}
+                  serviceType={serviceType}
+                  propertyType={propertyType}
                   propertySize={propertySize}
-                  extras={selectedExtras}
+                  indoorExtras={getIndoorExtrasForCalculation()}
+                  outdoorServices={getOutdoorServicesForCalculation()}
                   frequency={frequency}
                   distanceKm={distanceKm}
+                  rentalFeatures={['airbnb', 'daily_rental', 'vacation_rental'].includes(serviceType) ? rentalFeatures : undefined}
+                  bookingDate={selectedDate || undefined}
                 />
               </div>
             )}
@@ -797,10 +953,10 @@ function BookingContent() {
 }
 
 // Main component with Suspense boundary
-export default function BookingPage() {
+export default function EnhancedBookingPage() {
   return (
-    <Suspense fallback={<LoadingState message="Učitavanje rezervacije..." />}>
-      <BookingContent />
+    <Suspense fallback={<LoadingState message="Učitavanje napredne rezervacije..." />}>
+      <BookingContentEnhanced />
     </Suspense>
   );
 }

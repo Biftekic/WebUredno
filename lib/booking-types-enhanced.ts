@@ -1,6 +1,6 @@
 // Enhanced Booking Types and Constants for Improved Calculator
 
-export type ServiceTypeEnum = 'regular' | 'deep' | 'airbnb' | 'daily_rental' | 'vacation_rental';
+export type ServiceTypeEnum = 'regular' | 'standard' | 'deep' | 'post-renovation' | 'move-in-out' | 'daily_rental' | 'vacation_rental';
 
 export type PropertyTypeEnum = 'apartment' | 'house' | 'office';
 
@@ -57,12 +57,28 @@ export interface RentalFeatures {
   emergencyAvailable: boolean;
 }
 
+// Last Cleaned Time Period
+export type LastCleanedPeriod = 
+  | 'less-than-month'
+  | '1-3-months'
+  | '3-6-months'
+  | '6-12-months'
+  | 'over-year';
+
+export interface LastCleanedOption {
+  value: LastCleanedPeriod;
+  label: string;
+  multiplier: number;
+  description: string;
+}
+
 // Price Calculation Interface
 export interface EnhancedPriceCalculation {
   serviceType: ServiceTypeEnum;
   basePrice: number;
   sizeMultiplier: number;
   propertyTypeMultiplier: number;
+  lastCleanedMultiplier?: number;
 
   // Rental-specific features
   rentalFeatures?: RentalFeatures;
@@ -93,6 +109,7 @@ export interface EnhancedPriceCalculation {
 
   // Final calculations
   subtotal: number;
+  vatAmount: number;
   discount: number;
   total: number;
 }
@@ -111,6 +128,40 @@ export const PROPERTY_TYPE_MULTIPLIERS: Record<PropertyTypeEnum, number> = {
   office: 1.1,
 };
 
+// Last Cleaned Multipliers (for Standard and Deep cleaning only)
+export const LAST_CLEANED_OPTIONS: LastCleanedOption[] = [
+  { 
+    value: 'less-than-month', 
+    label: 'Manje od mjesec dana', 
+    multiplier: 1.0, 
+    description: 'Nedavno profesionalno čišćeno' 
+  },
+  { 
+    value: '1-3-months', 
+    label: '1-3 mjeseca', 
+    multiplier: 1.15, 
+    description: '+15% dodatnog rada' 
+  },
+  { 
+    value: '3-6-months', 
+    label: '3-6 mjeseci', 
+    multiplier: 1.30, 
+    description: '+30% dodatnog rada' 
+  },
+  { 
+    value: '6-12-months', 
+    label: '6-12 mjeseci', 
+    multiplier: 1.50, 
+    description: '+50% dodatnog rada' 
+  },
+  { 
+    value: 'over-year', 
+    label: 'Preko godine / Nikad', 
+    multiplier: 1.75, 
+    description: '+75% dodatnog rada' 
+  }
+];
+
 export const TURNAROUND_TIME_OPTIONS: TurnaroundTimeOption[] = [
   { value: '2-3h', label: 'Hitno (2-3h)', price_adjustment: 30 },
   { value: '4-6h', label: 'Standard (4-6h)', price_adjustment: 0 },
@@ -120,28 +171,6 @@ export const TURNAROUND_TIME_OPTIONS: TurnaroundTimeOption[] = [
 
 // Rental Services
 export const RENTAL_SERVICES: RentalServiceConfig[] = [
-  {
-    id: 'airbnb',
-    name: 'AirBnB čišćenje',
-    icon: '🏠',
-    base_price: 60,
-    price_per_sqm: 1.2,
-    min_price: 60,
-    description: 'Profesionalno čišćenje između gostiju',
-    includes: [
-      'Kompletno čišćenje prostora',
-      'Promjena posteljine',
-      'Dopuna potrepština',
-      'Dezinfekcija površina',
-      'Priprema dobrodošlice'
-    ],
-    extras: [
-      { id: 'laundry', name: 'Pranje posteljine', price: 20 },
-      { id: 'supplies', name: 'Dopuna potrepština', price: 15 },
-      { id: 'deep_bathroom', name: 'Dubinsko čišćenje kupaonice', price: 25 },
-      { id: 'check_inventory', name: 'Provjera inventara', price: 10 }
-    ]
-  },
   {
     id: 'daily_rental',
     name: 'Jednodnevni najam čišćenje',
@@ -234,7 +263,7 @@ export const QUANTIFIABLE_EXTRAS: QuantifiableExtra[] = [
     id: 'cabinet_interior',
     name: 'Čišćenje unutrašnjosti ormara',
     icon: '🚪',
-    price_per_unit: 20,
+    price_per_unit: 5,
     unit: 'ormar',
     default_quantity: 2,
     max_quantity: 10,
@@ -280,6 +309,13 @@ export const LANDSCAPING_SERVICES: OutdoorService[] = [
     unit: 'm',
     description: 'Oblikovanje i održavanje živice'
   }
+];
+
+// Daily rental frequency options (based on monthly bookings)
+export const DAILY_RENTAL_FREQUENCY_OPTIONS = [
+  { value: 'occasional', label: '< 5 puta mjesečno', description: 'Manje od 5 rezervacija mjesečno', pricePerSqm: 1.0 },
+  { value: 'frequent', label: '5-14 puta mjesečno', description: '5 do 14 rezervacija mjesečno', pricePerSqm: 0.8 },
+  { value: 'very-frequent', label: '15+ puta mjesečno', description: '15 ili više rezervacija mjesečno', pricePerSqm: 0.5 },
 ];
 
 // Enhanced frequency options with proper discount

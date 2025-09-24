@@ -4,7 +4,7 @@ export interface Service {
   id: string;
   name: string;
   slug: string;
-  category: 'regular' | 'deep' | 'construction' | 'moving' | 'windows' | 'office' | 'general' | 'disinfection';
+  category: 'regular' | 'standard' | 'deep' | 'post-renovation' | 'move-in-out' | 'daily_rental' | 'vacation_rental' | 'windows' | 'office' | 'general' | 'disinfection';
   base_price: number;
   price_per_sqm?: number | null;
   min_price?: number | null;

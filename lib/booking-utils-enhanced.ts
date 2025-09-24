@@ -84,14 +84,43 @@ export function calculateEnhancedPrice(
   frequency: string,
   distanceKm: number,
   rentalFeatures?: RentalFeatures,
-  bookingDate?: Date | string
+  bookingDate?: Date | string,
+  lastCleanedMultiplier?: number
 ): EnhancedPriceCalculation {
   // Property type multiplier
   const propertyTypeMultiplier = PROPERTY_TYPE_MULTIPLIERS[propertyType];
 
+  // Adjust price per sqm for daily rental based on monthly frequency
+  let adjustedPricePerSqm = pricePerSqm;
+  if (serviceType === 'daily_rental') {
+    // Daily rental pricing based on monthly frequency:
+    // 15+ times per month = 0.5 €/m²
+    // 5-14 times per month = 0.8 €/m²
+    // Less than 5 times per month = 1.0 €/m²
+    switch (frequency) {
+      case 'very-frequent': // 15+ times per month
+        adjustedPricePerSqm = 0.5;
+        break;
+      case 'frequent': // 5-14 times per month
+        adjustedPricePerSqm = 0.8;
+        break;
+      case 'occasional': // Less than 5 times per month
+      default:
+        adjustedPricePerSqm = 1.0;
+        break;
+    }
+  }
+
   // Calculate base price with size
-  const sizeAdjustedBase = basePrice + (propertySize * pricePerSqm);
-  const adjustedBase = sizeAdjustedBase * propertyTypeMultiplier;
+  const sizeAdjustedBase = basePrice + (propertySize * adjustedPricePerSqm);
+  
+  // Apply property type multiplier
+  let adjustedBase = sizeAdjustedBase * propertyTypeMultiplier;
+  
+  // Apply last cleaned multiplier (for standard and deep cleaning only)
+  if (lastCleanedMultiplier && (serviceType === 'standard' || serviceType === 'deep')) {
+    adjustedBase = adjustedBase * lastCleanedMultiplier;
+  }
 
   // Calculate indoor extras
   const indoorExtrasObj: EnhancedPriceCalculation['indoorExtras'] = {};
@@ -155,7 +184,7 @@ export function calculateEnhancedPrice(
   let weekendSurcharge = 0;
   let holidaySurcharge = 0;
 
-  if ((serviceType === 'airbnb' || serviceType === 'daily_rental') && bookingDate) {
+  if (serviceType === 'daily_rental' && bookingDate) {
     if (isWeekendDate(bookingDate)) {
       weekendSurcharge = subtotal * 0.20; // 20% weekend surcharge
     }
@@ -171,14 +200,21 @@ export function calculateEnhancedPrice(
     frequencyDiscount = (subtotal * frequencyOption.discount) / 100;
   }
 
-  // Calculate final total
-  const total = subtotal + weekendSurcharge + holidaySurcharge - frequencyDiscount;
+  // Calculate net total (before VAT)
+  const netTotal = subtotal + weekendSurcharge + holidaySurcharge - frequencyDiscount;
+  
+  // Calculate VAT (25%)
+  const vatAmount = netTotal * 0.25;
+  
+  // Calculate final total (with VAT)
+  const total = netTotal + vatAmount;
 
   return {
     serviceType,
     basePrice: adjustedBase,
     sizeMultiplier: propertySize,
     propertyTypeMultiplier,
+    lastCleanedMultiplier,
     rentalFeatures,
     indoorExtras: indoorExtrasObj,
     outdoorServices: outdoorServicesObj,
@@ -186,7 +222,8 @@ export function calculateEnhancedPrice(
     frequencyDiscount,
     weekendSurcharge,
     holidaySurcharge,
-    subtotal,
+    subtotal: netTotal,  // This is now the net amount before VAT
+    vatAmount: Math.round(vatAmount),
     discount: frequencyDiscount,
     total: Math.round(total)
   };
@@ -336,7 +373,7 @@ export function getEstimatedDuration(propertySize: number, serviceType: string):
     baseHours = 4;
   } else if (serviceType === 'construction') {
     baseHours = 6;
-  } else if (serviceType === 'airbnb' || serviceType === 'daily_rental') {
+  } else if (serviceType === 'daily_rental') {
     baseHours = 3;
   }
 
