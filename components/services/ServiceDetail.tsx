@@ -84,8 +84,8 @@ export default function ServiceDetail({ service }: ServiceDetailProps) {
     {
       question: 'Kako se formira cijena?',
       answer: service.price_per_sqm
-        ? `Osnovna cijena je od €${formatPrice(service.base_price)}, s dodatkom od ${service.price_per_sqm}€ po kvadratnom metru za veće prostore.`
-        : `Minimalna cijena za ovu uslugu je od €${formatPrice(service.base_price)}.`
+        ? `Cijena se računa kao ${service.price_per_sqm}€ po kvadratnom metru. Minimalna cijena je ${formatPrice(service.min_price || 0)} €.`
+        : `Minimalna cijena za ovu uslugu je od ${formatPrice(service.min_price || 0)} €.`
     },
     {
       question: 'Trebam li osigurati sredstva za čišćenje?',
@@ -147,7 +147,7 @@ export default function ServiceDetail({ service }: ServiceDetailProps) {
                 <div className="flex items-baseline gap-2 mb-2">
                   <span className="text-sm text-gray-500">od</span>
                   <span className="text-3xl font-bold text-gray-900">
-                    {formatPrice(service.base_price)} €
+                    {formatPrice(service.min_price || 0)} €
                   </span>
                 </div>
                 <div className="flex flex-wrap gap-4 text-sm text-gray-600">
