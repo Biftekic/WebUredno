@@ -35,7 +35,7 @@ const popularServices = [
     title: 'Osnovno čišćenje',
     description: 'Redovito održavanje čistoće vašeg doma ili poslovnog prostora',
     icon: Home,
-    price: 'od 35',
+    price: '35',
     duration: '2-3 sata',
     features: [
       'Usisavanje svih prostorija',
@@ -51,7 +51,7 @@ const popularServices = [
     title: 'Dubinsko čišćenje',
     description: 'Temeljito čišćenje svih površina i teško dostupnih mjesta',
     icon: Sparkles,
-    price: 'od 50',
+    price: '50',
     duration: '3-4 sata',
     features: [
       'Sve usluge osnovnog čišćenja',
@@ -67,7 +67,7 @@ const popularServices = [
     title: 'Čišćenje ureda',
     description: 'Održavanje poslovnih prostora po vašem rasporedu',
     icon: Building2,
-    price: 'od 45',
+    price: '45',
     duration: '2-3 sata',
     features: [
       'Čišćenje radnih površina',
@@ -83,7 +83,7 @@ const popularServices = [
     title: 'Selidba - čišćenje',
     description: 'Kompletno čišćenje prije useljenja ili nakon iseljenja',
     icon: Package,
-    price: 'od 60',
+    price: '60',
     duration: '3-4 sata',
     features: [
       'Čišćenje praznog prostora',
@@ -132,7 +132,7 @@ const testimonials = [
 const faqItems = [
   {
     question: 'Koliko košta vaša usluga čišćenja?',
-    answer: 'Cijena ovisi o vrsti usluge, veličini prostora i učestalosti čišćenja. Osnovno čišćenje kreće od 35€, a točnu cijenu možemo dogovoriti nakon besplatnog pregleda prostora ili putem fotografija koje nam pošaljete.'
+    answer: 'Cijena ovisi o vrsti usluge, veličini prostora i učestalosti čišćenja. Osnovno čišćenje kreće od 35 €, a točnu cijenu možemo dogovoriti nakon besplatnog pregleda prostora ili putem fotografija koje nam pošaljete.'
   },
   {
     question: 'Koje proizvode za čišćenje koristite?',
