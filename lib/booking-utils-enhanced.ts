@@ -75,7 +75,7 @@ export function isHoliday(date: Date | string): boolean {
 // Enhanced price calculation with all improvements
 export function calculateEnhancedPrice(
   serviceType: ServiceTypeEnum,
-  basePrice: number,
+  basePrice: number, // Will be ignored in calculation, kept for compatibility
   pricePerSqm: number,
   propertyType: PropertyTypeEnum,
   propertySize: number,
@@ -111,12 +111,15 @@ export function calculateEnhancedPrice(
     }
   }
 
-  // Calculate base price with size
-  const sizeAdjustedBase = basePrice + (propertySize * adjustedPricePerSqm);
-  
-  // Apply property type multiplier
-  let adjustedBase = sizeAdjustedBase * propertyTypeMultiplier;
-  
+  // Calculate base price: propertySize × pricePerSqm × propertyTypeMultiplier
+  // No base price added anymore
+  const effectiveArea = propertySize * propertyTypeMultiplier;
+  let adjustedBase = effectiveArea * adjustedPricePerSqm;
+
+  // Apply minimum price: 30€ for regular cleaning, 40€ for everything else
+  const minPrice = serviceType === 'regular' ? 30 : 40;
+  adjustedBase = Math.max(adjustedBase, minPrice);
+
   // Apply last cleaned multiplier (for standard and deep cleaning only)
   if (lastCleanedMultiplier && (serviceType === 'standard' || serviceType === 'deep')) {
     adjustedBase = adjustedBase * lastCleanedMultiplier;
@@ -200,20 +203,24 @@ export function calculateEnhancedPrice(
     frequencyDiscount = (subtotal * frequencyOption.discount) / 100;
   }
 
-  // Calculate net total (before VAT)
-  const netTotal = subtotal + weekendSurcharge + holidaySurcharge - frequencyDiscount;
-  
-  // Calculate VAT (25%)
-  const vatAmount = netTotal * 0.25;
-  
-  // Calculate final total (with VAT)
-  const total = netTotal + vatAmount;
+  // Calculate gross total (price with VAT included)
+  const grossTotal = subtotal + weekendSurcharge + holidaySurcharge - frequencyDiscount;
+
+  // Calculate VAT from gross (VAT = gross × 0.20, which equals gross/1.25*0.25)
+  const vatAmount = grossTotal * 0.20;
+
+  // Calculate net (gross - VAT)
+  const netTotal = grossTotal - vatAmount;
+
+  // Total is the gross amount
+  const total = grossTotal;
 
   return {
     serviceType,
     basePrice: adjustedBase,
     sizeMultiplier: propertySize,
     propertyTypeMultiplier,
+    effectiveArea, // Add effective area for display
     lastCleanedMultiplier,
     rentalFeatures,
     indoorExtras: indoorExtrasObj,
@@ -222,7 +229,8 @@ export function calculateEnhancedPrice(
     frequencyDiscount,
     weekendSurcharge,
     holidaySurcharge,
-    subtotal: netTotal,  // This is now the net amount before VAT
+    subtotal: grossTotal,  // This is now the gross amount (with VAT)
+    netAmount: Math.round(netTotal), // Net amount (without VAT)
     vatAmount: Math.round(vatAmount),
     discount: frequencyDiscount,
     total: Math.round(total)

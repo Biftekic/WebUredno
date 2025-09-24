@@ -78,6 +78,7 @@ export interface EnhancedPriceCalculation {
   basePrice: number;
   sizeMultiplier: number;
   propertyTypeMultiplier: number;
+  effectiveArea: number; // propertySize * propertyTypeMultiplier
   lastCleanedMultiplier?: number;
 
   // Rental-specific features
@@ -108,7 +109,8 @@ export interface EnhancedPriceCalculation {
   holidaySurcharge?: number;
 
   // Final calculations
-  subtotal: number;
+  subtotal: number; // Gross amount with VAT
+  netAmount: number; // Net amount without VAT
   vatAmount: number;
   discount: number;
   total: number;

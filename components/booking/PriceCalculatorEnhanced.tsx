@@ -163,17 +163,21 @@ export default function PriceCalculatorEnhanced({
       <div className="space-y-3">
         {/* Base Service */}
         <PriceRow
-          label={`${service.name} (${propertySize}m²)`}
+          label={`${service.name}`}
           amount={priceBreakdown.basePrice}
           type="base"
-          detail={`${propertySize}m² × ${service.price_per_sqm || 0} EUR/m²`}
+          detail={
+            priceBreakdown.propertyTypeMultiplier !== 1
+              ? `${propertySize}m² × ${priceBreakdown.propertyTypeMultiplier.toFixed(2)} = ${priceBreakdown.effectiveArea.toFixed(0)}m² × ${service.price_per_sqm || 0} EUR/m²`
+              : `${propertySize}m² × ${service.price_per_sqm || 0} EUR/m²`
+          }
         />
 
-        {/* Property Type Multiplier */}
+        {/* Property Type Note */}
         {priceBreakdown.propertyTypeMultiplier !== 1 && (
           <div className="text-xs text-gray-500 ml-4">
             • {propertyType === 'house' ? 'Kuća' : propertyType === 'office' ? 'Ured' : 'Stan'}
-            (+{((priceBreakdown.propertyTypeMultiplier - 1) * 100).toFixed(0)}%)
+            (faktor {priceBreakdown.propertyTypeMultiplier.toFixed(2)})
           </div>
         )}
 
@@ -280,20 +284,6 @@ export default function PriceCalculatorEnhanced({
         {/* Separator */}
         <div className="border-t border-gray-300 my-3" />
 
-        {/* Subtotal */}
-        <PriceRow
-          label="Međuzbroj"
-          amount={priceBreakdown.subtotal}
-          type="subtotal"
-        />
-
-        {/* VAT */}
-        <PriceRow
-          label="PDV (25%)"
-          amount={priceBreakdown.vatAmount || Math.round(priceBreakdown.subtotal * 0.25)}
-          type="fee"
-        />
-
         {/* Frequency Discount on Total */}
         {priceBreakdown.frequencyDiscount > 0 && frequencyOption && (
           <PriceRow
@@ -304,10 +294,35 @@ export default function PriceCalculatorEnhanced({
           />
         )}
 
+        {/* Subtotal before VAT separation */}
+        <div className="border-t pt-2 mt-2">
+          <PriceRow
+            label="Međuzbroj (s PDV-om)"
+            amount={priceBreakdown.subtotal}
+            type="subtotal"
+          />
+        </div>
+
+        {/* VAT from gross */}
+        <PriceRow
+          label="PDV (20% od bruto)"
+          amount={priceBreakdown.vatAmount}
+          type="fee"
+          detail="Uključen u cijenu"
+        />
+
+        {/* Net amount */}
+        <PriceRow
+          label="Neto iznos"
+          amount={priceBreakdown.netAmount}
+          type="base"
+          size="small"
+        />
+
         {/* Final Total */}
         <div className="border-t-2 border-green-500 pt-3 mt-3">
           <PriceRow
-            label="UKUPNO"
+            label="UKUPNO ZA PLATITI"
             amount={priceBreakdown.total}
             type="total"
             size="large"
