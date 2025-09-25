@@ -18,13 +18,13 @@ export const metadata: Metadata = {
 };
 
 // Service categories mapping
-const SERVICE_CATEGORIES = {
+const SERVICE_CATEGORIES: Record<string, string[]> = {
   'Redovno': ['regular', 'standard'],
   'Dubinsko': ['deep', 'post-renovation', 'move-in-out'],
   'Selidbe': ['move-in-out'],
   'Najam': ['daily_rental', 'vacation_rental'],
   'Ostalo': ['windows', 'office']
-} as const;
+};
 
 // Group services by categories
 function groupServicesByCategory() {
@@ -32,7 +32,7 @@ function groupServicesByCategory() {
 
   Object.entries(SERVICE_CATEGORIES).forEach(([categoryName, categoryTypes]) => {
     grouped[categoryName] = mockServices.filter(service =>
-      categoryTypes.includes(service.category as any) && service.active
+      categoryTypes.includes(service.category) && service.active
     );
   });
 
