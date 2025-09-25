@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import Script from 'next/script';
+import MobileBottomNav from '@/components/layout/MobileBottomNav';
 import './globals.css';
 
 const inter = Inter({ subsets: ['latin', 'latin-ext'] });
@@ -186,8 +187,9 @@ export default function RootLayout({
           `}
         </Script>
 
-        <div className="min-h-screen flex flex-col">
+        <div className="min-h-screen flex flex-col pb-16 md:pb-0">
           {children}
+          <MobileBottomNav />
         </div>
       </body>
     </html>
