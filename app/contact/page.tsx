@@ -51,7 +51,7 @@ const contactInfo = [
     icon: MapPin,
     title: 'Područje Djelovanja',
     content: 'Zagreb i okolica',
-    description: 'Pokrivamo cijeli Zagreb i okolna mjesta do 20km',
+    description: 'Pokrivamo cijeli Zagreb i okolna mjesta do 70km',
     action: null
   },
 ];
@@ -69,7 +69,7 @@ const faqs = [
   },
   {
     question: 'Koje područje pokrivate?',
-    answer: 'Pokrivamo cijeli Zagreb i okolna mjesta u radijusu do 20 kilometara.'
+    answer: 'Pokrivamo cijeli Zagreb i okolna mjesta u radijusu do 70 kilometara.'
   },
   {
     question: 'Mogu li dobiti besplatnu procjenu?',
@@ -310,7 +310,7 @@ export default function ContactPage() {
                 </h3>
                 <p className="text-gray-600 max-w-md">
                   Pokrivamo cijeli grad Zagreb uključujući sve gradske četvrti,
-                  kao i okolna mjesta u radijusu do 20 kilometara.
+                  kao i okolna mjesta u radijusu do 70 kilometara.
                 </p>
                 <div className="mt-6 flex flex-wrap justify-center gap-2">
                   {['Črnomerec', 'Maksimir', 'Novi Zagreb', 'Trešnjevka', 'Dubrava', 'Stenjevec', 'Peščenica'].map((area) => (
