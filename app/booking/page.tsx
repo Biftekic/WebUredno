@@ -12,6 +12,8 @@ import PriceCalculatorEnhanced from '@/components/booking/PriceCalculatorEnhance
 import QuantitySelector from '@/components/booking/QuantitySelector';
 import AreaInput from '@/components/booking/AreaInput';
 import RentalServiceSelector from '@/components/booking/RentalServiceSelector';
+import WindowsServiceSelector from '@/components/booking/WindowsServiceSelector';
+import OfficeServiceSelector from '@/components/booking/OfficeServiceSelector';
 import Button from '@/components/ui/Button';
 import Input from '@/components/ui/Input';
 import LoadingState from '@/components/ui/LoadingState';
@@ -88,6 +90,37 @@ function BookingContentEnhanced() {
     inventoryCheck: false,
     guestWelcomeSetup: false,
     emergencyAvailable: false,
+  });
+
+  // Windows Service Input
+  const [windowsInput, setWindowsInput] = useState({
+    windowCount: 5,
+    serviceType: 'both' as 'interior' | 'exterior' | 'both',
+    floorLevel: 'ground' as 'ground' | 'first' | 'second_plus',
+    framesCleaning: true,
+    sillsCleaning: true,
+    balconyDoors: 0,
+    skylights: 0,
+    distanceKm: 5,
+    frequency: 'one-time',
+  });
+
+  // Office Service Input
+  const [officeInput, setOfficeInput] = useState({
+    propertySize: 50,
+    officeType: 'single' as 'single' | 'open_plan' | 'mixed',
+    privateOffices: 0,
+    commonAreas: false,
+    bathrooms: 1,
+    kitchenette: false,
+    cleaningTime: 'business_hours' as 'business_hours' | 'after_hours' | 'weekend',
+    frequency: 'weekly',
+    floorCount: 1,
+    elevatorAccess: true,
+    supplies: 'client_provided' as 'client_provided' | 'we_provide',
+    trashRemoval: true,
+    recyclingManagement: false,
+    distanceKm: 5,
   });
 
   // Customer Data
@@ -388,6 +421,26 @@ function BookingContentEnhanced() {
                 >
                   ✨ Dubinsko najma
                 </button>
+                <button
+                  onClick={() => setServiceType('windows')}
+                  className={`px-4 py-2 rounded-t-lg font-medium text-sm transition-colors flex items-center gap-2 ${
+                    serviceType === 'windows'
+                      ? 'bg-sky-600 text-white'
+                      : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                  }`}
+                >
+                  🪟 Pranje prozora
+                </button>
+                <button
+                  onClick={() => setServiceType('office')}
+                  className={`px-4 py-2 rounded-t-lg font-medium text-sm transition-colors flex items-center gap-2 ${
+                    serviceType === 'office'
+                      ? 'bg-purple-600 text-white'
+                      : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                  }`}
+                >
+                  🏢 Čišćenje ureda
+                </button>
               </div>
             </div>
 
@@ -442,7 +495,40 @@ function BookingContentEnhanced() {
 
       case 1: // Enhanced Property Details
         const isRentalService = ['airbnb', 'daily_rental', 'vacation_rental'].includes(serviceType);
+        const isWindowsService = serviceType === 'windows';
+        const isOfficeService = serviceType === 'office';
 
+        // Windows Service UI
+        if (isWindowsService) {
+          return (
+            <div className="space-y-6">
+              <h2 className="text-xl font-semibold text-gray-900 mb-4">
+                Konfiguracija usluge pranja prozora
+              </h2>
+              <WindowsServiceSelector
+                onInputChange={(input) => setWindowsInput(input)}
+                initialInput={windowsInput}
+              />
+            </div>
+          );
+        }
+
+        // Office Service UI
+        if (isOfficeService) {
+          return (
+            <div className="space-y-6">
+              <h2 className="text-xl font-semibold text-gray-900 mb-4">
+                Konfiguracija usluge čišćenja ureda
+              </h2>
+              <OfficeServiceSelector
+                onInputChange={(input) => setOfficeInput(input)}
+                initialInput={officeInput}
+              />
+            </div>
+          );
+        }
+
+        // Standard Property Details for other services
         return (
           <div className="space-y-6">
             <h2 className="text-xl font-semibold text-gray-900 mb-4">
@@ -889,6 +975,8 @@ function BookingContentEnhanced() {
                   distanceKm={distanceKm}
                   rentalFeatures={['airbnb', 'daily_rental', 'vacation_rental'].includes(serviceType) ? rentalFeatures : undefined}
                   bookingDate={selectedDate || undefined}
+                  windowsInput={serviceType === 'windows' ? windowsInput : undefined}
+                  officeInput={serviceType === 'office' ? officeInput : undefined}
                 />
               </div>
             )}
@@ -942,6 +1030,8 @@ function BookingContentEnhanced() {
                   distanceKm={distanceKm}
                   rentalFeatures={['airbnb', 'daily_rental', 'vacation_rental'].includes(serviceType) ? rentalFeatures : undefined}
                   bookingDate={selectedDate || undefined}
+                  windowsInput={serviceType === 'windows' ? windowsInput : undefined}
+                  officeInput={serviceType === 'office' ? officeInput : undefined}
                 />
               </div>
             )}

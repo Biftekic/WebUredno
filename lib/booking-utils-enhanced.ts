@@ -91,8 +91,19 @@ export function calculateEnhancedPrice(
   distanceKm: number,
   rentalFeatures?: RentalFeatures,
   bookingDate?: Date | string,
-  lastCleanedMultiplier?: number
+  lastCleanedMultiplier?: number,
+  windowsInput?: WindowsBookingInput,
+  officeInput?: OfficeBookingInput
 ): EnhancedPriceCalculation {
+  // Special handling for Windows service
+  if (serviceType === 'windows' && windowsInput) {
+    return calculateWindowsPrice(windowsInput);
+  }
+
+  // Special handling for Office service
+  if (serviceType === 'office' && officeInput) {
+    return calculateOfficePrice(officeInput);
+  }
   // Property type multiplier
   const propertyTypeMultiplier = PROPERTY_TYPE_MULTIPLIERS[propertyType];
 

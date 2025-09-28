@@ -24,6 +24,8 @@ interface PriceCalculatorEnhancedProps {
   distanceKm: number;
   rentalFeatures?: RentalFeatures;
   bookingDate?: Date;
+  windowsInput?: any;
+  officeInput?: any;
 }
 
 interface PriceRowProps {
@@ -114,7 +116,9 @@ export default function PriceCalculatorEnhanced({
   frequency,
   distanceKm,
   rentalFeatures,
-  bookingDate
+  bookingDate,
+  windowsInput,
+  officeInput
 }: PriceCalculatorEnhancedProps) {
   const [priceBreakdown, setPriceBreakdown] = useState<EnhancedPriceCalculation | null>(null);
 
@@ -136,11 +140,14 @@ export default function PriceCalculatorEnhanced({
         frequency,
         distanceKm,
         rentalFeatures,
-        bookingDate
+        bookingDate,
+        undefined, // lastCleanedMultiplier
+        windowsInput,
+        officeInput
       );
       setPriceBreakdown(breakdown);
     }
-  }, [service, serviceType, propertyType, propertySize, indoorExtras, outdoorServices, frequency, distanceKm, rentalFeatures, bookingDate]);
+  }, [service, serviceType, propertyType, propertySize, indoorExtras, outdoorServices, frequency, distanceKm, rentalFeatures, bookingDate, windowsInput, officeInput]);
 
   if (!service || !priceBreakdown) {
     return null;
