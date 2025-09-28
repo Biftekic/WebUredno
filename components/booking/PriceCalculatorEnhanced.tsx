@@ -70,12 +70,12 @@ function PriceRow({ label, amount, type = 'base', detail, size = 'medium' }: Pri
           {label}
         </span>
         {detail && (
-          <span className="block sm:inline text-xs text-gray-400 sm:ml-2 mt-0.5 sm:mt-0">
+          <span className="block sm:inline text-xs text-gray-400 sm:ml-2 mt-0.5 sm:mt-0 break-words">
             ({detail})
           </span>
         )}
       </div>
-      <span className={`${getColorClass()} ${size === 'large' ? 'text-lg sm:text-xl' : ''} whitespace-nowrap`}>
+      <span className={`${getColorClass()} ${size === 'large' ? 'text-lg sm:text-xl' : ''} text-right`}>
         {type === 'discount' ? '-' : type === 'fee' || type === 'extra' || type === 'outdoor' || type === 'rental' ? '+' : ''}
         {Math.abs(amount)} EUR
       </span>
@@ -161,7 +161,7 @@ export default function PriceCalculatorEnhanced({
   const officeCalc = isOfficeService ? priceBreakdown as OfficePriceCalculation : null;
 
   return (
-    <div className="bg-gradient-to-br from-green-50 to-white rounded-xl border border-green-100 p-4 md:p-6">
+    <div className="bg-gradient-to-br from-green-50 to-white rounded-xl border border-green-100 p-3 sm:p-4 md:p-6 overflow-hidden">
       <div className="flex items-center gap-2 mb-4">
         <Calculator className="w-5 h-5 text-green-600" />
         <h3 className="text-base md:text-lg font-semibold text-gray-900">Detaljan izračun cijene</h3>

@@ -166,8 +166,8 @@ export default function WindowsServiceSelector({
                   onChange={(e) => updateInput({ framesCleaning: e.target.checked })}
                   className="sr-only peer"
                 />
-                <div className="w-14 h-8 bg-gray-200 rounded-full peer peer-checked:bg-green-600 transition-colors" />
-                <div className="absolute left-1 top-1 w-6 h-6 bg-white rounded-full transition-transform peer-checked:translate-x-6" />
+                <div className="w-12 h-7 sm:w-14 sm:h-8 bg-gray-200 rounded-full peer peer-checked:bg-green-600 transition-colors" />
+                <div className="absolute left-0.5 top-0.5 sm:left-1 sm:top-1 w-6 h-6 bg-white rounded-full transition-transform peer-checked:translate-x-5 sm:peer-checked:translate-x-6" />
               </div>
             </label>
 
@@ -184,8 +184,8 @@ export default function WindowsServiceSelector({
                   onChange={(e) => updateInput({ sillsCleaning: e.target.checked })}
                   className="sr-only peer"
                 />
-                <div className="w-14 h-8 bg-gray-200 rounded-full peer peer-checked:bg-green-600 transition-colors" />
-                <div className="absolute left-1 top-1 w-6 h-6 bg-white rounded-full transition-transform peer-checked:translate-x-6" />
+                <div className="w-12 h-7 sm:w-14 sm:h-8 bg-gray-200 rounded-full peer peer-checked:bg-green-600 transition-colors" />
+                <div className="absolute left-0.5 top-0.5 sm:left-1 sm:top-1 w-6 h-6 bg-white rounded-full transition-transform peer-checked:translate-x-5 sm:peer-checked:translate-x-6" />
               </div>
             </label>
 
@@ -200,7 +200,7 @@ export default function WindowsServiceSelector({
                   onClick={() =>
                     updateInput({ balconyDoors: Math.max(0, input.balconyDoors - 1) })
                   }
-                  className="w-12 h-12 flex items-center justify-center bg-gray-100 hover:bg-gray-200 rounded-lg text-xl font-bold text-gray-700 transition-colors"
+                  className="w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center bg-gray-100 hover:bg-gray-200 rounded-lg text-lg sm:text-xl font-bold text-gray-700 transition-colors"
                   disabled={input.balconyDoors === 0}
                 >
                   −
@@ -211,7 +211,7 @@ export default function WindowsServiceSelector({
                 <button
                   type="button"
                   onClick={() => updateInput({ balconyDoors: input.balconyDoors + 1 })}
-                  className="w-12 h-12 flex items-center justify-center bg-green-600 hover:bg-green-700 rounded-lg text-xl font-bold text-white transition-colors"
+                  className="w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center bg-green-600 hover:bg-green-700 rounded-lg text-lg sm:text-xl font-bold text-white transition-colors"
                 >
                   +
                 </button>
@@ -230,7 +230,7 @@ export default function WindowsServiceSelector({
                   onClick={() =>
                     updateInput({ skylights: Math.max(0, input.skylights - 1) })
                   }
-                  className="w-12 h-12 flex items-center justify-center bg-gray-100 hover:bg-gray-200 rounded-lg text-xl font-bold text-gray-700 transition-colors"
+                  className="w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center bg-gray-100 hover:bg-gray-200 rounded-lg text-lg sm:text-xl font-bold text-gray-700 transition-colors"
                   disabled={input.skylights === 0}
                 >
                   −
@@ -241,7 +241,7 @@ export default function WindowsServiceSelector({
                 <button
                   type="button"
                   onClick={() => updateInput({ skylights: input.skylights + 1 })}
-                  className="w-12 h-12 flex items-center justify-center bg-green-600 hover:bg-green-700 rounded-lg text-xl font-bold text-white transition-colors"
+                  className="w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center bg-green-600 hover:bg-green-700 rounded-lg text-lg sm:text-xl font-bold text-white transition-colors"
                 >
                   +
                 </button>

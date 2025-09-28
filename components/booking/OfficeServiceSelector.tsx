@@ -179,7 +179,7 @@ export default function OfficeServiceSelector({
             onClick={() =>
               updateInput({ floorCount: Math.max(1, input.floorCount - 1) })
             }
-            className="w-12 h-12 flex items-center justify-center bg-gray-100 hover:bg-gray-200 rounded-lg text-xl font-bold text-gray-700 transition-colors"
+            className="w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center bg-gray-100 hover:bg-gray-200 rounded-lg text-lg sm:text-xl font-bold text-gray-700 transition-colors"
             disabled={input.floorCount === 1}
           >
             −
@@ -190,7 +190,7 @@ export default function OfficeServiceSelector({
           <button
             type="button"
             onClick={() => updateInput({ floorCount: input.floorCount + 1 })}
-            className="w-12 h-12 flex items-center justify-center bg-green-600 hover:bg-green-700 rounded-lg text-xl font-bold text-white transition-colors"
+            className="w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center bg-green-600 hover:bg-green-700 rounded-lg text-lg sm:text-xl font-bold text-white transition-colors"
           >
             +
           </button>
@@ -212,8 +212,8 @@ export default function OfficeServiceSelector({
                 onChange={(e) => updateInput({ elevatorAccess: e.target.checked })}
                 className="sr-only peer"
               />
-              <div className="w-14 h-8 bg-gray-200 rounded-full peer peer-checked:bg-green-600 transition-colors" />
-              <div className="absolute left-1 top-1 w-6 h-6 bg-white rounded-full transition-transform peer-checked:translate-x-6" />
+              <div className="w-12 h-7 sm:w-14 sm:h-8 bg-gray-200 rounded-full peer peer-checked:bg-green-600 transition-colors" />
+              <div className="absolute left-0.5 top-0.5 sm:left-1 sm:top-1 w-5 h-5 sm:w-6 sm:h-6 bg-white rounded-full transition-transform peer-checked:translate-x-5 sm:peer-checked:translate-x-6" />
             </div>
           </label>
         )}
@@ -249,7 +249,7 @@ export default function OfficeServiceSelector({
                   onClick={() =>
                     updateInput({ privateOffices: Math.max(0, input.privateOffices - 1) })
                   }
-                  className="w-12 h-12 flex items-center justify-center bg-gray-100 hover:bg-gray-200 rounded-lg text-xl font-bold text-gray-700 transition-colors"
+                  className="w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center bg-gray-100 hover:bg-gray-200 rounded-lg text-lg sm:text-xl font-bold text-gray-700 transition-colors"
                   disabled={input.privateOffices === 0}
                 >
                   −
@@ -260,7 +260,7 @@ export default function OfficeServiceSelector({
                 <button
                   type="button"
                   onClick={() => updateInput({ privateOffices: input.privateOffices + 1 })}
-                  className="w-12 h-12 flex items-center justify-center bg-green-600 hover:bg-green-700 rounded-lg text-xl font-bold text-white transition-colors"
+                  className="w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center bg-green-600 hover:bg-green-700 rounded-lg text-lg sm:text-xl font-bold text-white transition-colors"
                 >
                   +
                 </button>
@@ -281,8 +281,8 @@ export default function OfficeServiceSelector({
                   onChange={(e) => updateInput({ commonAreas: e.target.checked })}
                   className="sr-only peer"
                 />
-                <div className="w-14 h-8 bg-gray-200 rounded-full peer peer-checked:bg-green-600 transition-colors" />
-                <div className="absolute left-1 top-1 w-6 h-6 bg-white rounded-full transition-transform peer-checked:translate-x-6" />
+                <div className="w-12 h-7 sm:w-14 sm:h-8 bg-gray-200 rounded-full peer peer-checked:bg-green-600 transition-colors" />
+                <div className="absolute left-0.5 top-0.5 sm:left-1 sm:top-1 w-5 h-5 sm:w-6 sm:h-6 bg-white rounded-full transition-transform peer-checked:translate-x-5 sm:peer-checked:translate-x-6" />
               </div>
             </label>
 
@@ -297,7 +297,7 @@ export default function OfficeServiceSelector({
                   onClick={() =>
                     updateInput({ bathrooms: Math.max(1, input.bathrooms - 1) })
                   }
-                  className="w-12 h-12 flex items-center justify-center bg-gray-100 hover:bg-gray-200 rounded-lg text-xl font-bold text-gray-700 transition-colors"
+                  className="w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center bg-gray-100 hover:bg-gray-200 rounded-lg text-lg sm:text-xl font-bold text-gray-700 transition-colors"
                   disabled={input.bathrooms === 1}
                 >
                   −
@@ -308,7 +308,7 @@ export default function OfficeServiceSelector({
                 <button
                   type="button"
                   onClick={() => updateInput({ bathrooms: input.bathrooms + 1 })}
-                  className="w-12 h-12 flex items-center justify-center bg-green-600 hover:bg-green-700 rounded-lg text-xl font-bold text-white transition-colors"
+                  className="w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center bg-green-600 hover:bg-green-700 rounded-lg text-lg sm:text-xl font-bold text-white transition-colors"
                 >
                   +
                 </button>
@@ -329,8 +329,8 @@ export default function OfficeServiceSelector({
                   onChange={(e) => updateInput({ kitchenette: e.target.checked })}
                   className="sr-only peer"
                 />
-                <div className="w-14 h-8 bg-gray-200 rounded-full peer peer-checked:bg-green-600 transition-colors" />
-                <div className="absolute left-1 top-1 w-6 h-6 bg-white rounded-full transition-transform peer-checked:translate-x-6" />
+                <div className="w-12 h-7 sm:w-14 sm:h-8 bg-gray-200 rounded-full peer peer-checked:bg-green-600 transition-colors" />
+                <div className="absolute left-0.5 top-0.5 sm:left-1 sm:top-1 w-5 h-5 sm:w-6 sm:h-6 bg-white rounded-full transition-transform peer-checked:translate-x-5 sm:peer-checked:translate-x-6" />
               </div>
             </label>
           </div>
@@ -369,8 +369,8 @@ export default function OfficeServiceSelector({
                   onChange={(e) => updateInput({ trashRemoval: e.target.checked })}
                   className="sr-only peer"
                 />
-                <div className="w-14 h-8 bg-gray-200 rounded-full peer peer-checked:bg-green-600 transition-colors" />
-                <div className="absolute left-1 top-1 w-6 h-6 bg-white rounded-full transition-transform peer-checked:translate-x-6" />
+                <div className="w-12 h-7 sm:w-14 sm:h-8 bg-gray-200 rounded-full peer peer-checked:bg-green-600 transition-colors" />
+                <div className="absolute left-0.5 top-0.5 sm:left-1 sm:top-1 w-5 h-5 sm:w-6 sm:h-6 bg-white rounded-full transition-transform peer-checked:translate-x-5 sm:peer-checked:translate-x-6" />
               </div>
             </label>
 
@@ -387,8 +387,8 @@ export default function OfficeServiceSelector({
                   onChange={(e) => updateInput({ recyclingManagement: e.target.checked })}
                   className="sr-only peer"
                 />
-                <div className="w-14 h-8 bg-gray-200 rounded-full peer peer-checked:bg-green-600 transition-colors" />
-                <div className="absolute left-1 top-1 w-6 h-6 bg-white rounded-full transition-transform peer-checked:translate-x-6" />
+                <div className="w-12 h-7 sm:w-14 sm:h-8 bg-gray-200 rounded-full peer peer-checked:bg-green-600 transition-colors" />
+                <div className="absolute left-0.5 top-0.5 sm:left-1 sm:top-1 w-5 h-5 sm:w-6 sm:h-6 bg-white rounded-full transition-transform peer-checked:translate-x-5 sm:peer-checked:translate-x-6" />
               </div>
             </label>
           </div>
