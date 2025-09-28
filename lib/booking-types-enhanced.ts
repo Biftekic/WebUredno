@@ -1,6 +1,6 @@
 // Enhanced Booking Types and Constants for Improved Calculator
 
-export type ServiceTypeEnum = 'regular' | 'standard' | 'deep' | 'post-renovation' | 'move-in-out' | 'daily_rental' | 'vacation_rental';
+export type ServiceTypeEnum = 'regular' | 'standard' | 'deep' | 'post-renovation' | 'move-in-out' | 'daily_rental' | 'vacation_rental' | 'windows' | 'office';
 
 export type PropertyTypeEnum = 'apartment' | 'house' | 'office';
 
@@ -326,4 +326,147 @@ export const ENHANCED_FREQUENCY_OPTIONS = [
   { value: 'weekly', label: 'Tjedno', description: 'Svakih 7 dana', discount: 10 },
   { value: 'biweekly', label: 'Dvotjedno', description: 'Svakih 14 dana', discount: 5 },
   { value: 'monthly', label: 'Mjesečno', description: 'Jednom mjesečno', discount: 3 },
+];
+
+// ==================== WINDOWS SERVICE ====================
+
+export type WindowsServiceType = 'interior' | 'exterior' | 'both';
+export type WindowsFloorLevel = 'ground' | 'first' | 'second_plus';
+
+export interface WindowsBookingInput {
+  windowCount: number;
+  serviceType: WindowsServiceType;
+  floorLevel: WindowsFloorLevel;
+  framesCleaning: boolean;
+  sillsCleaning: boolean;
+  balconyDoors: number;
+  skylights: number;
+  distanceKm: number;
+  frequency: string;
+}
+
+export interface WindowsPriceCalculation extends EnhancedPriceCalculation {
+  windowsBase: number;
+  balconyDoorsTotal: number;
+  skylightsTotal: number;
+  framesTotal: number;
+  sillsTotal: number;
+  pricePerWindow: number;
+}
+
+// Windows Service Configuration
+export const WINDOWS_SERVICE_CONFIG = {
+  basePerWindow: 7,
+  serviceTypeMultipliers: {
+    interior: 1.0,
+    exterior: 1.2,
+    both: 1.8,
+  },
+  floorSurcharges: {
+    ground: 0,
+    first: 2,
+    second_plus: 5,
+  },
+  framesCostPerWindow: 1.5,
+  sillsCostPerWindow: 1.0,
+  balconyDoorMultiplier: 2,
+  skylightMultiplier: 1.5,
+  minPrice: 25,
+};
+
+export const WINDOWS_SERVICE_TYPE_OPTIONS = [
+  { value: 'interior', label: 'Iznutra', icon: '🏠', description: 'Čišćenje prozora s unutarnje strane' },
+  { value: 'exterior', label: 'Izvana', icon: '🏢', description: 'Čišćenje prozora s vanjske strane' },
+  { value: 'both', label: 'Obostrano', icon: '🪟', description: 'Čišćenje s obje strane prozora' },
+];
+
+export const WINDOWS_FLOOR_LEVEL_OPTIONS = [
+  { value: 'ground', label: 'Prizemlje', surcharge: 0, description: 'Prozori u prizemlju' },
+  { value: 'first', label: '1. kat', surcharge: 2, description: '+2€ po prozoru' },
+  { value: 'second_plus', label: '2+ kat', surcharge: 5, description: '+5€ po prozoru' },
+];
+
+// ==================== OFFICE SERVICE ====================
+
+export type OfficeType = 'single' | 'open_plan' | 'mixed';
+export type CleaningTime = 'business_hours' | 'after_hours' | 'weekend';
+export type SuppliesOption = 'client_provided' | 'we_provide';
+
+export interface OfficeBookingInput {
+  propertySize: number;
+  officeType: OfficeType;
+  privateOffices: number;
+  commonAreas: boolean;
+  bathrooms: number;
+  kitchenette: boolean;
+  cleaningTime: CleaningTime;
+  frequency: string;
+  floorCount: number;
+  elevatorAccess: boolean;
+  supplies: SuppliesOption;
+  trashRemoval: boolean;
+  recyclingManagement: boolean;
+  distanceKm: number;
+}
+
+export interface OfficePriceCalculation extends EnhancedPriceCalculation {
+  officeBasePrice: number;
+  privateOfficesExtra: number;
+  commonAreasExtra: number;
+  bathroomsExtra: number;
+  kitchenetteExtra: number;
+  suppliesExtra: number;
+  trashExtra: number;
+  recyclingExtra: number;
+  timeMultiplier: number;
+  officeTypeMultiplier: number;
+}
+
+// Office Service Configuration
+export const OFFICE_SERVICE_CONFIG = {
+  basePricePerSqm: 0.4,
+  officeTypeMultipliers: {
+    single: 1.0,
+    open_plan: 0.9,
+    mixed: 1.05,
+  },
+  timeSlotMultipliers: {
+    business_hours: 1.0,
+    after_hours: 1.3,
+    weekend: 1.5,
+  },
+  floorMultiplierPerFloor: 0.05,
+  noElevatorPenalty: 1.1,
+  privateOfficeExtra: 5,
+  commonAreasExtra: 15,
+  bathroomExtra: 10,
+  kitchenetteExtra: 15,
+  suppliesExtra: 20,
+  trashExtra: 5,
+  recyclingExtra: 5,
+  minPrice: 45,
+  commercialFrequencyDiscounts: {
+    'one-time': 0,
+    daily: 0.20,
+    weekly: 0.15,
+    biweekly: 0.10,
+    monthly: 0.05,
+  },
+};
+
+export const OFFICE_TYPE_OPTIONS = [
+  { value: 'single', label: 'Pojedinačni ured', icon: '🚪', multiplier: 1.0, description: 'Jedan zatvoreni uredski prostor' },
+  { value: 'open_plan', label: 'Otvoreni prostor', icon: '📊', multiplier: 0.9, description: 'Otvoreni uredski prostor' },
+  { value: 'mixed', label: 'Mješovito', icon: '🏢', multiplier: 1.05, description: 'Kombinacija zatvorenih ureda i otvorenog prostora' },
+];
+
+export const CLEANING_TIME_OPTIONS = [
+  { value: 'business_hours', label: 'Radno vrijeme', icon: '🕐', multiplier: 1.0, description: 'Čišćenje tijekom radnog vremena' },
+  { value: 'after_hours', label: 'Izvan radnog vremena', icon: '🌙', multiplier: 1.3, description: '+30% nadoplata' },
+  { value: 'weekend', label: 'Vikend', icon: '🎉', multiplier: 1.5, description: '+50% nadoplata' },
+];
+
+export const SUPPLIES_OPTIONS = [
+  { value: 'client_provided', label: 'Klijent osigurava', icon: '🧴', extra: 0, description: 'Koristite vlastite proizvode' },
+  { value: 'we_provide', label: 'Mi osiguravamo', icon: '✨', extra: 20, description: '+20€ za profesionalne proizvode' },
 ];

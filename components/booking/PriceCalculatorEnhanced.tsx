@@ -7,6 +7,8 @@ import {
   ServiceTypeEnum,
   PropertyTypeEnum,
   EnhancedPriceCalculation,
+  WindowsPriceCalculation,
+  OfficePriceCalculation,
   RentalFeatures
 } from '@/lib/booking-types-enhanced';
 import type { Service } from '@/types/database';
@@ -60,18 +62,18 @@ function PriceRow({ label, amount, type = 'base', detail, size = 'medium' }: Pri
   };
 
   return (
-    <div className={`flex items-center justify-between ${getSizeClass()}`}>
+    <div className={`flex flex-col sm:flex-row sm:items-center justify-between gap-1 sm:gap-0 ${getSizeClass()}`}>
       <div className="flex-1">
         <span className={getColorClass()}>
           {label}
         </span>
         {detail && (
-          <span className="text-xs text-gray-400 ml-2">
+          <span className="block sm:inline text-xs text-gray-400 sm:ml-2 mt-0.5 sm:mt-0">
             ({detail})
           </span>
         )}
       </div>
-      <span className={`${getColorClass()} ${size === 'large' ? 'text-xl' : ''}`}>
+      <span className={`${getColorClass()} ${size === 'large' ? 'text-lg sm:text-xl' : ''} whitespace-nowrap`}>
         {type === 'discount' ? '-' : type === 'fee' || type === 'extra' || type === 'outdoor' || type === 'rental' ? '+' : ''}
         {Math.abs(amount)} EUR
       </span>
@@ -82,7 +84,10 @@ function PriceRow({ label, amount, type = 'base', detail, size = 'medium' }: Pri
 function ServiceBadge({ type, children }: { type: ServiceTypeEnum; children: React.ReactNode }) {
   const getBadgeColor = () => {
     switch (type) {
-
+      case 'windows':
+        return 'bg-sky-100 text-sky-700 border-sky-300';
+      case 'office':
+        return 'bg-purple-100 text-purple-700 border-purple-300';
       case 'daily_rental':
         return 'bg-blue-100 text-blue-700 border-blue-300';
       case 'vacation_rental':
@@ -93,7 +98,7 @@ function ServiceBadge({ type, children }: { type: ServiceTypeEnum; children: Rea
   };
 
   return (
-    <div className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium border ${getBadgeColor()} mb-3`}>
+    <div className={`inline-flex items-center px-3 py-1 rounded-full text-xs md:text-sm font-medium border ${getBadgeColor()} mb-3`}>
       {children}
     </div>
   );
@@ -143,20 +148,25 @@ export default function PriceCalculatorEnhanced({
 
   const frequencyOption = FREQUENCY_OPTIONS.find(f => f.value === frequency);
   const isRentalService = ['daily_rental', 'vacation_rental'].includes(serviceType);
+  const isWindowsService = serviceType === 'windows';
+  const isOfficeService = serviceType === 'office';
+  const windowsCalc = isWindowsService ? priceBreakdown as WindowsPriceCalculation : null;
+  const officeCalc = isOfficeService ? priceBreakdown as OfficePriceCalculation : null;
 
   return (
     <div className="bg-gradient-to-br from-green-50 to-white rounded-xl border border-green-100 p-4 md:p-6">
       <div className="flex items-center gap-2 mb-4">
         <Calculator className="w-5 h-5 text-green-600" />
-        <h3 className="text-lg font-semibold text-gray-900">Detaljan izračun cijene</h3>
+        <h3 className="text-base md:text-lg font-semibold text-gray-900">Detaljan izračun cijene</h3>
       </div>
 
       {/* Service Type Badge */}
-      {isRentalService && (
+      {(isRentalService || isWindowsService || isOfficeService) && (
         <ServiceBadge type={serviceType}>
-
           {serviceType === 'daily_rental' && '🔑 Jednodnevni najam'}
           {serviceType === 'vacation_rental' && '✨ Dubinsko čišćenje najma'}
+          {serviceType === 'windows' && '🪟 Pranje prozora'}
+          {serviceType === 'office' && '🏢 Čišćenje ureda'}
         </ServiceBadge>
       )}
 
@@ -198,6 +208,126 @@ export default function PriceCalculatorEnhanced({
             )}
             {rentalFeatures.emergencyAvailable && (
               <PriceRow label="24/7 Hitna dostupnost" amount={50} type="rental" />
+            )}
+          </>
+        )}
+
+        {/* Windows-Specific Breakdown */}
+        {isWindowsService && windowsCalc && (
+          <>
+            <div className="border-t pt-2">
+              <p className="text-sm font-medium text-gray-700 mb-2">Detalji prozora</p>
+            </div>
+            <PriceRow
+              label="Osnovni prozori"
+              amount={windowsCalc.windowsBase}
+              type="base"
+              detail={`${windowsCalc.pricePerWindow.toFixed(2)} EUR po prozoru`}
+              size="small"
+            />
+            {windowsCalc.balconyDoorsTotal > 0 && (
+              <PriceRow
+                label="Balkonska vrata"
+                amount={windowsCalc.balconyDoorsTotal}
+                type="extra"
+                size="small"
+              />
+            )}
+            {windowsCalc.skylightsTotal > 0 && (
+              <PriceRow
+                label="Krovni prozori"
+                amount={windowsCalc.skylightsTotal}
+                type="extra"
+                size="small"
+              />
+            )}
+            {windowsCalc.framesTotal > 0 && (
+              <PriceRow
+                label="Čišćenje okvira"
+                amount={windowsCalc.framesTotal}
+                type="extra"
+                size="small"
+              />
+            )}
+            {windowsCalc.sillsTotal > 0 && (
+              <PriceRow
+                label="Čišćenje prozorskih dasaka"
+                amount={windowsCalc.sillsTotal}
+                type="extra"
+                size="small"
+              />
+            )}
+          </>
+        )}
+
+        {/* Office-Specific Breakdown */}
+        {isOfficeService && officeCalc && (
+          <>
+            <div className="border-t pt-2">
+              <p className="text-sm font-medium text-gray-700 mb-2">Detalji ureda</p>
+            </div>
+            <PriceRow
+              label="Osnovna površina"
+              amount={officeCalc.officeBasePrice}
+              type="base"
+              detail={`×${officeCalc.officeTypeMultiplier.toFixed(2)} tip × ${officeCalc.timeMultiplier.toFixed(2)} vrijeme`}
+              size="small"
+            />
+            {officeCalc.privateOfficesExtra > 0 && (
+              <PriceRow
+                label="Zasebni uredi"
+                amount={officeCalc.privateOfficesExtra}
+                type="extra"
+                size="small"
+              />
+            )}
+            {officeCalc.commonAreasExtra > 0 && (
+              <PriceRow
+                label="Zajednički prostori"
+                amount={officeCalc.commonAreasExtra}
+                type="extra"
+                size="small"
+              />
+            )}
+            {officeCalc.bathroomsExtra > 0 && (
+              <PriceRow
+                label="Sanitarni čvorovi"
+                amount={officeCalc.bathroomsExtra}
+                type="extra"
+                size="small"
+              />
+            )}
+            {officeCalc.kitchenetteExtra > 0 && (
+              <PriceRow
+                label="Čajna kuhinja"
+                amount={officeCalc.kitchenetteExtra}
+                type="extra"
+                size="small"
+              />
+            )}
+            {officeCalc.suppliesExtra > 0 && (
+              <PriceRow
+                label="Profesionalni proizvodi"
+                amount={officeCalc.suppliesExtra}
+                type="extra"
+                size="small"
+              />
+            )}
+            {officeCalc.trashExtra > 0 && (
+              <PriceRow
+                label="Iznošenje smeća"
+                amount={officeCalc.trashExtra}
+                type="extra"
+                size="small"
+              />
+            )}
+            {officeCalc.recyclingExtra > 0 && (
+              <PriceRow
+                label="Upravljanje reciklažom"
+                amount={officeCalc.recyclingExtra}
+                type="extra"
+                size="small"
+              />
             )}
           </>
         )}

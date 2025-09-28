@@ -6,7 +6,13 @@ import {
   EnhancedPriceCalculation,
   PROPERTY_TYPE_MULTIPLIERS,
   RentalFeatures,
-  TURNAROUND_TIME_OPTIONS
+  TURNAROUND_TIME_OPTIONS,
+  WindowsBookingInput,
+  WindowsPriceCalculation,
+  WINDOWS_SERVICE_CONFIG,
+  OfficeBookingInput,
+  OfficePriceCalculation,
+  OFFICE_SERVICE_CONFIG,
 } from './booking-types-enhanced';
 
 // Time slot configuration
@@ -291,6 +297,191 @@ export function formatPhoneForWhatsApp(phone: string): string {
     return `385${cleaned.startsWith('0') ? cleaned.slice(1) : cleaned}`;
   }
   return cleaned;
+}
+
+// ==================== WINDOWS SERVICE CALCULATION ====================
+
+export function calculateWindowsPrice(input: WindowsBookingInput): WindowsPriceCalculation {
+  const config = WINDOWS_SERVICE_CONFIG;
+
+  // Service type multiplier
+  const serviceMultiplier = config.serviceTypeMultipliers[input.serviceType];
+
+  // Floor surcharge
+  const floorSurcharge = config.floorSurcharges[input.floorLevel];
+
+  // Price per window
+  const pricePerWindow = config.basePerWindow * serviceMultiplier + floorSurcharge;
+
+  // Calculate windows cost
+  const windowsBase = input.windowCount * pricePerWindow;
+
+  // Balcony doors (count as 2 windows)
+  const balconyDoorsTotal = input.balconyDoors * config.balconyDoorMultiplier * pricePerWindow;
+
+  // Skylights (harder access, +50%)
+  const skylightsTotal = input.skylights * (config.basePerWindow * config.skylightMultiplier * serviceMultiplier + floorSurcharge * config.skylightMultiplier);
+
+  // Optional extras
+  const framesTotal = input.framesCleaning ? input.windowCount * config.framesCostPerWindow : 0;
+  const sillsTotal = input.sillsCleaning ? input.windowCount * config.sillsCostPerWindow : 0;
+
+  // Subtotal before minimum
+  const subtotalBeforeMin = windowsBase + balconyDoorsTotal + skylightsTotal + framesTotal + sillsTotal;
+
+  // Apply minimum price
+  const basePrice = Math.max(subtotalBeforeMin, config.minPrice);
+
+  // Distance fee
+  const distanceFee = calculateDistanceFee(input.distanceKm);
+
+  // Frequency discount
+  const frequencyOption = FREQUENCY_OPTIONS.find(f => f.value === input.frequency);
+  const frequencyDiscountRate = frequencyOption ? frequencyOption.discount / 100 : 0;
+  const frequencyDiscount = Math.round(basePrice * frequencyDiscountRate);
+
+  // Subtotal (gross with VAT)
+  const subtotal = basePrice + distanceFee - frequencyDiscount;
+
+  // VAT calculation (VAT already included in gross)
+  const vatAmount = Math.round(subtotal * 0.20 / 1.20);
+  const netAmount = subtotal - vatAmount;
+
+  // Final total
+  const total = subtotal;
+
+  return {
+    serviceType: 'windows',
+    basePrice,
+    sizeMultiplier: 1,
+    propertyTypeMultiplier: 1,
+    effectiveArea: input.windowCount,
+    indoorExtras: {},
+    outdoorServices: {},
+    distanceFee,
+    frequencyDiscount,
+    subtotal,
+    netAmount,
+    vatAmount,
+    discount: frequencyDiscount,
+    total,
+    // Windows-specific
+    windowsBase,
+    balconyDoorsTotal,
+    skylightsTotal,
+    framesTotal,
+    sillsTotal,
+    pricePerWindow,
+  };
+}
+
+// ==================== OFFICE SERVICE CALCULATION ====================
+
+export function calculateOfficePrice(input: OfficeBookingInput): OfficePriceCalculation {
+  const config = OFFICE_SERVICE_CONFIG;
+
+  // Office type multiplier
+  const officeTypeMultiplier = config.officeTypeMultipliers[input.officeType];
+
+  // Time slot surcharge
+  const timeMultiplier = config.timeSlotMultipliers[input.cleaningTime];
+
+  // Multi-floor multiplier
+  const floorMultiplier = input.floorCount > 1
+    ? 1 + ((input.floorCount - 1) * config.floorMultiplierPerFloor)
+    : 1.0;
+
+  // No elevator penalty
+  const elevatorPenalty = !input.elevatorAccess && input.floorCount > 1
+    ? config.noElevatorPenalty
+    : 1.0;
+
+  // Calculate base price
+  const officeBasePrice = Math.round(
+    input.propertySize *
+    config.basePricePerSqm *
+    officeTypeMultiplier *
+    timeMultiplier *
+    floorMultiplier *
+    elevatorPenalty
+  );
+
+  // Private offices extra care
+  const privateOfficesExtra = input.privateOffices * config.privateOfficeExtra;
+
+  // Common areas extra
+  const commonAreasExtra = input.commonAreas ? config.commonAreasExtra : 0;
+
+  // Bathroom cleaning (per bathroom)
+  const bathroomsExtra = input.bathrooms * config.bathroomExtra;
+
+  // Kitchenette cleaning
+  const kitchenetteExtra = input.kitchenette ? config.kitchenetteExtra : 0;
+
+  // Supply provision
+  const suppliesExtra = input.supplies === 'we_provide' ? config.suppliesExtra : 0;
+
+  // Trash & recycling
+  const trashExtra = input.trashRemoval ? config.trashExtra : 0;
+  const recyclingExtra = input.recyclingManagement ? config.recyclingExtra : 0;
+
+  // Subtotal before minimum
+  const subtotalBeforeMin = officeBasePrice +
+    privateOfficesExtra +
+    commonAreasExtra +
+    bathroomsExtra +
+    kitchenetteExtra +
+    suppliesExtra +
+    trashExtra +
+    recyclingExtra;
+
+  // Apply minimum price
+  const basePrice = Math.max(subtotalBeforeMin, config.minPrice);
+
+  // Distance fee
+  const distanceFee = calculateDistanceFee(input.distanceKm);
+
+  // Commercial frequency discounts (more generous for recurring)
+  const frequencyDiscountRate = config.commercialFrequencyDiscounts[input.frequency as keyof typeof config.commercialFrequencyDiscounts] || 0;
+  const frequencyDiscount = Math.round(basePrice * frequencyDiscountRate);
+
+  // Subtotal (gross with VAT)
+  const subtotal = basePrice + distanceFee - frequencyDiscount;
+
+  // VAT calculation (VAT already included in gross)
+  const vatAmount = Math.round(subtotal * 0.20 / 1.20);
+  const netAmount = subtotal - vatAmount;
+
+  // Final total
+  const total = subtotal;
+
+  return {
+    serviceType: 'office',
+    basePrice,
+    sizeMultiplier: 1,
+    propertyTypeMultiplier: 1,
+    effectiveArea: input.propertySize,
+    indoorExtras: {},
+    outdoorServices: {},
+    distanceFee,
+    frequencyDiscount,
+    subtotal,
+    netAmount,
+    vatAmount,
+    discount: frequencyDiscount,
+    total,
+    // Office-specific
+    officeBasePrice,
+    privateOfficesExtra,
+    commonAreasExtra,
+    bathroomsExtra,
+    kitchenetteExtra,
+    suppliesExtra,
+    trashExtra,
+    recyclingExtra,
+    timeMultiplier,
+    officeTypeMultiplier,
+  };
 }
 
 // Generate WhatsApp message
