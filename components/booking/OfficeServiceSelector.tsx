@@ -77,7 +77,7 @@ export default function OfficeServiceSelector({
         <label className="block mb-3 text-sm font-semibold text-gray-900">
           Tip uredskog prostora
         </label>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
           {OFFICE_TYPE_OPTIONS.map((option) => {
             const isSelected = input.officeType === option.value;
             return (
@@ -109,7 +109,7 @@ export default function OfficeServiceSelector({
         <label className="block mb-3 text-sm font-semibold text-gray-900">
           Vrijeme čišćenja
         </label>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
           {CLEANING_TIME_OPTIONS.map((option) => {
             const isSelected = input.cleaningTime === option.value;
             return (
@@ -141,7 +141,7 @@ export default function OfficeServiceSelector({
         <label className="block mb-3 text-sm font-semibold text-gray-900">
           Proizvodi za čišćenje
         </label>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           {SUPPLIES_OPTIONS.map((option) => {
             const isSelected = input.supplies === option.value;
             return (

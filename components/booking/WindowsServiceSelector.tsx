@@ -69,7 +69,7 @@ export default function WindowsServiceSelector({
         <label className="block mb-3 text-sm font-semibold text-gray-900">
           Način čišćenja
         </label>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
           {WINDOWS_SERVICE_TYPE_OPTIONS.map((option) => {
             const isSelected = input.serviceType === option.value;
             return (
@@ -101,7 +101,7 @@ export default function WindowsServiceSelector({
         <label className="block mb-3 text-sm font-semibold text-gray-900">
           Kat
         </label>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
           {WINDOWS_FLOOR_LEVEL_OPTIONS.map((option) => {
             const isSelected = input.floorLevel === option.value;
             return (
