@@ -44,7 +44,7 @@ const popularServices = [
       'Iznošenje smeća'
     ],
     popular: true,
-    href: '/services/osnovno-ciscenje'
+    href: '/services/redovno-ciscenje'
   },
   {
     id: 2,
@@ -92,7 +92,7 @@ const popularServices = [
       'Pranje prozora'
     ],
     popular: false,
-    href: '/services/selidba-ciscenje'
+    href: '/services/useljenje-iseljenje'
   }
 ];
 
