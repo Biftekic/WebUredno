@@ -401,25 +401,15 @@ function BookingContentEnhanced() {
                 <button
                   onClick={() => setServiceType('daily_rental')}
                   className={`px-4 py-2 rounded-t-lg font-medium text-sm transition-colors flex items-center gap-2 ${
-                    serviceType === 'daily_rental'
+                    serviceType === 'daily_rental' || serviceType === 'vacation_rental'
                       ? 'bg-purple-600 text-white'
                       : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                   }`}
                 >
-                  🔑 Jednodnevni najam
+                  🏠 Najam
                   <span className="px-2 py-0.5 bg-yellow-400 text-black text-xs rounded-full">
                     NOVO
                   </span>
-                </button>
-                <button
-                  onClick={() => setServiceType('vacation_rental')}
-                  className={`px-4 py-2 rounded-t-lg font-medium text-sm transition-colors flex items-center gap-2 ${
-                    serviceType === 'vacation_rental'
-                      ? 'bg-blue-600 text-white'
-                      : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-                  }`}
-                >
-                  ✨ Dubinsko najma
                 </button>
                 <button
                   onClick={() => setServiceType('windows')}
@@ -450,11 +440,44 @@ function BookingContentEnhanced() {
               </div>
             )}
 
+            {/* Rental Sub-type Selection */}
+            {(serviceType === 'daily_rental' || serviceType === 'vacation_rental') && (
+              <div className="mb-6">
+                <p className="text-sm font-medium text-gray-700 mb-3">Odaberite tip najma:</p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <button
+                    onClick={() => setServiceType('daily_rental')}
+                    className={`p-4 rounded-lg border-2 transition-all duration-200 ${
+                      serviceType === 'daily_rental'
+                        ? 'border-purple-500 bg-purple-50'
+                        : 'border-gray-200 bg-white hover:border-gray-300'
+                    }`}
+                  >
+                    <div className="text-2xl mb-2">🔑</div>
+                    <h4 className="font-medium text-gray-900 mb-1">Jednodnevni najam</h4>
+                    <p className="text-xs text-gray-600">Brzo čišćenje između gostiju</p>
+                  </button>
+                  <button
+                    onClick={() => setServiceType('vacation_rental')}
+                    className={`p-4 rounded-lg border-2 transition-all duration-200 ${
+                      serviceType === 'vacation_rental'
+                        ? 'border-purple-500 bg-purple-50'
+                        : 'border-gray-200 bg-white hover:border-gray-300'
+                    }`}
+                  >
+                    <div className="text-2xl mb-2">✨</div>
+                    <h4 className="font-medium text-gray-900 mb-1">Dubinsko čišćenje najma</h4>
+                    <p className="text-xs text-gray-600">Temeljito čišćenje nakon odjave</p>
+                  </button>
+                </div>
+              </div>
+            )}
+
             <div className="grid gap-4 md:grid-cols-2">
               {services
                 .filter(service => {
                   if (serviceType === 'daily_rental') return service.slug === 'jednodnevni-najam';
-                  if (serviceType === 'vacation_rental') return service.slug === 'vacation-rental-deep';
+                  if (serviceType === 'vacation_rental') return service.slug === 'dubinsko-ciscenje-najma';
                   if (serviceType === 'deep') return service.category === 'deep';
                   return service.category === 'regular';
                 })
