@@ -440,12 +440,12 @@ export default function PriceCalculatorEnhanced({
           />
         </div>
 
-        {/* VAT from gross */}
+        {/* VAT (25% of NET) */}
         <PriceRow
-          label="PDV (20% od bruto)"
+          label="PDV (25%)"
           amount={priceBreakdown.vatAmount}
           type="fee"
-          detail="Uključen u cijenu"
+          detail="25% od neto cijene"
         />
 
         {/* Net amount */}

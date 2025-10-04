@@ -488,7 +488,7 @@ function BookingContentEnhanced() {
                     key={service.id}
                     onClick={() => setSelectedService(service)}
                     className={`
-                      p-3 sm:p-4 rounded-xl border-2 text-left transition-all duration-200 min-h-touch
+                      p-3 sm:p-4 rounded-xl border-2 text-left transition-all duration-200 min-h-touch w-full
                       ${selectedService?.id === service.id
                         ? 'border-green-500 bg-green-50'
                         : 'border-gray-200 hover:border-gray-300 active:bg-gray-50 bg-white'
@@ -496,20 +496,20 @@ function BookingContentEnhanced() {
                     `}
                     aria-label={`${service.name} - ${service.base_price} EUR`}
                   >
-                    <div className="flex items-start justify-between mb-2">
-                      <h3 className="font-medium text-gray-900">{service.name}</h3>
+                    <div className="flex items-start justify-between gap-2 mb-2">
+                      <h3 className="font-medium text-gray-900 text-sm sm:text-base break-words flex-1">{service.name}</h3>
                       {service.popular && (
-                        <span className="px-2 py-1 bg-green-100 text-green-700 text-xs rounded-full">
+                        <span className="px-2 py-1 bg-green-100 text-green-700 text-xs rounded-full whitespace-nowrap flex-shrink-0">
                           Popularno
                         </span>
                       )}
                     </div>
-                    <p className="text-sm text-gray-600 mb-3">{service.description}</p>
-                    <div className="flex items-center justify-between">
-                      <span className="text-lg font-semibold text-green-600">
+                    <p className="text-xs sm:text-sm text-gray-600 mb-3 break-words leading-relaxed">{service.description}</p>
+                    <div className="flex items-center justify-between gap-2 flex-wrap">
+                      <span className="text-base sm:text-lg font-semibold text-green-600 whitespace-nowrap">
                         od {service.base_price} EUR
                       </span>
-                      <span className="text-xs text-gray-500">
+                      <span className="text-xs text-gray-500 whitespace-nowrap">
                         ~{service.duration_hours}h
                       </span>
                     </div>
@@ -557,7 +557,7 @@ function BookingContentEnhanced() {
         // Standard Property Details for other services
         return (
           <div className="space-y-4 sm:space-y-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-gray-900 mb-3 sm:mb-4">
+            <h2 className="text-base sm:text-lg md:text-xl font-semibold text-gray-900 mb-3 sm:mb-4 break-words">
               Detalji o nekretnini i dodatne usluge
             </h2>
 
@@ -987,7 +987,7 @@ function BookingContentEnhanced() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white pb-20 sm:pb-0">
-      <div className="container mx-auto px-4 py-6 md:py-8 max-w-7xl">
+      <div className="w-full mx-auto px-3 sm:px-4 py-4 sm:py-6 md:py-8 max-w-7xl">
         {/* Header */}
         <div className="mb-6 md:mb-8">
           <button
@@ -997,14 +997,14 @@ function BookingContentEnhanced() {
             <ArrowLeft className="w-5 h-5" />
             <span className="text-sm">Natrag</span>
           </button>
-          <h1 className="text-2xl md:text-3xl font-bold text-gray-900">Napredna rezervacija čišćenja</h1>
-          <p className="text-gray-600 mt-1 md:mt-2 text-sm md:text-base">Prilagodite uslugu vašim potrebama</p>
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 break-words">Napredna rezervacija čišćenja</h1>
+          <p className="text-gray-600 mt-1 md:mt-2 text-xs sm:text-sm md:text-base">Prilagodite uslugu vašim potrebama</p>
         </div>
 
         <div className="grid lg:grid-cols-[280px_1fr] xl:grid-cols-[300px_1fr_380px] gap-4 lg:gap-6 xl:gap-8">
           {/* Left Column - Steps */}
-          <div className="lg:col-span-1">
-            <div className="bg-white rounded-xl shadow-sm p-4 sm:p-6">
+          <div className="lg:col-span-1 min-w-0">
+            <div className="bg-white rounded-lg sm:rounded-xl shadow-sm p-3 sm:p-4 lg:p-6">
               <BookingSteps
                 currentStep={currentStep}
                 steps={BOOKING_STEPS}
@@ -1035,8 +1035,8 @@ function BookingContentEnhanced() {
           </div>
 
           {/* Right Column - Form Content */}
-          <div className="lg:col-span-1">
-            <div className="bg-white rounded-xl shadow-sm p-4 sm:p-6 md:p-8">
+          <div className="lg:col-span-1 min-w-0">
+            <div className="bg-white rounded-lg sm:rounded-xl shadow-sm p-3 sm:p-4 md:p-6 lg:p-8">
               {renderStepContent()}
 
               {/* Navigation Buttons */}

@@ -223,11 +223,10 @@ export function calculateEnhancedPrice(
   // Calculate gross total (price with VAT included)
   const grossTotal = subtotal + weekendSurcharge + holidaySurcharge - frequencyDiscount;
 
-  // Calculate VAT from gross (VAT = gross × 0.20, which equals gross/1.25*0.25)
-  const vatAmount = grossTotal * 0.20;
-
-  // Calculate net (gross - VAT)
-  const netTotal = grossTotal - vatAmount;
+  // Croatian VAT (PDV) is 25% of NET price
+  // If gross includes VAT: NET = GROSS / 1.25, VAT = NET * 0.25
+  const netTotal = grossTotal / 1.25;
+  const vatAmount = netTotal * 0.25;
 
   // Total is the gross amount
   const total = grossTotal;
@@ -354,9 +353,10 @@ export function calculateWindowsPrice(input: WindowsBookingInput): WindowsPriceC
   // Subtotal (gross with VAT)
   const subtotal = basePrice + distanceFee - frequencyDiscount;
 
-  // VAT calculation (VAT already included in gross)
-  const vatAmount = Math.round(subtotal * 0.20 / 1.20);
-  const netAmount = subtotal - vatAmount;
+  // Croatian VAT (PDV) is 25% of NET price
+  // If gross includes VAT: NET = GROSS / 1.25, VAT = NET * 0.25
+  const netAmount = subtotal / 1.25;
+  const vatAmount = Math.round(netAmount * 0.25);
 
   // Final total
   const total = subtotal;
@@ -459,9 +459,10 @@ export function calculateOfficePrice(input: OfficeBookingInput): OfficePriceCalc
   // Subtotal (gross with VAT)
   const subtotal = basePrice + distanceFee - frequencyDiscount;
 
-  // VAT calculation (VAT already included in gross)
-  const vatAmount = Math.round(subtotal * 0.20 / 1.20);
-  const netAmount = subtotal - vatAmount;
+  // Croatian VAT (PDV) is 25% of NET price
+  // If gross includes VAT: NET = GROSS / 1.25, VAT = NET * 0.25
+  const netAmount = subtotal / 1.25;
+  const vatAmount = Math.round(netAmount * 0.25);
 
   // Final total
   const total = subtotal;
