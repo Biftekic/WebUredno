@@ -350,7 +350,7 @@ export default function PricingInfo({
                 Pozovite odmah
               </a>
               <a
-                href="/kontakt"
+                href="/contact"
                 className="inline-flex items-center justify-center px-4 py-2 border border-green-600 text-green-600 rounded-lg hover:bg-green-50 transition-colors text-sm font-medium"
               >
                 Pošaljite poruku

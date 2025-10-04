@@ -26,7 +26,7 @@ export default function ServiceCard({
   duration,
   features,
   popular = false,
-  href = '/kontakt',
+  href = '/contact',
   onSelect,
   showPerHour = true,
 }: ServiceCardProps) {

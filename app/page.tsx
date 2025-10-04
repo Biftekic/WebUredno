@@ -267,7 +267,7 @@ export default function HomePage() {
             viewport={{ once: true }}
             className="text-center mt-8"
           >
-            <Button href="/usluge" variant="outline" size="lg">
+            <Button href="/services" variant="outline" size="lg">
               Pogledajte sve usluge
               <ArrowRight className="ml-2 w-4 h-4" />
             </Button>

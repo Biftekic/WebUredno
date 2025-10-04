@@ -35,7 +35,7 @@ export default function PricingCard({
   popular = false,
   recommended = false,
   discount,
-  href = '/kontakt',
+  href = '/contact',
   onSelect,
   showPerHour = true,
   buttonText = 'Rezerviraj odmah',

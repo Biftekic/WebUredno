@@ -27,7 +27,7 @@ const navItems: NavItem[] = [
     icon: Home
   },
   {
-    href: '/usluge',
+    href: '/services',
     label: 'Usluge',
     icon: Briefcase
   },
@@ -43,7 +43,7 @@ const navItems: NavItem[] = [
     icon: Euro
   },
   {
-    href: '/kontakt',
+    href: '/contact',
     label: 'Kontakt',
     icon: Phone
   },

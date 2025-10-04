@@ -32,10 +32,10 @@ export default function Header({ transparent = false }: HeaderProps) {
 
   const navItems = [
     { href: '/', label: 'Početna' },
-    { href: '/usluge', label: 'Usluge' },
+    { href: '/services', label: 'Usluge' },
     { href: '/cjenik', label: 'Cjenik' },
     { href: '/o-nama', label: 'O nama' },
-    { href: '/kontakt', label: 'Kontakt' },
+    { href: '/contact', label: 'Kontakt' },
   ];
 
   return (

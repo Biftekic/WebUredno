@@ -21,17 +21,17 @@ export default function Footer() {
   };
 
   const services = [
-    { href: '/usluge/redovito-ciscenje', label: 'Redovito čišćenje' },
-    { href: '/usluge/dubinsko-ciscenje', label: 'Dubinsko čišćenje' },
-    { href: '/usluge/useljenje-iseljenje', label: 'Useljenje/Iseljenje' },
-    { href: '/usluge/uredski-prostori', label: 'Uredski prostori' },
+    { href: '/services/redovito-ciscenje', label: 'Redovito čišćenje' },
+    { href: '/services/dubinsko-ciscenje', label: 'Dubinsko čišćenje' },
+    { href: '/services/useljenje-iseljenje', label: 'Useljenje/Iseljenje' },
+    { href: '/services/uredski-prostori', label: 'Uredski prostori' },
   ];
 
   const quickLinks = [
     { href: '/o-nama', label: 'O nama' },
     { href: '/cjenik', label: 'Cjenik' },
     { href: '/rezervacija', label: 'Rezervacija' },
-    { href: '/kontakt', label: 'Kontakt' },
+    { href: '/contact', label: 'Kontakt' },
   ];
 
   const socialLinks = [

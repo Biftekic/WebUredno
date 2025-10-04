@@ -14,10 +14,9 @@ interface NavItem {
 
 const navItems: NavItem[] = [
   { href: '/', label: 'Početna', icon: Home },
-  { href: '/usluge', label: 'Usluge', icon: Briefcase },
+  { href: '/services', label: 'Usluge', icon: Briefcase },
   { href: '/booking', label: 'Rezerviraj', icon: Calendar },
-  { href: '/kontakt', label: 'Kontakt', icon: Phone },
-  { href: '/profil', label: 'Profil', icon: User },
+  { href: '/contact', label: 'Kontakt', icon: Phone },
 ];
 
 export default function MobileNav() {
