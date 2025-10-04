@@ -94,13 +94,13 @@ export default function BookingCalendar({
   const firstDayOfWeek = (startOfMonth(currentMonth).getDay() + 6) % 7; // Monday = 0
 
   return (
-    <div className="bg-white rounded-xl shadow-sm p-4 md:p-6">
-      <div className="mb-6">
-        <h3 className="text-lg font-semibold text-gray-900 mb-2 flex items-center gap-2">
-          <Calendar className="w-5 h-5 text-green-600" />
+    <div className="bg-white rounded-xl shadow-sm p-3 sm:p-4 md:p-6">
+      <div className="mb-4 sm:mb-6">
+        <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-1 sm:mb-2 flex items-center gap-2">
+          <Calendar className="w-4 h-4 sm:w-5 sm:h-5 text-green-600" />
           Odaberite datum
         </h3>
-        <p className="text-sm text-gray-600">
+        <p className="text-xs sm:text-sm text-gray-600">
           Dostupni termini u sljedećih 30 dana (radimo ponedjeljak - subota)
         </p>
       </div>
@@ -110,32 +110,32 @@ export default function BookingCalendar({
       ) : (
         <>
           {/* Month Navigation */}
-          <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center justify-between mb-3 sm:mb-4">
             <button
               onClick={() => setCurrentMonth(prev => new Date(prev.getFullYear(), prev.getMonth() - 1))}
-              className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
+              className="p-2 rounded-lg hover:bg-gray-100 active:bg-gray-200 transition-colors min-h-touch min-w-[44px]"
               aria-label="Prethodni mjesec"
             >
-              <ChevronLeft className="w-5 h-5 text-gray-600" />
+              <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600" />
             </button>
 
-            <h4 className="text-base font-medium text-gray-900 capitalize">
+            <h4 className="text-sm sm:text-base font-medium text-gray-900 capitalize">
               {format(currentMonth, 'LLLL yyyy', { locale: hr })}
             </h4>
 
             <button
               onClick={() => setCurrentMonth(prev => new Date(prev.getFullYear(), prev.getMonth() + 1))}
-              className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
+              className="p-2 rounded-lg hover:bg-gray-100 active:bg-gray-200 transition-colors min-h-touch min-w-[44px]"
               aria-label="Sljedeći mjesec"
             >
-              <ChevronRight className="w-5 h-5 text-gray-600" />
+              <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600" />
             </button>
           </div>
 
           {/* Calendar Grid */}
-          <div className="grid grid-cols-7 gap-1 mb-4">
+          <div className="grid grid-cols-7 gap-0.5 sm:gap-1 mb-3 sm:mb-4">
             {['Pon', 'Uto', 'Sri', 'Čet', 'Pet', 'Sub', 'Ned'].map(day => (
-              <div key={day} className="text-xs font-medium text-gray-500 text-center py-2">
+              <div key={day} className="text-xxs sm:text-xs font-medium text-gray-500 text-center py-1 sm:py-2">
                 {day}
               </div>
             ))}
@@ -160,13 +160,13 @@ export default function BookingCalendar({
                   onClick={() => handleDateClick(date)}
                   disabled={!available}
                   className={`
-                    relative aspect-square flex items-center justify-center rounded-lg text-sm
-                    transition-all duration-200 min-h-[40px]
+                    relative aspect-square flex items-center justify-center rounded-md sm:rounded-lg text-xs sm:text-sm
+                    transition-all duration-200 min-h-[36px] sm:min-h-[40px]
                     ${!available ? 'text-gray-300 cursor-not-allowed' : ''}
-                    ${available && !selected && !expanded ? 'hover:bg-green-50 text-gray-900 cursor-pointer' : ''}
+                    ${available && !selected && !expanded ? 'hover:bg-green-50 active:bg-green-100 text-gray-900 cursor-pointer' : ''}
                     ${selected ? 'bg-green-600 text-white font-medium' : ''}
                     ${expanded && !selected ? 'bg-green-100 text-green-900' : ''}
-                    ${today && !selected ? 'ring-2 ring-green-500 ring-offset-2' : ''}
+                    ${today && !selected ? 'ring-1 sm:ring-2 ring-green-500 ring-offset-1 sm:ring-offset-2' : ''}
                     ${available && hasAvailableSlots ? 'font-medium' : ''}
                   `}
                   aria-label={`${format(date, 'd. MMMM', { locale: hr })} ${
@@ -176,7 +176,7 @@ export default function BookingCalendar({
                   {format(date, 'd')}
                   {available && hasAvailableSlots && (
                     <span className={`
-                      absolute bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full
+                      absolute bottom-0.5 sm:bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full
                       ${selected ? 'bg-white' : 'bg-green-500'}
                     `} />
                   )}
@@ -187,13 +187,13 @@ export default function BookingCalendar({
 
           {/* Time Slots for Selected Date */}
           {expandedDate && (
-            <div className="mt-6 pt-6 border-t border-gray-200">
-              <h4 className="text-base font-medium text-gray-900 mb-3 flex items-center gap-2">
-                <Clock className="w-5 h-5 text-green-600" />
+            <div className="mt-4 sm:mt-6 pt-4 sm:pt-6 border-t border-gray-200">
+              <h4 className="text-sm sm:text-base font-medium text-gray-900 mb-2 sm:mb-3 flex items-center gap-2">
+                <Clock className="w-4 h-4 sm:w-5 sm:h-5 text-green-600" />
                 Dostupni termini za {format(expandedDate, 'd. MMMM', { locale: hr })}
               </h4>
 
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2 sm:gap-3">
                 {TIME_SLOTS.map(slot => {
                   const dateSlots = getDateSlots(expandedDate);
                   const slotData = dateSlots.find(s => s.time_slot === slot.value);
@@ -207,10 +207,10 @@ export default function BookingCalendar({
                       onClick={() => handleTimeSlotClick(expandedDate, slot.value)}
                       disabled={!available || isPast}
                       className={`
-                        p-3 rounded-lg text-sm font-medium transition-all duration-200
-                        min-h-[48px] flex flex-col items-center justify-center gap-1
+                        p-2.5 sm:p-3 rounded-lg text-xs sm:text-sm font-medium transition-all duration-200
+                        min-h-touch-lg flex flex-col items-center justify-center gap-0.5 sm:gap-1
                         ${!available || isPast ? 'bg-gray-100 text-gray-400 cursor-not-allowed' : ''}
-                        ${available && !selected && !isPast ? 'bg-white border-2 border-gray-200 text-gray-900 hover:border-green-500 hover:bg-green-50' : ''}
+                        ${available && !selected && !isPast ? 'bg-white border-2 border-gray-200 text-gray-900 hover:border-green-500 hover:bg-green-50 active:bg-green-100' : ''}
                         ${selected ? 'bg-green-600 text-white border-2 border-green-600' : ''}
                       `}
                       aria-label={`${slot.label} ${
@@ -219,9 +219,9 @@ export default function BookingCalendar({
                         `dostupno (${slotData?.available_teams} tim${slotData?.available_teams === 1 ? '' : 'a'})`
                       }`}
                     >
-                      <span>{slot.label}</span>
+                      <span className="font-semibold">{slot.label}</span>
                       {available && !isPast && slotData && (
-                        <span className={`text-xs ${selected ? 'text-green-100' : 'text-gray-500'}`}>
+                        <span className={`text-xxs sm:text-xs ${selected ? 'text-green-100' : 'text-gray-500'}`}>
                           {slotData.available_teams} {slotData.available_teams === 1 ? 'tim' : 'tima'}
                         </span>
                       )}
@@ -234,11 +234,11 @@ export default function BookingCalendar({
 
           {/* Selected DateTime Display */}
           {selectedDate && selectedTimeSlot && (
-            <div className="mt-6 p-4 bg-green-50 rounded-lg border border-green-200">
-              <p className="text-sm font-medium text-green-900">
+            <div className="mt-4 sm:mt-6 p-3 sm:p-4 bg-green-50 rounded-lg border border-green-200">
+              <p className="text-xs sm:text-sm font-medium text-green-900">
                 Odabrani termin:
               </p>
-              <p className="text-base text-green-700 mt-1">
+              <p className="text-sm sm:text-base text-green-700 mt-1">
                 {format(selectedDate, 'EEEE, d. MMMM yyyy.', { locale: hr })} u {selectedTimeSlot}
               </p>
             </div>

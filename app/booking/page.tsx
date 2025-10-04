@@ -370,40 +370,40 @@ function BookingContentEnhanced() {
     switch (currentStep) {
       case 0: // Enhanced Service Selection
         return (
-          <div className="space-y-6">
-            <h2 className="text-xl font-semibold text-gray-900 mb-4">
+          <div className="space-y-4 sm:space-y-6">
+            <h2 className="text-lg sm:text-xl font-semibold text-gray-900 mb-3 sm:mb-4">
               Odaberite vrstu čišćenja
             </h2>
 
             {/* Service Type Tabs */}
-            <div className="border-b border-gray-200 mb-6">
-              <div className="flex flex-wrap gap-2 pb-2">
+            <div className="border-b border-gray-200 mb-4 sm:mb-6 -mx-4 sm:mx-0 px-4 sm:px-0">
+              <div className="flex overflow-x-auto scrollbar-hide gap-2 pb-2 snap-x snap-mandatory">
                 <button
                   onClick={() => setServiceType('regular')}
-                  className={`px-4 py-2 rounded-t-lg font-medium text-sm transition-colors ${
+                  className={`px-4 py-2 rounded-t-lg font-medium text-sm transition-colors whitespace-nowrap flex-shrink-0 snap-start min-h-touch ${
                     serviceType === 'regular'
                       ? 'bg-green-600 text-white'
-                      : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                      : 'bg-gray-100 text-gray-600 hover:bg-gray-200 active:bg-gray-300'
                   }`}
                 >
                   Redovno
                 </button>
                 <button
                   onClick={() => setServiceType('deep')}
-                  className={`px-4 py-2 rounded-t-lg font-medium text-sm transition-colors ${
+                  className={`px-4 py-2 rounded-t-lg font-medium text-sm transition-colors whitespace-nowrap flex-shrink-0 snap-start min-h-touch ${
                     serviceType === 'deep'
                       ? 'bg-green-600 text-white'
-                      : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                      : 'bg-gray-100 text-gray-600 hover:bg-gray-200 active:bg-gray-300'
                   }`}
                 >
                   Dubinsko
                 </button>
                 <button
                   onClick={() => setServiceType('daily_rental')}
-                  className={`px-4 py-2 rounded-t-lg font-medium text-sm transition-colors flex items-center gap-2 ${
+                  className={`px-4 py-2 rounded-t-lg font-medium text-sm transition-colors flex items-center gap-2 whitespace-nowrap flex-shrink-0 snap-start min-h-touch ${
                     serviceType === 'daily_rental' || serviceType === 'vacation_rental'
                       ? 'bg-purple-600 text-white'
-                      : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                      : 'bg-gray-100 text-gray-600 hover:bg-gray-200 active:bg-gray-300'
                   }`}
                 >
                   🏠 Najam
@@ -413,20 +413,20 @@ function BookingContentEnhanced() {
                 </button>
                 <button
                   onClick={() => setServiceType('windows')}
-                  className={`px-4 py-2 rounded-t-lg font-medium text-sm transition-colors flex items-center gap-2 ${
+                  className={`px-4 py-2 rounded-t-lg font-medium text-sm transition-colors flex items-center gap-2 whitespace-nowrap flex-shrink-0 snap-start min-h-touch ${
                     serviceType === 'windows'
                       ? 'bg-sky-600 text-white'
-                      : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                      : 'bg-gray-100 text-gray-600 hover:bg-gray-200 active:bg-gray-300'
                   }`}
                 >
                   🪟 Pranje prozora
                 </button>
                 <button
                   onClick={() => setServiceType('office')}
-                  className={`px-4 py-2 rounded-t-lg font-medium text-sm transition-colors flex items-center gap-2 ${
+                  className={`px-4 py-2 rounded-t-lg font-medium text-sm transition-colors flex items-center gap-2 whitespace-nowrap flex-shrink-0 snap-start min-h-touch ${
                     serviceType === 'office'
                       ? 'bg-purple-600 text-white'
-                      : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                      : 'bg-gray-100 text-gray-600 hover:bg-gray-200 active:bg-gray-300'
                   }`}
                 >
                   🏢 Čišćenje ureda
@@ -442,38 +442,40 @@ function BookingContentEnhanced() {
 
             {/* Rental Sub-type Selection */}
             {(serviceType === 'daily_rental' || serviceType === 'vacation_rental') && (
-              <div className="mb-6">
-                <p className="text-sm font-medium text-gray-700 mb-3">Odaberite tip najma:</p>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div className="mb-4 sm:mb-6">
+                <p className="text-sm font-medium text-gray-700 mb-2 sm:mb-3">Odaberite tip najma:</p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3">
                   <button
                     onClick={() => setServiceType('daily_rental')}
-                    className={`p-4 rounded-lg border-2 transition-all duration-200 ${
+                    className={`p-3 sm:p-4 rounded-lg border-2 transition-all duration-200 min-h-touch ${
                       serviceType === 'daily_rental'
                         ? 'border-purple-500 bg-purple-50'
-                        : 'border-gray-200 bg-white hover:border-gray-300'
+                        : 'border-gray-200 bg-white hover:border-gray-300 active:bg-gray-50'
                     }`}
+                    aria-label="Jednodnevni najam - Brzo čišćenje između gostiju"
                   >
-                    <div className="text-2xl mb-2">🔑</div>
-                    <h4 className="font-medium text-gray-900 mb-1">Jednodnevni najam</h4>
+                    <div className="text-xl sm:text-2xl mb-1 sm:mb-2">🔑</div>
+                    <h4 className="font-medium text-gray-900 mb-0.5 sm:mb-1 text-sm sm:text-base">Jednodnevni najam</h4>
                     <p className="text-xs text-gray-600">Brzo čišćenje između gostiju</p>
                   </button>
                   <button
                     onClick={() => setServiceType('vacation_rental')}
-                    className={`p-4 rounded-lg border-2 transition-all duration-200 ${
+                    className={`p-3 sm:p-4 rounded-lg border-2 transition-all duration-200 min-h-touch ${
                       serviceType === 'vacation_rental'
                         ? 'border-purple-500 bg-purple-50'
-                        : 'border-gray-200 bg-white hover:border-gray-300'
+                        : 'border-gray-200 bg-white hover:border-gray-300 active:bg-gray-50'
                     }`}
+                    aria-label="Dubinsko čišćenje najma - Temeljito čišćenje nakon odjave"
                   >
-                    <div className="text-2xl mb-2">✨</div>
-                    <h4 className="font-medium text-gray-900 mb-1">Dubinsko čišćenje najma</h4>
+                    <div className="text-xl sm:text-2xl mb-1 sm:mb-2">✨</div>
+                    <h4 className="font-medium text-gray-900 mb-0.5 sm:mb-1 text-sm sm:text-base">Dubinsko čišćenje najma</h4>
                     <p className="text-xs text-gray-600">Temeljito čišćenje nakon odjave</p>
                   </button>
                 </div>
               </div>
             )}
 
-            <div className="grid gap-4 md:grid-cols-2">
+            <div className="grid gap-3 sm:gap-4 md:grid-cols-2">
               {services
                 .filter(service => {
                   if (serviceType === 'daily_rental') return service.slug === 'jednodnevni-najam';
@@ -486,12 +488,13 @@ function BookingContentEnhanced() {
                     key={service.id}
                     onClick={() => setSelectedService(service)}
                     className={`
-                      p-4 rounded-xl border-2 text-left transition-all duration-200
+                      p-3 sm:p-4 rounded-xl border-2 text-left transition-all duration-200 min-h-touch
                       ${selectedService?.id === service.id
                         ? 'border-green-500 bg-green-50'
-                        : 'border-gray-200 hover:border-gray-300 bg-white'
+                        : 'border-gray-200 hover:border-gray-300 active:bg-gray-50 bg-white'
                       }
                     `}
+                    aria-label={`${service.name} - ${service.base_price} EUR`}
                   >
                     <div className="flex items-start justify-between mb-2">
                       <h3 className="font-medium text-gray-900">{service.name}</h3>
@@ -553,31 +556,31 @@ function BookingContentEnhanced() {
 
         // Standard Property Details for other services
         return (
-          <div className="space-y-6">
-            <h2 className="text-xl font-semibold text-gray-900 mb-4">
+          <div className="space-y-4 sm:space-y-6">
+            <h2 className="text-lg sm:text-xl font-semibold text-gray-900 mb-3 sm:mb-4">
               Detalji o nekretnini i dodatne usluge
             </h2>
 
             {/* Property Type */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-3">
+              <label className="block text-sm font-medium text-gray-700 mb-2 sm:mb-3">
                 Tip nekretnine
               </label>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-3">
                 {PROPERTY_TYPES.map(type => (
                   <button
                     key={type.value}
                     onClick={() => setPropertyType(type.value as PropertyTypeEnum)}
                     className={`
-                      p-4 rounded-lg border-2 transition-all duration-200
+                      p-3 sm:p-4 rounded-lg border-2 transition-all duration-200 min-h-touch
                       ${propertyType === type.value
                         ? 'border-green-500 bg-green-50'
-                        : 'border-gray-200 hover:border-gray-300'
+                        : 'border-gray-200 hover:border-gray-300 active:bg-gray-50'
                       }
                     `}
                   >
-                    <div className="text-2xl mb-2">{type.icon}</div>
-                    <div className="text-sm font-medium">{type.label}</div>
+                    <div className="text-xl sm:text-2xl mb-1 sm:mb-2">{type.icon}</div>
+                    <div className="text-xs sm:text-sm font-medium">{type.label}</div>
                   </button>
                 ))}
               </div>
@@ -585,13 +588,14 @@ function BookingContentEnhanced() {
 
             {/* Property Size */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-3">
+              <label className="block text-sm font-medium text-gray-700 mb-2 sm:mb-3">
                 Površina nekretnine (m²)
               </label>
-              <div className="flex items-center gap-4">
+              <div className="flex items-center gap-3 sm:gap-4">
                 <button
                   onClick={() => setPropertySize(Math.max(20, propertySize - 10))}
-                  className="p-2 rounded-lg border border-gray-300 hover:bg-gray-50"
+                  className="p-2 rounded-lg border border-gray-300 hover:bg-gray-50 active:bg-gray-100 min-h-touch min-w-[44px]"
+                  aria-label="Smanji površinu"
                 >
                   <ArrowLeft className="w-5 h-5" />
                 </button>
@@ -601,12 +605,13 @@ function BookingContentEnhanced() {
                   onChange={(e) => setPropertySize(Number(e.target.value))}
                   min="20"
                   max="500"
-                  className="text-center w-24"
+                  className="text-center w-20 sm:w-24"
                   error={validationErrors.propertySize}
                 />
                 <button
                   onClick={() => setPropertySize(Math.min(500, propertySize + 10))}
-                  className="p-2 rounded-lg border border-gray-300 hover:bg-gray-50"
+                  className="p-2 rounded-lg border border-gray-300 hover:bg-gray-50 active:bg-gray-100 min-h-touch min-w-[44px]"
+                  aria-label="Povećaj površinu"
                 >
                   <ArrowRight className="w-5 h-5" />
                 </button>
@@ -615,29 +620,29 @@ function BookingContentEnhanced() {
 
             {/* Frequency */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-3">
+              <label className="block text-sm font-medium text-gray-700 mb-2 sm:mb-3">
                 Učestalost čišćenja
               </label>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3">
                 {FREQUENCY_OPTIONS.map(option => (
                   <button
                     key={option.value}
                     onClick={() => setFrequency(option.value)}
                     className={`
-                      p-3 rounded-lg border-2 text-left transition-all duration-200
+                      p-3 sm:p-4 rounded-lg border-2 text-left transition-all duration-200 min-h-touch
                       ${frequency === option.value
                         ? 'border-green-500 bg-green-50'
-                        : 'border-gray-200 hover:border-gray-300'
+                        : 'border-gray-200 hover:border-gray-300 active:bg-gray-50'
                       }
                     `}
                   >
-                    <div className="flex items-start justify-between">
-                      <div>
+                    <div className="flex items-start justify-between gap-2">
+                      <div className="flex-1 min-w-0">
                         <div className="font-medium text-sm">{option.label}</div>
-                        <div className="text-xs text-gray-600 mt-0.5">{option.description}</div>
+                        <div className="text-xs text-gray-600 mt-0.5 line-clamp-2">{option.description}</div>
                       </div>
                       {option.discount && option.discount > 0 && (
-                        <span className="px-2 py-1 bg-green-100 text-green-700 text-xs rounded-full">
+                        <span className="px-2 py-1 bg-green-100 text-green-700 text-xs rounded-full whitespace-nowrap flex-shrink-0">
                           -{option.discount}%
                         </span>
                       )}
@@ -658,10 +663,10 @@ function BookingContentEnhanced() {
 
             {/* Indoor Extras with Quantities */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-3">
+              <label className="block text-sm font-medium text-gray-700 mb-2 sm:mb-3">
                 Dodatne usluge u zatvorenom (opcionalno)
               </label>
-              <div className="space-y-3">
+              <div className="space-y-2 sm:space-y-3">
                 {QUANTIFIABLE_EXTRAS.map(extra => (
                   <QuantitySelector
                     key={extra.id}
@@ -681,10 +686,10 @@ function BookingContentEnhanced() {
 
             {/* Outdoor Services */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-3">
+              <label className="block text-sm font-medium text-gray-700 mb-2 sm:mb-3">
                 Vanjski radovi (opcionalno)
               </label>
-              <div className="space-y-3">
+              <div className="space-y-2 sm:space-y-3">
                 {LANDSCAPING_SERVICES.map(service => (
                   <AreaInput
                     key={service.id}
@@ -707,8 +712,8 @@ function BookingContentEnhanced() {
 
       case 2: // Date and Time
         return (
-          <div className="space-y-6">
-            <h2 className="text-xl font-semibold text-gray-900 mb-4">
+          <div className="space-y-4 sm:space-y-6">
+            <h2 className="text-lg sm:text-xl font-semibold text-gray-900 mb-3 sm:mb-4">
               Odaberite datum i vrijeme
             </h2>
             {(validationErrors.date || validationErrors.time) && (
@@ -729,12 +734,12 @@ function BookingContentEnhanced() {
 
       case 3: // Contact Information
         return (
-          <div className="space-y-6">
-            <h2 className="text-xl font-semibold text-gray-900 mb-4">
+          <div className="space-y-4 sm:space-y-6">
+            <h2 className="text-lg sm:text-xl font-semibold text-gray-900 mb-3 sm:mb-4">
               Kontakt podaci
             </h2>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
               <Input
                 label="Ime"
                 required
@@ -817,8 +822,8 @@ function BookingContentEnhanced() {
 
       case 4: // Review and Confirm
         return (
-          <div className="space-y-6">
-            <h2 className="text-xl font-semibold text-gray-900 mb-4">
+          <div className="space-y-4 sm:space-y-6">
+            <h2 className="text-lg sm:text-xl font-semibold text-gray-900 mb-3 sm:mb-4">
               Pregled rezervacije
             </h2>
 
@@ -956,26 +961,50 @@ function BookingContentEnhanced() {
     }
   };
 
+  // Calculate total price for mobile sticky bar
+  const [totalPrice, setTotalPrice] = useState<number>(0);
+
+  useEffect(() => {
+    if (selectedService) {
+      // Simple price calculation for display
+      const basePrice = selectedService.base_price || 0;
+      const sizePrice = propertySize * (selectedService.price_per_sqm || 0);
+      const extrasPrice = getIndoorExtrasForCalculation().reduce((sum, extra) =>
+        sum + (extra.quantity * extra.unitPrice), 0);
+      const outdoorPrice = getOutdoorServicesForCalculation().reduce((sum, service) =>
+        sum + Math.max(service.area * service.pricePerUnit, service.minPrice), 0);
+
+      const subtotal = Math.max(basePrice, sizePrice) + extrasPrice + outdoorPrice;
+
+      // Apply frequency discount
+      const frequencyOption = FREQUENCY_OPTIONS.find(f => f.value === frequency);
+      const discount = frequencyOption?.discount || 0;
+      const total = subtotal * (1 - discount / 100);
+
+      setTotalPrice(total);
+    }
+  }, [selectedService, propertySize, indoorExtras, outdoorServices, frequency]);
+
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
-      <div className="max-w-6xl mx-auto px-4 py-8">
+    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white pb-20 sm:pb-0">
+      <div className="container mx-auto px-4 py-6 md:py-8 max-w-7xl">
         {/* Header */}
-        <div className="mb-8">
+        <div className="mb-6 md:mb-8">
           <button
             onClick={() => router.push('/')}
-            className="flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors mb-4"
+            className="flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors mb-3 md:mb-4 min-h-touch"
           >
             <ArrowLeft className="w-5 h-5" />
             <span className="text-sm">Natrag</span>
           </button>
-          <h1 className="text-3xl font-bold text-gray-900">Napredna rezervacija čišćenja</h1>
-          <p className="text-gray-600 mt-2">Prilagodite uslugu vašim potrebama</p>
+          <h1 className="text-2xl md:text-3xl font-bold text-gray-900">Napredna rezervacija čišćenja</h1>
+          <p className="text-gray-600 mt-1 md:mt-2 text-sm md:text-base">Prilagodite uslugu vašim potrebama</p>
         </div>
 
-        <div className="grid lg:grid-cols-3 gap-8">
+        <div className="grid lg:grid-cols-[280px_1fr] xl:grid-cols-[300px_1fr_380px] gap-4 lg:gap-6 xl:gap-8">
           {/* Left Column - Steps */}
           <div className="lg:col-span-1">
-            <div className="bg-white rounded-xl shadow-sm p-6">
+            <div className="bg-white rounded-xl shadow-sm p-4 sm:p-6">
               <BookingSteps
                 currentStep={currentStep}
                 steps={BOOKING_STEPS}
@@ -986,7 +1015,7 @@ function BookingContentEnhanced() {
 
             {/* Price Calculator - Desktop Only */}
             {selectedService && (
-              <div className="hidden lg:block mt-6">
+              <div className="hidden xl:block mt-4 lg:mt-6">
                 <PriceCalculatorEnhanced
                   service={selectedService}
                   serviceType={serviceType}
@@ -1006,12 +1035,12 @@ function BookingContentEnhanced() {
           </div>
 
           {/* Right Column - Form Content */}
-          <div className="lg:col-span-2">
-            <div className="bg-white rounded-xl shadow-sm p-6 md:p-8">
+          <div className="lg:col-span-1">
+            <div className="bg-white rounded-xl shadow-sm p-4 sm:p-6 md:p-8">
               {renderStepContent()}
 
               {/* Navigation Buttons */}
-              <div className="flex items-center justify-between mt-8 pt-6 border-t border-gray-200">
+              <div className="flex items-center justify-between mt-6 sm:mt-8 pt-4 sm:pt-6 border-t border-gray-200">
                 <Button
                   variant="outline"
                   onClick={handlePrevStep}
@@ -1039,9 +1068,9 @@ function BookingContentEnhanced() {
               </div>
             </div>
 
-            {/* Price Calculator - Mobile Only */}
+            {/* Price Calculator - Mobile/Tablet */}
             {selectedService && (
-              <div className="lg:hidden mt-6">
+              <div className="xl:hidden mt-4 sm:mt-6">
                 <PriceCalculatorEnhanced
                   service={selectedService}
                   serviceType={serviceType}
@@ -1060,6 +1089,30 @@ function BookingContentEnhanced() {
             )}
           </div>
         </div>
+
+        {/* Mobile Sticky Price Bar */}
+        {selectedService && currentStep < BOOKING_STEPS.length - 1 && (
+          <div className="xl:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 shadow-lg z-40 safe-bottom">
+            <div className="container mx-auto px-4 py-3">
+              <div className="flex items-center justify-between gap-3">
+                <div className="flex-1 min-w-0">
+                  <p className="text-xs text-gray-500 mb-0.5">Ukupna cijena</p>
+                  <p className="text-lg font-bold text-gray-900">
+                    {totalPrice.toFixed(2)} EUR
+                  </p>
+                </div>
+                <Button
+                  onClick={handleNextStep}
+                  size="lg"
+                  className="flex-shrink-0"
+                >
+                  Dalje
+                  <ArrowRight className="w-4 h-4 ml-2" />
+                </Button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
